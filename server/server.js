@@ -1,7 +1,22 @@
-var express = require('express');
-var app = express();
-app.use('/', express.static(__dirname + '/../app'));
-app.use('/lib', express.static(__dirname + '/../node_modules'));
+'use strict';
+
+let express = require('express'),
+    config = require('./config/config'),
+    mongoose = require('mongoose');
+
+let app = express();
+
+require('./config/express')(app, config);
+
+mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' +
+    process.env.MONGO_PORT + '/' + process.env.MONGO_DB);
+
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log('Database connected');
+});
+
 app.listen(8080, function() {
-    console.log('Front listening on port 8080!');
+    console.log('Server listening on port 8080 !');
 });
