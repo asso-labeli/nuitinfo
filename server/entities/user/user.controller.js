@@ -104,6 +104,7 @@ module.exports = function (userSchema) {
     /* Express calls */
 
     userSchema.statics.exCreate = function (req, res) {
+        console.log(req.user);
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
             (next) => mongoose.model('User').create(req.body, next)

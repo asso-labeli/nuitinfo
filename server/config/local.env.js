@@ -12,7 +12,7 @@ module.exports = {
     API_URL: 'http://localhost:15400',
     WEBSERVER_URL: 'http://vps215250.ovh.net',
 
-    SESSION_SECRET: 'bJC2rlw0IW7XcsV5pWrFvcAK86y9JMD4L8JLB75BBmFJ00heK6yXtXMPDglcrZhl',
+    JWT_SECRET: 'bJC2rlw0IW7XcsV5pWrFvcAK86y9JMD4L8JLB75BBmFJ00heK6yXtXMPDglcrZhl',
 
     BCRYPT_SALT_ROUNDS: 10
 };

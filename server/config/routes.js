@@ -13,6 +13,8 @@ module.exports = function (app, config) {
 
     app.use('/user', require('../entities/user/user.routes'));
 
+    app.use('/', require('../tools/routes/auth'));
+
     // All api/something go on 404 error if not found
     app.route('/:url(api)/*').get(Errors[404]);
 

@@ -18,7 +18,8 @@ let codes = {
   invalidID: -31,
   invalidParameter: -32,
   surveyClosed: -41,
-  tooManyItems: -42
+  tooManyItems: -42,
+  authenticationFailed: -51
 };
 
 let mongoCodes = {
@@ -190,6 +191,14 @@ function tooManyItems(res){
   });
 }
 
+function authenticationFailed(res, message, data){
+  sendResponse(res, 400, {
+    message: message,
+    data: data,
+    success: codes.authenticationFailed
+  });
+}
+
 module.exports = formatResponse;
 module.exports.success = success;
 module.exports.notLogged = notLogged;
@@ -210,5 +219,6 @@ module.exports.invalidParameter = invalidParameter;
 module.exports.serverError = serverError;
 module.exports.surveyClosed = surveyClosed;
 module.exports.tooManyItems = tooManyItems;
+module.exports.authenticationFailed = authenticationFailed;
 module.exports.Codes = codes;
 module.exports.MongoCodes = mongoCodes;
