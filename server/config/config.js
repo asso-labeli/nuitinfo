@@ -8,7 +8,7 @@ let config = {
     development: {
         root: rootPath,
         app: {
-            name: 'tuviens-api-dev'
+            name: 'nuitinfo-api-dev'
         },
         port: 15400,
         secret: 'development-session-nuitinfo-lamantin'
@@ -17,7 +17,7 @@ let config = {
     test: {
         root: rootPath,
         app: {
-            name: 'tuviens-api-test'
+            name: 'nuitinfo-api-test'
         },
         port: 15400,
         secret: 'test-session-nuitinfo-lamantin'
@@ -26,7 +26,7 @@ let config = {
     production: {
         root: rootPath,
         app: {
-            name: 'tuviens-api'
+            name: 'nuitinfo-api'
         },
         port: 15400,
         secret: 'prod-session-nuitinfo-lamantin'

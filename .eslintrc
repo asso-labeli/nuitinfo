@@ -54,7 +54,6 @@
     "quotes": [2, "single"],
     "semi": [2, "always"],
     // ES6
-    "arrow-body-style": [2, "always"],
     "arrow-parens": [2],
     "no-var": [2]
   }

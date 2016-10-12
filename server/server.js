@@ -6,6 +6,15 @@ let express = require('express'),
 
 let app = express();
 
+// Load process.env
+let envConf = require('./config/local.env');
+
+for (let key in envConf) {
+    if (envConf.hasOwnProperty(key)){
+        process.env[key] = envConf[key];
+    }
+}
+
 require('./config/express')(app, config);
 
 mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' +
