@@ -31,7 +31,8 @@ let teamSchema = new Schema({
     },
     cremiRoom : {
         type: String
-    }
+    },
+    data : mongoose.Schema.Types.Mixed
 });
 
 require('./team.controller')(teamSchema);
