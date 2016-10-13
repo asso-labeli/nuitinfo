@@ -4,11 +4,11 @@ let Response = require('../../tools/response');
 let mongoose = require('mongoose');
 let async = require('async');
 
-module.exports = function (userSchema) {
+module.exports = function (teamSchema) {
 
     /* Controllers methods */
 
-    userSchema.statics.create = function (params, callback) {
+    teamSchema.statics.create = function (params, callback) {
         let Self = this;
 
         let team = new Self(params);
@@ -32,7 +32,7 @@ module.exports = function (userSchema) {
 
     /* Express calls */
 
-    userSchema.statics.exCreate = function (req, res) {
+    teamSchema.statics.exCreate = function (req, res) {
         if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
@@ -40,7 +40,7 @@ module.exports = function (userSchema) {
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
             (next) => mongoose.model('Team').create(req.body, next)
-        ], (err, user) => {
+        ], (err, team) => {
             if (err && err.alreadySent) {
                 return;
             }
@@ -55,7 +55,7 @@ module.exports = function (userSchema) {
                 return Response.insertError(res, err);
             }
 
-            return Response.success(res, 'Team added', user);
+            return Response.success(res, 'Team added', team);
         });
     };
 };
