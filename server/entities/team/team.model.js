@@ -20,13 +20,23 @@ let teamSchema = new Schema({
     logisticsRequirements : {
         type: String
     },
-    application : {
+    applications : {
         open : {
             type: Boolean,
             default: true
         },
         list : [{
             type: mongoose.Schema.Types.ObjectId
+        }]
+    },
+    members : {
+        leader : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        list : [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         }]
     },
     cremiRoom : {

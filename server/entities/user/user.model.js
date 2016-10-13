@@ -61,6 +61,10 @@ let userSchema = new Schema({
         studentNumber : Number,
         studentMail : String
     },
+    team : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Team'
+    },
     data : mongoose.Schema.Types.Mixed
 });
 
