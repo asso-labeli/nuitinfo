@@ -12,6 +12,7 @@ module.exports = function (app, config) {
     }
 
     app.use('/user', require('../entities/user/user.routes'));
+    app.use('/team', require('../entities/team/team.routes'));
 
     app.use('/', require('../tools/routes/auth'));
 
