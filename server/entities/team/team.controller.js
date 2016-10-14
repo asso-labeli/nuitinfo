@@ -68,6 +68,16 @@ module.exports = function (teamSchema) {
         });
     };
 
+    teamSchema.statics.findTeamForUser = function (params, callback) {
+        mongoose.model('Team').findOne({
+            $or: [{
+                'members.list': params.user
+            }, {
+                'members.leader': params.user
+            }]
+        }, callback);
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {
@@ -88,15 +98,15 @@ module.exports = function (teamSchema) {
             return callback({alreadySent: true});
         }
 
-        if (req.body.members){
+        if (req.body.members) {
             req.body.members = undefined;
         }
 
-        if (req.body.applications){
+        if (req.body.applications) {
             req.body.applications = undefined;
         }
 
-        if (req.body.data){
+        if (req.body.data) {
             req.body.data = undefined;
         }
 
@@ -122,6 +132,16 @@ module.exports = function (teamSchema) {
 
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
+            // Check if user already have team
+            (next) => mongoose.model('Team').findTeamForUser({user: req.user._id}, next),
+            (team, next) => {
+                if (!team || !team._id){
+                    return next();
+                }
+
+                next('User already have team');
+            },
+            // Create team
             (next) => {
                 if (!req.body.members) {
                     req.body.members = {};
@@ -129,7 +149,20 @@ module.exports = function (teamSchema) {
 
                 req.body.members.leader = req.user._id;
                 mongoose.model('Team').create(req.body, next);
-            }
+            },
+            // Add team to user
+            (team, entryCreated, next) => mongoose.model('User').update(
+                {_id: req.user._id},
+                {team: team._id},
+                (err) => {
+
+                    console.log(team, next);
+                    if (err) {
+                        return next(err);
+                    }
+
+                    next(null, team);
+                })
         ], (err, team) => {
             if (err && err.alreadySent) {
                 return;
