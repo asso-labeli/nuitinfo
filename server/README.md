@@ -13,4 +13,5 @@ Route | Description | Authentication
 Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /team | Add a new team | Yes
+**PUT** /team | Edit a team | Yes
 **DELETE** /team | Remove a team | Yes

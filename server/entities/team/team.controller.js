@@ -18,24 +18,49 @@ module.exports = function (teamSchema) {
         team.save(callback);
     };
 
-    teamSchema.statics.delete = function (params, callback){
+    teamSchema.statics.edit = function (params, callback) {
         let Self = this;
 
         async.waterfall([
-            (next) => Self.findById(params.teamId, next),
+            (next) => Self.findById(params._id, next),
             (team, next) => {
-                if (!team){
+                if (!team) {
                     next('Team not found');
                 }
 
                 if (team.members.leader.equals(params.leaderId)) {
-                    mongoose.model('Team').remove({_id : params.teamId}, next);
+                    Self.update({_id: params._id}, {$set: params}, next);
                 } else {
                     next('Logged user isn\'t the leader of the team');
                 }
             }
         ], (err, team) => {
-            if (err){
+            if (err) {
+                return callback(err);
+            }
+
+            callback(null, team);
+        });
+    };
+
+    teamSchema.statics.delete = function (params, callback) {
+        let Self = this;
+
+        async.waterfall([
+            (next) => Self.findById(params._id, next),
+            (team, next) => {
+                if (!team) {
+                    next('Team not found');
+                }
+
+                if (team.members.leader.equals(params.leaderId)) {
+                    mongoose.model('Team').remove({_id: params._id}, next);
+                } else {
+                    next('Logged user isn\'t the leader of the team');
+                }
+            }
+        ], (err, team) => {
+            if (err) {
                 return callback(err);
             }
 
@@ -57,9 +82,30 @@ module.exports = function (teamSchema) {
         callback({alreadySent: true});
     }
 
-    function checkParametersExistsForDelete(req, res, callback){
-        if (!req.body || !req.body.teamId){
-            Response.missing(res, 'teamId', -11);
+    function checkParametersExistsForEdit(req, res, callback) {
+        if (!req.body || !req.body._id) {
+            Response.missing(res, '_id', -11);
+            return callback({alreadySent: true});
+        }
+
+        if (req.body.members){
+            req.body.members = undefined;
+        }
+
+        if (req.body.applications){
+            req.body.applications = undefined;
+        }
+
+        if (req.body.data){
+            req.body.data = undefined;
+        }
+
+        callback();
+    }
+
+    function checkParametersExistsForDelete(req, res, callback) {
+        if (!req.body || !req.body._id) {
+            Response.missing(res, '_id', -11);
         } else {
             return callback();
         }
@@ -77,7 +123,7 @@ module.exports = function (teamSchema) {
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
             (next) => {
-                if (!req.body.members){
+                if (!req.body.members) {
                     req.body.members = {};
                 }
 
@@ -103,8 +149,30 @@ module.exports = function (teamSchema) {
         });
     };
 
-    teamSchema.statics.exDelete = function(req, res){
-        if (!req.isLogged){
+    teamSchema.statics.exEdit = function (req, res) {
+        if (!req.isLogged()) {
+            return Response.notAllowed(res);
+        }
+
+        async.waterfall([
+            (next) => checkParametersExistsForEdit(req, res, next),
+            (next) => {
+                req.body.leaderId = req.user._id;
+                mongoose.model('Team').edit(req.body, next);
+            }
+        ], (err) => {
+            if (err && err.alreadySent) {
+                return;
+            } else if (err) {
+                return Response.editError(res, err);
+            }
+
+            return Response.success(res, 'Edit successful');
+        });
+    };
+
+    teamSchema.statics.exDelete = function (req, res) {
+        if (!req.isLogged) {
             return Response.notAllowed(res);
         }
 
@@ -115,9 +183,9 @@ module.exports = function (teamSchema) {
                 mongoose.model('Team').delete(req.body, next);
             }
         ], (err) => {
-            if (err && err.alreadySent){
+            if (err && err.alreadySent) {
                 return;
-            } else if (err){
+            } else if (err) {
                 return Response.deleteError(res, err);
             }
 
