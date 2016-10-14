@@ -35,7 +35,7 @@ router.post('/login', (req, res) => {
             }
 
             if (result === true){
-                let payload = {id: user._id};
+                let payload = {_id: user._id};
                 let token = jwt.encode(payload, process.env.JWT_SECRET);
 
                 return Response.success(res, 'Authentication successfull', {

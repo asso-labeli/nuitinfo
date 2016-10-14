@@ -18,7 +18,7 @@ module.exports = {
     },
 
     isLogged: function(req){
-        return req.user !== undefined;
+        return req.user !== undefined && req.user._id !== undefined;
     },
 
     logout: function(req){

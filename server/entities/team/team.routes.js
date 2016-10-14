@@ -6,6 +6,7 @@ let passport = require('passport');
 
 let router = express.Router();
 
-router.post('/add', Team.exCreate);
+router.post('/', Team.exCreate);
+router.delete('/', Team.exDelete);
 
 module.exports = router;
