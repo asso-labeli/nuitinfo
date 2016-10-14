@@ -11,6 +11,7 @@ module.exports = function (app, config) {
         require('../entities/' + file + '/' + file + '.model');
     }
 
+    app.use('/application', require('../entities/application/application.routes'));
     app.use('/user', require('../entities/user/user.routes'));
     app.use('/team', require('../entities/team/team.routes'));
 
