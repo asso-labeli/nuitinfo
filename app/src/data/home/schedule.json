@@ -1,0 +1,32 @@
+{
+  "title": "Planning de la Nuit",
+  "days": [
+    {
+      "title": "Vendredi 27 Novembre",
+      "date": "2016-11-27",
+      "events": [
+        {
+          "hour": "23:59",
+          "TZD": "+01:00",
+          "content": "<b>Clôture</b> des inscriptions des <b>participants</b>"
+        },
+        {
+          "hour": "23:59",
+          "TZD": "+01:00",
+          "content": "<b>Clôture</b> des inscriptions des <b>équipes</b>"
+        }
+      ]
+    },
+    {
+      "title": "Lundi 30 Novembre",
+      "date": "2016-11-30",
+      "events": [
+        {
+          "hour": "18:00",
+          "TZD": "+01:00",
+          "content": "<b>Clôture</b> des inscriptions des <b>participants</b> sur le <a href=\"http://nuitdelinfo.com/nuitinfo\">site officiel</a>"
+        }
+      ]
+    }
+  ]
+}
