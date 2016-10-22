@@ -20,6 +20,22 @@ const router = new VueRouter({
         component: require('./components/Login.vue'),
         name: 'login'
     }, {
+        path: '/register',
+        component: require('./components/Register.vue'),
+        name: 'register'
+    }, {
+        path: '/challenges',
+        component: require('./components/Challenges.vue'),
+        name: 'challenges'
+    }, {
+        path: '/mapping',
+        component: require('./components/Mapping.vue'),
+        name: 'mapping'
+    }, {
+        path: '/sponsorship',
+        component: require('./components/Sponsorship.vue'),
+        name: 'sponsorship'
+    }, {
         path: '*',
         component: require('./components/Lost.vue'),
         name: 'lost'
