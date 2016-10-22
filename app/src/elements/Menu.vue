@@ -23,11 +23,11 @@
                         Flux
                     </div>
                 </a>
-                <a href="/login" class="">
+                <router-link :to="{name: 'login'}" exact>
                     <div class="tab">
                         Connexion
                     </div>
-                </a>
+                </router-link>
             </nav>
             <nav id="smallmenu">
                 <a id="openMenu" href="#smallmenu"><i class="material-icons">menu</i></a>

@@ -16,6 +16,10 @@ const router = new VueRouter({
         component: require('./components/Help.vue'),
         name: 'help'
     }, {
+        path: '/login',
+        component: require('./components/Login.vue'),
+        name: 'login'
+    }, {
         path: '*',
         component: require('./components/Lost.vue'),
         name: 'lost'

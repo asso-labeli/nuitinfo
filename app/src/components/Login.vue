@@ -1,13 +1,12 @@
 <template>
-    <div id="lost">
-        <h1>Perdu ?</h1>
-        <a href="/">Retour à l'accueil</a>
+    <div id="login">
+        <h1>Connexion</h1>
     </div>
 </template>
 
 <style>
     @media screen and (min-width: 700px) {
-        #lost {
+        #login {
             padding: 10px;
             padding-bottom: 5vh;
             max-width: 1200px;
