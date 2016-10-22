@@ -1,8 +1,7 @@
 <template>
     <div id="app">
         <NuitInfoMenu></NuitInfoMenu>
-        <h1>{{ title }}</h1>
-
+        <router-view></router-view>
         <NuitInfoFooter></NuitInfoFooter>
     </div>
 </template>
@@ -69,6 +68,11 @@
         font-weight: 900;
     }
 
+    b {
+        color: #F4D700;
+        font-weight: 900;
+    }
+
     .title:before {
         content: '// ';
     }
@@ -127,4 +131,9 @@
             text-align: center;
         }
     }
+
+    .orange {
+        color: #FF9F00 !important;
+    }
+
 </style>

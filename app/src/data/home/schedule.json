@@ -1,32 +1,94 @@
 {
-  "title": "Planning de la Nuit",
-  "days": [
-    {
-      "title": "Vendredi 27 Novembre",
-      "date": "2016-11-27",
-      "events": [
+    "title": "Planning provisoire de la Nuit",
+    "days": [
         {
-          "hour": "23:59",
-          "TZD": "+01:00",
-          "content": "<b>Clôture</b> des inscriptions des <b>participants</b>"
+            "title": "Vendredi 25 Novembre",
+            "date": "2016-11-27",
+            "events": [
+                {
+                    "hour": "23:59",
+                    "TZD": "+01:00",
+                    "content": "<b>Clôture</b> des inscriptions des <b>participants</b>"
+                },
+                {
+                    "hour": "23:59",
+                    "TZD": "+01:00",
+                    "content": "<b>Clôture</b> des inscriptions des <b>équipes</b>"
+                }
+            ]
         },
         {
-          "hour": "23:59",
-          "TZD": "+01:00",
-          "content": "<b>Clôture</b> des inscriptions des <b>équipes</b>"
-        }
-      ]
-    },
-    {
-      "title": "Lundi 30 Novembre",
-      "date": "2016-11-30",
-      "events": [
+            "title": "Lundi 28 Novembre",
+            "date": "2016-11-30",
+            "events": [
+                {
+                    "hour": "18:00",
+                    "TZD": "+01:00",
+                    "content": "<b>Clôture</b> des inscriptions des <b>participants</b> sur le <a href=\"http://nuitdelinfo.com/nuitinfo\">site officiel</a>"
+                }
+            ]
+        },
         {
-          "hour": "18:00",
-          "TZD": "+01:00",
-          "content": "<b>Clôture</b> des inscriptions des <b>participants</b> sur le <a href=\"http://nuitdelinfo.com/nuitinfo\">site officiel</a>"
+            "title": "Jeudi 1er Décembre",
+            "date": "2016-12-01",
+            "events": [
+                {
+                    "hour": "16:00",
+                    "TZD": "+01:00",
+                    "content": "<b>Visioconférence</b> (Amphi Poincaré, bâtiment A22)"
+                },
+                {
+                    "hour": "16:30",
+                    "TZD": "+01:00",
+                    "content": "Présentation du <b>sujet</b> de la Nuit"
+                },
+                {
+                    "hour": "16:40",
+                    "TZD": "+01:00",
+                    "content": "<b>Début</b> officiel de la Nuit"
+                },
+                {
+                    "hour": "18:00",
+                    "TZD": "+01:00",
+                    "content": "<b>Ouverture</b> des salles du <b>CREMI</b> aux équipes de la Nuit"
+                },
+                {
+                    "hour": "20:00",
+                    "TZD": "+01:00",
+                    "content": "<b>Repas/Buffet</b>"
+                }
+            ]
+        },
+        {
+            "title": "Vendredi 2 Décembre",
+            "date": "2016-12-02",
+            "events": [
+                {
+                    "hour": "07:00",
+                    "TZD": "+01:00",
+                    "content": "<b>Petit déjeuner</b>"
+                },
+                {
+                    "hour": "07:50",
+                    "TZD": "+01:00",
+                    "content": "<b>Rendu</b> des défis sur le site <a href=\"http://nuitdelinfo.com/nuitinfo\">site officiel</a>"
+                },
+                {
+                    "hour": "08:00",
+                    "TZD": "+01:00",
+                    "content": "<b>Reprise</b> des <b>cours</b> dans les salles zzz et yyy"
+                },
+                {
+                    "hour": "08:02",
+                    "TZD": "+01:00",
+                    "content": "<b>Fin</b> de la Nuit"
+                },
+                {
+                    "hour": "16:30",
+                    "TZD": "+01:00",
+                    "content": "Diffusion des <b>résultats</b>"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

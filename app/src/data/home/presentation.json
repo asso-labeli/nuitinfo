@@ -1,1 +1,23 @@
-{}
+{
+    "paragraphs": [
+        {
+            "title": "Présentation de l'événement",
+            "content": [
+                "La <a href=\"http://www.nuitdelinfo.com/\" target=\"_blank\">Nuit de l'info</a> est un <b>concours national</b> qui se déroule chaque année en Décembre.",
+                "Centré autour du <b>web</b>, le concours propose aux étudiants de <b>programmer</b> et <b>designer</b> durant toute une nuit.",
+                "Des entreprises propose des <b>défis</b> aux étudiants autour d'une technologie, d'une méthode de travail ou d'un thème précis.",
+                "Les étudiants sont alors amenés à <b>créer des équipes</b> pour développer et travailler ensemble durant la nuit pour répondre à un ou plusieurs <b>défis</b>.",
+                "De nombreux <b>lots</b> sont à gagner suivant les défis.<br/>",
+                "À <b>Bordeaux</b>, cette nuit se déroule à l'<b>Université de Bordeaux</b>, Collège Sciences et Technologies, au campus de <b>Talence</b>, au <b>CREMI</b> (bâtiment A28).",
+                "<div id=\"map\"><iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1415.3442437508752!2d-0.5976352695683768!3d44.807536800928006!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa078e3c803322892!2sCREMI!5e0!3m2!1sfr!2sfr!4v1443796301602\" width=\"1100\" height=\"300\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe></div>",
+                "L'évènement est totalement <b>gratuit</b>."
+            ]
+        },
+        {
+            "title": "Présentation du site",
+            "content": [
+                "Ce site a été créé par <a href=\"http://labeli.org/\">Label[i]</a> pour permettre aux organisateurs d'améliorer au mieux la logistique lors de la <b>Nuit</b>."
+            ]
+        }
+    ]
+}

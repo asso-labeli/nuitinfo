@@ -1,0 +1,358 @@
+header {
+        /*background-color : rgba(0,0,0,0.5);*/
+        background-image: url('./assets/favicon.png');
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 60px;
+        min-height: 60px;
+}
+
+header a {
+        color: white;
+}
+
+header .content {
+        max-width: 100%;
+        text-align: right;
+        margin: auto;
+}
+
+header #goHome {
+        float: left;
+        display: inline-block;
+        height: 60px;
+        width: 64px;
+}
+
+nav#menu {
+        display: none;
+}
+
+nav#smallmenu {
+        margin: 0;
+}
+
+nav#smallmenu a#closeMenu {
+        display: none;
+}
+
+nav#smallmenu ul#submenu {
+        display: none;
+}
+
+nav#smallmenu:target ul#submenu {
+        display: block;
+}
+
+nav#smallmenu:target a#openMenu {
+        display: none;
+}
+
+nav#smallmenu:target a#closeMenu {
+        display: block;
+}
+
+#closeMenu .material-icons, #openMenu .material-icons {
+        font-size: 56px;
+}
+
+ul#submenu {
+        margin: 0;
+        text-align: center;
+        padding: 5px 20px 5px 20px;
+}
+
+ul#submenu li {
+        /*background-color: rgba(0,0,0,0.5);*/
+        display: block;
+        /*border: 2px solid rgba(0,0,0,0.75);*/
+        margin: 5px 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding: 3px;
+}
+
+ul#submenu li:before {
+        content: none;
+}
+
+footer {
+        padding: 1%;
+        /*background-color : rgba(0,0,0,0.5);*/
+        border-top: 2px solid rgba(0, 0, 0, 0.75);
+}
+
+footer .content {
+        max-width: 90%;
+        margin: auto;
+}
+
+footer .credits div:first-child {
+        margin-left: 25px;
+}
+
+footer .credits div {
+        text-align: center;
+        margin-right: 25px;
+        display: inline-block;
+}
+
+.radioTitle, .selectTitle {
+        display: inline-block;
+        margin-right: 10px;
+}
+
+h1 {
+        text-align: center;
+        margin: 25px 0px;
+}
+
+.responsive {
+        /*background-color : rgba(0,0,0,0.33);*/
+        padding: 10px;
+        max-width: 90%;
+        margin: 15px auto;
+        overflow: auto;
+}
+
+.loginForm {
+        text-align: center;
+}
+
+.title {
+        font-size: 150%;
+        margin: 0px 0px 10px 10px;
+}
+
+.date {
+        display: inline-block;
+        min-width: 25%;
+        font-size: 100%;
+        vertical-align: middle;
+}
+
+.register .button, .fluxRSS .button, .adminPanel .button {
+        display: block;
+        font-size: 200%;
+        width: 90%;
+        text-align: center;
+        padding: 10px;
+        margin: 10px auto;
+}
+
+.adminPanel .button {
+        font-size: 150%;
+        width: 95%;
+}
+
+.statistics .participants, .statistics .teams {
+        font-size: 140%;
+        text-align: center;
+        margin: 10px 0px;
+}
+
+textarea {
+        display: block;
+        margin-left: 15px;
+        padding: 5px;
+        width: 94%;
+        height: 10em;
+}
+
+div.questions p {
+        margin: 0 5px 10px 5px;
+        font-size: 0.95em;
+}
+
+.message {
+        font-size: 1em;
+        width: 90%;
+        margin: auto;
+        border: 1px #CCC solid;
+        border-top: none;
+        text-align: center;
+        padding: 10px;
+}
+
+.error {
+        color: #740000;
+        border: 1px #740000 solid;
+        border-top: none;
+}
+
+.valid {
+        color: #005D00;
+        border: 1px #005D00 solid;
+        border-top: none;
+}
+
+select#teamId {
+        display: inline;
+        margin-left: 20px;
+        font-size: 1em;
+}
+
+.teamsList div.team, .usersList div.user {
+        margin: 10px;
+}
+
+.teamsList div.team h4, .usersList div.user h4, div.info div.member h4 {
+        text-align: center;
+        margin-bottom: 5px;
+}
+
+.usersList div.user h4, div.info div.member h4 {
+        text-align: center;
+        text-transform: capitalize;
+}
+
+div.description, div.bio, div.application {
+        margin: 2px 2px 2px 10px;
+        font-size: 0.9em;
+}
+
+div.teamActions a {
+        margin: 0 20px;
+}
+
+.accept:before {
+        margin-right: 3px;
+        content: url('./assets/accept_icon.png');
+}
+
+.refuse:before {
+        margin-right: 3px;
+        content: url('./assets/refuse_icon.png');
+}
+
+.fluxRSS p {
+        font-size: 1em;
+}
+
+pre.lists {
+        word-wrap: break-word;
+}
+
+table {
+        border-collapse: collapse
+}
+
+tr {
+        border-bottom: 1px #CCC solid;
+}
+
+tr:last-child {
+        border: none;
+}
+
+.usersList table tbody {
+        font-size: 0.9em;
+}
+
+td.description, td.requests, td.bio {
+        padding: 5px;
+        font-size: 0.8em;
+}
+
+td.email, td.name {
+        text-align: center
+}
+
+.openedApplications, .closedApplications {
+        width: 10px;
+        border: none;
+        background-image: url('./assets/open.png');
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+}
+
+.closedApplications {
+        background-image: url('./assets/close.png');
+}
+
+#page.admin .usersList {
+        max-width: 1400px;
+}
+
+#page.admin .usersList td, #page.admin .usersList tr {
+        padding-left: 5px;
+}
+
+.twitterList {
+        max-height: 600px;
+        overflow: auto;
+}
+
+.twitterList nav {
+        display: table;
+        border-spacing: 10px 15px;
+}
+
+div.tweet {
+        display: table-row;
+        border-spacing: 0;
+}
+
+div.tweet div.twitterAvatar {
+        display: table-cell;
+        vertical-align: middle;
+}
+
+div.tweet div.twitterAvatar img {
+        display: table-column;
+        width: 24px;
+        height: 24px;
+}
+
+div.tweet div.tweetInfo {
+        display: table-cell;
+        vertical-align: top
+}
+
+div.tweet a.twitterUser {
+        display: inline-block;
+        font-size: 105%;
+}
+
+div.tweet div.tweetContent {
+        font-size: 95%;
+}
+
+div.tweet div.tweetDetails {
+        font-size: 80%;
+}
+
+div.tweet div.tweetDetails a {
+        margin-right: 5%;
+}
+
+#page.users .button {
+        margin-right: 3%;
+}
+
+#page.stats label {
+        display: block;
+}
+
+.iframe-responsive-wrapper {
+        position: relative;
+}
+
+.iframe-responsive-wrapper .iframe-ratio {
+        display: block;
+        width: auto;
+        height: 820px;
+}
+
+.iframe-responsive-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+}
+
+.register .links {
+        width: 100%;
+}
