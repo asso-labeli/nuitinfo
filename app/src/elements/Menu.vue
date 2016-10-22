@@ -8,24 +8,24 @@
                         Aide
                     </div>
                 </router-link>
-                <a href="/sponsors" class="">
+                <router-link :to="{name: 'sponsorship'}" exact>
                     <div class="tab">
                         Partenaires
                     </div>
-                </a>
-                <a href="/challenges" class="">
+                </router-link>
+                <router-link :to="{name: 'challenges'}" exact>
                     <div class="tab">
                         Défis
                     </div>
-                </a>
-                <a href="/flux" class="">
-                    <div class="tab">
-                        Flux
-                    </div>
-                </a>
+                </router-link>
                 <router-link :to="{name: 'login'}" exact>
                     <div class="tab">
                         Connexion
+                    </div>
+                </router-link>
+                <router-link :to="{name: 'register'}" exact>
+                    <div class="tab">
+                        Inscription
                     </div>
                 </router-link>
             </nav>
@@ -33,10 +33,21 @@
                 <a id="openMenu" href="#smallmenu"><i class="material-icons">menu</i></a>
                 <a id="closeMenu" href="#"><i class="material-icons">menu</i></a>
                 <ul id="submenu">
-                    <li><a href="/help">Help</a></li>
-                    <li><a href="/sponsors">Partenaires</a></li>
-                    <li><a href="/challenges">Défis</a></li>
-                    <li><a href="/flux">Flux</a></li>
+                    <li>
+                        <router-link :to="{name: 'help'}" exact>Aide</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'sponsorship'}" exact>Partenaires</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'challenges'}" exact>Défis</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'login'}" exact>Connexion</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'register'}" exact>Login</router-link>
+                    </li>
                     <li><a href="/login">Connexion</a></li>
                 </ul>
             </nav>
