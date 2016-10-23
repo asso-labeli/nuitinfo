@@ -37,7 +37,8 @@
                     <label for="birthday"><span class="special">Date de naissance :</span></label>
                 </div>
                 <div class="contentWrapper">
-                    <input id="birthday" type="date" v-model="user.birthday" required="required" placeholder="dd/mm/aaaa"
+                    <input id="birthday" type="date" v-model="user.birthday" required="required"
+                           placeholder="dd/mm/aaaa"
                            pattern="(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\d\d"/>
                 </div>
             </div>
@@ -91,12 +92,14 @@
             <h2 class="title">Engagements</h2>
 
             <div style="display:flex;flex-direction: row;">
-                <label for="cremiCharter">Je déclare avoir pris connaissance de la charte d'utilisation du CREMI et de la suivre : </label>
+                <label for="cremiCharter">Je déclare avoir pris connaissance de la charte d'utilisation du CREMI et de
+                    la suivre : </label>
                 <input type="checkbox" id="cremiCharter" v-model="user.cremiCharter"/>
             </div>
 
             <div style="display:flex;flex-direction: row;">
-                <label for="mailForRecruitment">J'accepte que mon e-mail soit communiqué à nos partenaires <b>uniquement</b> à des fins de recrutement : </label>
+                <label for="mailForRecruitment">J'accepte que mon e-mail soit communiqué à nos partenaires
+                    <b>uniquement</b> à des fins de recrutement : </label>
                 <input type="checkbox" id="mailForRecruitment" v-model="user.mailForRecruitment"/>
             </div>
 
@@ -129,6 +132,13 @@
                     cremiCharter: false
                 }
             };
+        },
+        register () {
+            this.$http.post('/routes/user/add', user).then((response) => {
+                console.log('Success');
+            }, (response) => {
+                console.log('Error');
+            })
         }
     };
 </script>
