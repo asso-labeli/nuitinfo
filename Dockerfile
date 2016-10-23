@@ -24,6 +24,9 @@ RUN wget http://hackjack.info/mongod.service && mv mongod.service /lib/systemd/s
 # Install Git
 RUN apt-get install git -y
 
+# Install Python 3
+RUN apt-get install python3 -y
+
 # Clone repo
 RUN cd /var/www && git clone https://github.com/asso-labeli/nuitinfo.git
 RUN cd /var/www/nuitinfo/ && npm i
