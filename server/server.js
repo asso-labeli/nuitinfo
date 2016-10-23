@@ -26,6 +26,8 @@ db.once('open', function() {
     console.log('Database connected');
 });
 
+app.use('/web', express.static('../app'));
+
 app.listen(8080, function() {
     console.log('Server listening on port 8080 !');
 });
