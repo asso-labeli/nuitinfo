@@ -7,7 +7,7 @@ let express = require('express'),
 let app = express();
 
 // Load process.env
-let envConf = require('./config/local.env.default.js');
+let envConf = require('./config/local.env.js');
 
 for (let key in envConf) {
     if (envConf.hasOwnProperty(key)){
