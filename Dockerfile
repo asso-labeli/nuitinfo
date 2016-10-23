@@ -26,7 +26,7 @@ RUN apt-get install git -y
 
 # Install Python 2.7
 RUN apt-get install python2.7 -y
-ENV python=python2.7
+ENV PYTHON python2.7
 
 # Install make
 RUN apt-get install build-essential -y
