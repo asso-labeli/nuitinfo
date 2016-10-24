@@ -26,6 +26,9 @@ RUN apt-get install build-essential -y
 # Install gcc
 RUN apt-get install gcc -y
 
+# Install PM2
+RUN npm install pm2 -g
+
 # Clone repo
 RUN cd /var/www && git clone https://github.com/asso-labeli/nuitinfo.git
 RUN cd /var/www/nuitinfo/ && npm i
@@ -43,4 +46,4 @@ ENV WEBSERVER_URL http://localhost:8080/web
 ENV JWT_SECRET bJC2rlw0IW7XcsV5pWrFvcAK86y9JMD4L8JLB75BBmFJ00heK6yXtXMPDglcrZhl
 ENV BCRYPT_SALT_ROUNDS 10
 
-CMD cd /var/www/nuitinfo && git pull && npm i && cd /var/www/nuitinfo/server/config/ && mv local.env.default.js local.env.js && cd /var/www/nuitinfo/app && npm i && npm run build && cd /var/www/nuitinfo && npm run start
+CMD cd /var/www/nuitinfo && git pull && npm i && npm run build && cd /var/www/nuitinfo/server/config/ && mv local.env.default.js local.env.js && cd /var/www/nuitinfo && npm run serve
