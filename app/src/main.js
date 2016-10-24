@@ -32,9 +32,9 @@ const router = new VueRouter({
         component: require('./pages/Mapping.vue'),
         name: 'mapping'
     }, {
-        path: '/sponsorship',
-        component: require('./pages/Sponsorship.vue'),
-        name: 'sponsorship'
+        path: '/organization',
+        component: require('./pages/Organization.vue'),
+        name: 'organization'
     }, {
         path: '*',
         component: require('./pages/Lost.vue'),
