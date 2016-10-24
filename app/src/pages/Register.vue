@@ -137,7 +137,7 @@
             submit() {
                 console.log(JSON.stringify(this.user));
                 /*
-                this.$http.post('/routes/user/add', JSON.stringify(this.user)).then((response) => {
+                this.$http.post('/api/user/add', JSON.stringify(this.user)).then((response) => {
                     console.log('Success');
                 }, (response) => {
                     console.log('Error');

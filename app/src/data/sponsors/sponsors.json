@@ -1,0 +1,67 @@
+{
+  "sponsors": [
+    {
+      "type": "Organisateurs",
+      "partners": [
+        {
+          "name": "Label[i]",
+          "logo": "",
+          "description": "",
+          "website": "http://labeli.org"
+        },
+        {
+          "name": "Abeii",
+          "logo": "",
+          "description": "",
+          "website": ""
+        },
+        {
+          "name": "UF Informatique",
+          "logo": "",
+          "description": "",
+          "website": "http://www.u-bordeaux.fr/Formation/Composantes-de-formation/College-Sciences-et-technologies/Unite-de-formation-d-informatique"
+        }
+      ]
+    },
+    {
+      "type": "Partenaires institutionnels",
+      "partners": [
+        {
+          "name": "CREMI",
+          "logo": "",
+          "description": "Centre de Ressources pour l'Enseignement des Mathématiques et de l'Informatique",
+          "website": "http://www.emi.u-bordeaux.fr"
+        },
+        {
+          "name": "LaBRI",
+          "logo": "",
+          "description": "Laboratoire Bordelais de Recherche Informatique",
+          "website": "http://www.labri.fr/"
+        },
+        {
+          "name": "FSDIE",
+          "logo": "",
+          "description": "Fonds de Solidarité et de Développement des Initiatives Étudiantes",
+          "website": "http://www.u-bordeaux.fr/Campus/Vie-associative/Projets-etudiants-FSDIE"
+        }
+      ]
+    },
+    {
+      "type": "Partenaires privés",
+      "partners": [
+        {
+          "name": "CGI",
+          "logo": "",
+          "description": "Cinquième plus importante entreprise indépendante de services en technologies de l'information et en gestion des processus d'affaires au monde.",
+          "website": "http://www.cgi-recrute.fr/"
+        },
+        {
+          "name": "OVH",
+          "logo": "",
+          "description": "Leader européen de l'hébergement web et du cloud.",
+          "website": "https://ovh.com/fr"
+        }
+      ]
+    }
+  ]
+}

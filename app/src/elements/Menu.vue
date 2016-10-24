@@ -8,9 +8,9 @@
                         Aide
                     </div>
                 </router-link>
-                <router-link :to="{name: 'sponsorship'}" exact>
+                <router-link :to="{name: 'organization'}" exact>
                     <div class="tab">
-                        Partenaires
+                        Organisation
                     </div>
                 </router-link>
                 <router-link :to="{name: 'challenges'}" exact>
@@ -37,7 +37,7 @@
                         <router-link :to="{name: 'help'}" exact>Aide</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name: 'sponsorship'}" exact>Partenaires</router-link>
+                        <router-link :to="{name: 'organization'}" exact>Organisation</router-link>
                     </li>
                     <li>
                         <router-link :to="{name: 'challenges'}" exact>Défis</router-link>
@@ -48,7 +48,6 @@
                     <li>
                         <router-link :to="{name: 'register'}" exact>Login</router-link>
                     </li>
-                    <li><a href="/login">Connexion</a></li>
                 </ul>
             </nav>
         </div>
