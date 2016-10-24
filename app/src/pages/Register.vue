@@ -1,7 +1,7 @@
 <template>
     <div id="register">
         <h1>Enregistrement</h1>
-        <form method="POST" action="/user" class="userForm">
+        <form v-on:submit.prevent="submit" class="userForm">
             <input type="hidden" name="post" value="post"/>
 
             <h2 class="title" style="padding-top: 0">Informations personnelles</h2>
@@ -133,12 +133,17 @@
                 }
             };
         },
-        register () {
-            this.$http.post('/routes/user/add', user).then((response) => {
-                console.log('Success');
-            }, (response) => {
-                console.log('Error');
-            })
+        methods: {
+            submit() {
+                console.log(JSON.stringify(this.user));
+                /*
+                this.$http.post('/routes/user/add', JSON.stringify(this.user)).then((response) => {
+                    console.log('Success');
+                }, (response) => {
+                    console.log('Error');
+                });
+                */
+            }
         }
     };
 </script>
