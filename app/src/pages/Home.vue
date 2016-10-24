@@ -19,8 +19,39 @@
                     <span class="details" v-html="event.content"></span>
                 </div>
             </div>
-
         </div>
+
+        <div class="register">
+            <div class="links">
+                <div class="big special">
+                    <span>goto </span>
+                    <router-link :to="{name: 'help'}">Guide &amp; Aide<span class="special">;</span></router-link>
+                </div>
+                <div class="big special">
+                    <span>goto </span>
+                    <router-link :to="{name: 'register'}">S'inscrire<span class="special">;</span></router-link>
+                </div>
+                <div class="big special">
+                    <span>goto </span>
+                    <router-link :to="{name: 'recovery'}">Perte de votre compte<span class="special">;</span>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+
+        <div class="statistics">
+            <h2 class="title"><a href="/stats">Statistiques</a></h2>
+            <div class="flexbox flexbox-wrap flexbox-center">
+                <div class="participants">{ <a href="#"><span>participants : <span
+                        class="integer">{{ users }}</span></span></a>
+                    ,
+                </div>
+                <div class="teams">&nbsp;<a href="#"><span>teams :  <span class="integer">{{ teams }}</span></span></a>
+                    }
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -30,7 +61,9 @@
             return {
                 title: "Planning de la Nuit",
                 paragraphs: [],
-                days: []
+                days: [],
+                users: 0,
+                teams: 0
             };
         },
         mounted () {
@@ -49,6 +82,14 @@
             }, (response) => {
 
             });
+            /*
+                        this.$http.get('/api/statistics/users').then((response) => {
+                            response.json().then((data) => {
+                                this.users = data.value;
+                            })
+                        }, (response) => {
+                        });
+                        */
         }
     };
 </script>

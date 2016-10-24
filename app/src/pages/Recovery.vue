@@ -1,20 +1,14 @@
 <template>
-    <div id="login">
-        <h1>Connexion</h1>
-        <form v-on:submit.prevent="login">
+    <div id="recovery">
+        <h1>Récupération</h1>
+        <form v-on:submit.prevent="recovery">
             <div>
-                <label for="login">Adresse e-mail :</label>
-                <input type="email" id="login" v-model="user.login"/>
-            </div>
-
-            <div>
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" v-model="user.password"/>
+                <label for="email">Adresse e-mail :</label>
+                <input type="email" id="email" v-model="email"/>
             </div>
 
             <div class="actions">
                 <router-link class="special" :to="{name: 'home'}">back();</router-link>
-                <router-link class="special" :to="{name: 'recovery'}">lost(myAccount);</router-link>
                 <input type="submit" class="special" value="submit(this);"/>
             </div>
         </form>
@@ -25,17 +19,14 @@
     export default {
         data () {
             return {
-                user: {
-                    login: "",
-                    password: ""
-                }
+                email: ""
             };
         },
         methods: {
             login() {
-                console.log(JSON.stringify(this.user));
+                console.log(JSON.stringify(this.email));
                 /*
-                this.$http.post('/api/user/login', JSON.stringify(this.user)).then((response) => {
+                this.$http.post('/api/user/recovery', JSON.stringify(this.email)).then((response) => {
                     console.log('Success');
                 }, (response) => {
                     console.log('Error');
@@ -48,7 +39,7 @@
 
 <style>
     @media screen and (min-width: 700px) {
-        #login {
+        #recovery {
             padding: 10px;
             padding-bottom: 5vh;
             max-width: 1200px;
