@@ -69,6 +69,19 @@ module.exports = function (userSchema) {
         });
     };
 
+    userSchema.statics.changeTeam = function(params, callback){
+        mongoose.model('User').update(
+            {_id: params.user._id},
+            {team: params.team._id},
+            (err) => {
+                if (err) {
+                    return callback(err);
+                }
+
+                callback();
+            });
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {

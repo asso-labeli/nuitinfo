@@ -77,6 +77,19 @@ module.exports = function (teamSchema) {
             }]
         }, callback);
     };
+    
+    teamSchema.statics.addUser = function(params, callback){
+        mongoose.model('Team').update(
+            {_id: params.team._id},
+            {$push: { 'members.list' : params.team._id}},
+            (err) => {
+                if (err) {
+                    return callback(err);
+                }
+
+                callback();
+            });
+    };
 
     /* Express methods verifications */
 
@@ -151,18 +164,11 @@ module.exports = function (teamSchema) {
                 mongoose.model('Team').create(req.body, next);
             },
             // Add team to user
-            (team, entryCreated, next) => mongoose.model('User').update(
-                {_id: req.user._id},
-                {team: team._id},
-                (err) => {
-
-                    console.log(team, next);
-                    if (err) {
-                        return next(err);
-                    }
-
-                    next(null, team);
-                })
+            (team, entryCreated, next) =>
+                mongoose.model('User').changeTeam({
+                    user: req.user,
+                    team: team
+                }, (err) => next(err, team))
         ], (err, team) => {
             if (err && err.alreadySent) {
                 return;
