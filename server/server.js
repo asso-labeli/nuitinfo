@@ -23,7 +23,7 @@ mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' +
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-    console.log('Database connected');
+    console.log('Database connected on', process.env.MONGO_DB);
 });
 
 app.listen(8080, function() {

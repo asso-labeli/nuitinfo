@@ -2,6 +2,8 @@
 
 ## Routes
 
+All these routes are available from `/api/`.
+
 ### User
 
 Route | Description | Authentication
@@ -21,3 +23,4 @@ Route | Description | Authentication
 Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /application/fromUser | Add a new application from a user | Yes
+**POST** /application/fromTeam | Add a new application from a team | Yes

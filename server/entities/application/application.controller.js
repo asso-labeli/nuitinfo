@@ -83,4 +83,51 @@ module.exports = function (applicationSchema) {
         });
     };
 
+    applicationSchema.statics.exCreateFromTeam = function(req, res){
+        if (!req.isLogged()){
+            return Response.notAllowed(res);
+        }
+
+        req.body.fromTeam = true;
+        req.body.fromUser = undefined;
+
+        async.waterfall([
+            // Search team with logged user as owner
+            (next) => mongoose.model('Team').findOne({'members.leader': req.user._id}, next),
+            (team, next) => {
+                if (team && team._id) {
+                    req.body.team = team;
+                    return next();
+                }
+
+                next('No team with connected user as owner found');
+            },
+            // Check parameters
+            (next) => checkParametersForCreate(req, res, next),
+            // Search existing application between this team and this user
+            (next) => mongoose.model('Application').findOne({
+                user: req.body.user,
+                team: req.body.team
+            }, next),
+            (application, next) => {
+                if (!application || !application._id){
+                    return next();
+                }
+
+                next('Application already exists between this user and this team');
+            },
+            // Create new application
+            (next) => mongoose.model('Application').create(req.body, next)
+        ], (err, application) => {
+            if (err && err.alreadySent){
+                return;
+            }
+
+            if (err) {
+                return Response.insertError(res, err);
+            }
+
+            Response.success(res, 'Application added', application);
+        });
+    };
 };
