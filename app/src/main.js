@@ -36,11 +36,16 @@ const router = new VueRouter({
         component: require('./pages/Organization.vue'),
         name: 'organization'
     }, {
+        path: '/recovery',
+        component: require('./pages/Recovery.vue'),
+        name: 'recovery'
+    }, {
         path: '*',
         component: require('./pages/Lost.vue'),
         name: 'lost'
     }]
 });
+
 
 new Vue({
     el: '#app',

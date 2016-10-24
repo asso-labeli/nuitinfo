@@ -1,7 +1,7 @@
 <template>
     <div id="register">
         <h1>Enregistrement</h1>
-        <form v-on:submit.prevent="submit" class="userForm">
+        <form v-on:submit.prevent="register" class="userForm">
             <input type="hidden" name="post" value="post"/>
 
             <h2 class="title" style="padding-top: 0">Informations personnelles</h2>
@@ -105,7 +105,7 @@
 
 
             <div class="actions">
-                <a class="special" href="/home">back();</a>
+                <router-link class="special" :to="{name: 'home'}">back();</router-link>
                 <input type="submit" class="special" value="submit(this);"/>
             </div>
         </form>
@@ -134,7 +134,7 @@
             };
         },
         methods: {
-            submit() {
+            register() {
                 console.log(JSON.stringify(this.user));
                 /*
                 this.$http.post('/api/user/add', JSON.stringify(this.user)).then((response) => {
