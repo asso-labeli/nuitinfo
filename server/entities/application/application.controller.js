@@ -15,6 +15,35 @@ module.exports = function (applicationSchema) {
 
         application.save(callback);
     };
+
+    applicationSchema.statics.accept = function(params, callback){
+        async.waterfall([
+            (next) => mongoose.model('Application').findById(params.application, next),
+            (application, next) => {
+                if (application && application._id){
+                    if (application.user.equals(params.user)) {
+                        return next(undefined, application);
+                    } else {
+                        return next('Application\'s user isn\'t the same than logged user');
+                    }
+                }
+
+                next('Application not found');
+            },
+            (application, next) => async.parallel([
+                (finished) => mongoose.model('User').changeTeam({
+                    user: {_id : application.user},
+                    team: {_id : application.team}
+                }, finished),
+                (finished) => mongoose.model('Team').addUser({
+                    user: {_id : application.user},
+                    team: {_id: application.team}
+                }, finished)
+            ], (err) => next(err, application)),
+            (application, next) =>
+                mongoose.model('Application').remove({_id: application._id}, next)
+        ], callback);
+    };
     
     /* Express methods verifications */
     
@@ -25,6 +54,16 @@ module.exports = function (applicationSchema) {
             Response.missing(res, 'team', -12);
         } else if (!req.body.fromUser && !req.body.fromTeam){
             Response.missing(res, 'fromUser || fromTeam', -13);
+        } else {
+            return callback();
+        }
+
+        callback({alreadySent: true});
+    }
+
+    function checkParametersForAccept(req, res, callback){
+        if (!req.body || !req.body.application){
+            Response.missing(res, 'application', -11);
         } else {
             return callback();
         }
@@ -128,6 +167,30 @@ module.exports = function (applicationSchema) {
             }
 
             Response.success(res, 'Application added', application);
+        });
+    };
+
+    applicationSchema.statics.exAccept = function(req, res) {
+        if (!req.isLogged()){
+            return Response.notAllowed(res);
+        }
+
+        async.waterfall([
+            (next) => checkParametersForAccept(req, res, next),
+            (next) => mongoose.model('Application').accept({
+                application: req.body.application,
+                user: req.user._id
+            }, next)
+        ], (err) => {
+            if (err && err.alreadySent){
+                return;
+            }
+
+            if (err) {
+                return Response.deleteError(res, err);
+            }
+
+            Response.success(res, 'Application accepted');
         });
     };
 };
