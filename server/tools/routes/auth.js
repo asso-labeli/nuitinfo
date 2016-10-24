@@ -1,7 +1,5 @@
 'use strict';
 
-'use strict';
-
 let express = require('express');
 let passport = require('passport');
 let mongoose = require('mongoose');

@@ -16,6 +16,7 @@ module.exports = function (app, config) {
     app.use('/api/team', require('../entities/team/team.routes'));
 
     app.use('/api/', require('../tools/routes/auth'));
+    app.use('/api/statistics', require('../tools/routes/statistics'));
 
     // All api/something go on 404 error if not found
     app.route('/:url(api)/*').get(Errors[404]);

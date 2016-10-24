@@ -24,3 +24,9 @@ Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /application/fromUser | Add a new application from a user | Yes
 **POST** /application/fromTeam | Add a new application from a team | Yes
+
+### Statistics
+
+Route | Description | Authentication
+----- | ----------- | --------------
+**GET** /statistics/users | Get numbers of users | No
