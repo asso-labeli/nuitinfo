@@ -68,7 +68,7 @@ router.post('/passwordRecovery', (req, res) => {
                     alreadySent: true
                 });
             }
-            
+
             PassTools.hashPassword(
                 user.email + Date.now() + Math.random(),
                 (err, recoveryToken) => next(err, user, recoveryToken));
@@ -92,6 +92,41 @@ router.post('/passwordRecovery', (req, res) => {
         }
 
         Response.success(res, 'Mail sent');
+    });
+});
+
+router.post('/recovery/:token', (req, res) => {
+    if (!req.body || !req.body.password){
+        return Response.missing(res, 'password', -11);
+    }
+
+    async.waterfall([
+        (next) => mongoose.model('User').findOne({passwordRecoveryToken: req.params.token}, next),
+        (user, next) => {
+            if (!user) {
+                Response.notFound(res, 'token');
+                return next({
+                    alreadySent: true
+                });
+            }
+
+            PassTools.hashPassword(req.body.password, (err, password) =>
+                next(err, user, password));
+        },
+        (user, password, next) => {
+            user.password = password;
+            user.passwordRecoveryToken = undefined;
+
+            user.save(next);
+        }
+    ], (err, user) => {
+        if (err && err.alreadySent){
+            return;
+        } else if (err) {
+            return Response.selectError(res, err);
+        }
+
+        Response.success(res, 'Password changed', user);
     });
 });
 

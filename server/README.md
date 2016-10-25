@@ -10,6 +10,7 @@ Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /login | Log an user | No
 **POST** /passwordRecovery | Get a recovery password mail | No
+**POST** /recovery/:token | Send a password change | No
 
 ### User
 
