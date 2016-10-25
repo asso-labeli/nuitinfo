@@ -4,11 +4,20 @@
 
 All these routes are available from `/api/`.
 
+### Authentication
+
+Route | Description | Authentication
+----- | ----------- | --------------
+**POST** /login | Log an user | No
+**POST** /passwordRecovery | Get a recovery password mail | No
+**POST** /recovery/:token | Send a password change | No
+
 ### User
 
 Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /user | Add a new user | No
+**PUT** /user | Edit logged user | Yes
 
 ### Team
 

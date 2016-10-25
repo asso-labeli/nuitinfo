@@ -26,6 +26,9 @@ let userSchema = new Schema({
         type: String,
         required: true
     },
+    biography: {
+        type: String
+    },
     birthday: {
         type: Date
     },
@@ -64,6 +67,9 @@ let userSchema = new Schema({
     team : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
+    },
+    passwordRecoveryToken : {
+        type: String
     },
     data : mongoose.Schema.Types.Mixed
 });

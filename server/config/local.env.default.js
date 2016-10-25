@@ -7,9 +7,11 @@ module.exports = {
     MONGO_PORT: process.env.MONGO_PORT || 27017,
     MONGO_DB: process.env.MONGO_DB || 'nuitinfo',
 
-    MAIL_SERVICE: process.env.MAIL_SERVICE || 'custom',
     MAIL_ADDRESS: process.env.MAIL_ADDRESS || 'email@default.com',
     MAIL_PASSWORD: process.env.MAIL_PASSWORD || 'password',
+    MAIL_HOST : process.env.MAIL_HOST || 'some-address.smtp.net',
+    MAIL_PORT : process.env.MAIL_PORT || 777,
+    MAIL_SECURE : process.env.MAIL_SECURE || true,
 
     API_URL: process.env.API_URL || 'http://localhost:8080',
     WEBSERVER_URL: process.env.WEBSERVER_URL || 'http://localhost:8080',
