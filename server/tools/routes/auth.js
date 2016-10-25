@@ -14,13 +14,13 @@ let router = express.Router();
 require('../../config/passsport').configure(passport);
 
 router.post('/login', (req, res) => {
-    if(!req.body || !req.body.login){
+    if(!req.body || !req.body.email){
         return Response.missing(res, 'login', -11);
     } else if (!req.body.password){
         return Response.missing(res, 'password', -12);
     }
 
-    mongoose.model('User').findOne({login: req.body.login}, function(err, user){
+    mongoose.model('User').findOne({email: req.body.email}, function(err, user){
         if (err){
             return Response.authenticationFailed(res, 'Error', err);
         }
@@ -41,7 +41,7 @@ router.post('/login', (req, res) => {
                 return Response.success(res, 'Authentication successfull', {
                     token: token
                 });
-            }else {
+            } else {
                 return Response.authenticationFailed(res, 'Error : Bad' +
                     ' password');
             }
