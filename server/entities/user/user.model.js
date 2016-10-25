@@ -26,6 +26,9 @@ let userSchema = new Schema({
         type: String,
         required: true
     },
+    biography: {
+        type: String
+    },
     birthday: {
         type: Date
     },
