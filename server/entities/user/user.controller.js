@@ -5,6 +5,30 @@ let mongoose = require('mongoose');
 let async = require('async');
 let PassTools = require('../../tools/passTools');
 
+const editableFields = {
+    lastName: true,
+    firstName: true,
+    email: true,
+    biography: true,
+    birthday: true,
+    school: {
+        institution : true,
+        studyYear: true,
+        pathway: true
+    },
+    material: {
+        hasMaterial: true,
+        isDesktop: true,
+        hasWifi: true
+    },
+    mailForRecruitment: true,
+    cremiAccount: {
+        needed: true,
+        studentNumber: true,
+        studentMail: true
+    }
+};
+
 module.exports = function (userSchema) {
 
     /* Tool methods */
@@ -52,6 +76,24 @@ module.exports = function (userSchema) {
         );
     };
 
+    function recursiveEdit(parametersObject, newParams, user){
+        for (let key in parametersObject){
+            if (!parametersObject.hasOwnProperty(key)){
+                continue;
+            }
+
+            if (parametersObject[key] instanceof Object && newParams[key]){
+                recursiveEdit(parametersObject[key], newParams[key], user[key]);
+            } else if (newParams[key]) {
+                user[key] = newParams[key];
+            }
+        }
+    }
+
+    function editUserParameters(params, user){
+        recursiveEdit(editableFields, params, user);
+    }
+
     /* Controllers methods */
 
     userSchema.statics.create = function (params, callback) {
@@ -67,6 +109,21 @@ module.exports = function (userSchema) {
 
             user.save(callback);
         });
+    };
+
+    userSchema.statics.edit = function(params, callback){
+        async.waterfall([
+            (next) => mongoose.model('User').findById(params.user, next),
+            (user, next) => {
+                if (!user) {
+                    callback('User not found');
+                }
+
+                editUserParameters(params, user);
+
+                user.save(next);
+            }
+        ], callback);
     };
 
     userSchema.statics.changeTeam = function(params, callback){
@@ -117,7 +174,6 @@ module.exports = function (userSchema) {
     /* Express calls */
 
     userSchema.statics.exCreate = function (req, res) {
-        console.log(req.user);
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
             (next) => mongoose.model('User').create(req.body, next)
@@ -133,6 +189,22 @@ module.exports = function (userSchema) {
             }
 
             return Response.success(res, 'User added', user);
+        });
+    };
+
+    userSchema.statics.exEdit = function (req, res) {
+        if (!req.isLogged()) {
+            return Response.notAllowed(res);
+        }
+
+        req.body.user = req.user._id;
+
+        mongoose.model('User').edit(req.body, (err, user) => {
+            if (err) {
+                return Response.selectError(res, err);
+            }
+
+            Response.success(res, 'User edited', user);
         });
     };
 };

@@ -17,6 +17,7 @@ Route | Description | Authentication
 Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /user | Add a new user | No
+**PUT** /user | Edit logged user | Yes
 
 ### Team
 
