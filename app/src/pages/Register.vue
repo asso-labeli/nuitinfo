@@ -58,7 +58,7 @@
                     <label for="bio"><span class="special">Biographie :</span></label>
                 </div>
                 <div class="contentWrapper">
-                    <textarea id="bio" v-model="user.bio"></textarea>
+                    <textarea id="bio" v-model="user.biographyw"></textarea>
                 </div>
             </div>
 
@@ -133,12 +133,12 @@
         data () {
             return {
                 user: {
-                    email: 'default@email.com',
-                    username: 'login',
-                    password: 'password',
-                    firstName: 'John',
-                    lastName: 'Snow',
-                    birthday: '1970-01-01',
+                    email: '',
+                    password: '',
+                    firstName: '',
+                    lastName: '',
+                    birthday: '',
+                    biography: '',
                     material: {
                         hasMaterial: true,
                         isDesktop: false,
@@ -157,13 +157,12 @@
         methods: {
             register() {
                 console.log(JSON.stringify(this.user));
-                /*
-                this.$http.post('/api/user/add', JSON.stringify(this.user)).then((response) => {
+
+                this.$http.post('/api/user', JSON.stringify(this.user)).then((response) => {
                     console.log('Success');
                 }, (response) => {
                     console.log('Error');
                 });
-                */
             }
         }
     };
