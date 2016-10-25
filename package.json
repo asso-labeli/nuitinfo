@@ -1,39 +1,40 @@
 {
-    "name": "nuitinfo",
-    "version": "1.0.0",
-    "description": "0.0.1",
-    "main": "server/server.js",
-    "scripts": {
-        "start": "node ./server/server.js",
-        "serve": "pm2 start ./server/server.js --no-daemon",
-        "build": "cd app && npm i && npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/asso-labeli/nuitinfo.git"
-    },
-    "keywords": [
-        "nuitinfo"
-    ],
-    "author": "HackJack - Florian Kauder <florian@kauder.fr>",
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/asso-labeli/nuitinfo/issues"
-    },
-    "homepage": "https://github.com/asso-labeli/nuitinfo#readme",
-    "dependencies": {
-        "async": "^2.0.1",
-        "bcrypt": "^0.8.7",
-        "bcryptjs": "^2.3.0",
-        "body-parser": "^1.15.2",
-        "compression": "^1.6.2",
-        "express": "^4.14.0",
-        "jwt-simple": "^0.5.0",
-        "mongoose": "^4.6.3",
-        "passport": "^0.3.2",
-        "passport-jwt": "^2.1.0",
-        "serve-favicon": "^2.3.0",
-        "vue": "^2.0.1",
-        "vue-router": "^2.0.0-rc.7"
-    }
+  "name": "nuitinfo",
+  "version": "1.0.0",
+  "description": "0.0.1",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node ./server/server.js",
+    "serve": "pm2 start ./server/server.js --no-daemon",
+    "build": "cd app && npm i && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asso-labeli/nuitinfo.git"
+  },
+  "keywords": [
+    "nuitinfo"
+  ],
+  "author": "HackJack - Florian Kauder <florian@kauder.fr>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/asso-labeli/nuitinfo/issues"
+  },
+  "homepage": "https://github.com/asso-labeli/nuitinfo#readme",
+  "dependencies": {
+    "async": "^2.0.1",
+    "bcrypt": "^0.8.7",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "jwt-simple": "^0.5.0",
+    "mongoose": "^4.6.3",
+    "nodemailer": "^2.6.4",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.1.0",
+    "serve-favicon": "^2.3.0",
+    "vue": "^2.0.1",
+    "vue-router": "^2.0.0-rc.7"
+  }
 }

@@ -65,6 +65,9 @@ let userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
     },
+    passwordRecoveryToken : {
+        type: String
+    },
     data : mongoose.Schema.Types.Mixed
 });
 

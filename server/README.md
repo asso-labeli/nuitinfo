@@ -4,6 +4,13 @@
 
 All these routes are available from `/api/`.
 
+### Authentication
+
+Route | Description | Authentication
+----- | ----------- | --------------
+**POST** /login | Log an user | No
+**POST** /passwordRecovery | Get a recovery password mail | No
+
 ### User
 
 Route | Description | Authentication
