@@ -147,6 +147,14 @@ module.exports = function (userSchema) {
             .exec(callback);
     };
 
+    userSchema.statics.getAll = function (params, callback){
+        mongoose.model('User')
+            .find()
+            .select('firstName lastName school team biography')
+            .populate('team')
+            .exec(callback);
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {
@@ -227,6 +235,20 @@ module.exports = function (userSchema) {
             }
 
             Response.success(res, 'User found', user);
+        });
+    };
+
+    userSchema.statics.exGetAll = function (req, res) {
+        mongoose.model('User').getAll({}, (err, users) => {
+            if (err) {
+                return Response.selectError(err);
+            }
+
+            if (!users || users.length === 0){
+                return Response.resourceNotFound(res, 'users');
+            }
+
+            Response.success(res, 'Users found', users);
         });
     };
 };
