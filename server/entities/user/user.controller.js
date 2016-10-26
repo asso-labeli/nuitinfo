@@ -139,6 +139,14 @@ module.exports = function (userSchema) {
             });
     };
 
+    userSchema.statics.getById = function(params, callback){
+        mongoose.model('User')
+            .findById(params.id)
+            .select('firstName lastName school team biography')
+            .populate('team')
+            .exec(callback);
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {
@@ -205,6 +213,20 @@ module.exports = function (userSchema) {
             }
 
             Response.success(res, 'User edited', user);
+        });
+    };
+
+    userSchema.statics.exGet = function (req, res) {
+        mongoose.model('User').getById(req.params, (err, user) => {
+            if (err) {
+                return Response.selectError(err);
+            }
+
+            if (!user) {
+                return Response.resourceNotFound(res, 'user');
+            }
+
+            Response.success(res, 'User found', user);
         });
     };
 };
