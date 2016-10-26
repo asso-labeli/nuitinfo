@@ -10,7 +10,7 @@
                     <label for="email"><span class="special">Adresse e-mail :</span></label>
                 </div>
                 <div class="contentWrapper">
-                    <input id="email" type="email" v-model="user.password" required="required"/>
+                    <input id="email" type="email" v-model="user.email" required="required"/>
                 </div>
             </div>
 
