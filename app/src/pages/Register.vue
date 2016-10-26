@@ -58,7 +58,7 @@
                     <label for="bio"><span class="special">Biographie :</span></label>
                 </div>
                 <div class="contentWrapper">
-                    <textarea id="bio" v-model="user.biographyw"></textarea>
+                    <textarea id="bio" v-model="user.biography"></textarea>
                 </div>
             </div>
 
@@ -85,7 +85,7 @@
                 <input type="checkbox" id="cremiOwner" v-model="cremiOwner"/>
             </div>
 
-            <div v-if="!user.cremiAccount.needed">
+            <div v-if="!cremiOwner">
                 <div class="formField">
                     <div class="labelWrapper">
                         <label for="studentNumber"><span class="special">Numéro étudiant :</span></label>
@@ -146,7 +146,6 @@
                         hasWiFi: true,
                     },
                     cremiAccount: {
-                        needed: !this.cremiOwner,
                         studentNumber: null,
                         studentMail: "",
                         charter: false
@@ -157,6 +156,7 @@
         },
         methods: {
             register() {
+                this.user.cremiAccount.needed = !this.cremiOwner;
                 console.log(JSON.stringify(this.user));
 
                 this.$http.post('/api/user', JSON.stringify(this.user)).then((response) => {
