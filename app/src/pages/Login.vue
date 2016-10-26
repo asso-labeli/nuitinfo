@@ -4,7 +4,7 @@
         <form v-on:submit.prevent="login">
             <div>
                 <label for="login">Adresse e-mail :</label>
-                <input type="email" id="login" v-model="user.login"/>
+                <input type="email" id="email" v-model="user.email"/>
             </div>
 
             <div>
@@ -26,7 +26,7 @@
         data () {
             return {
                 user: {
-                    login: "",
+                    email: "",
                     password: ""
                 }
             };
@@ -34,13 +34,13 @@
         methods: {
             login() {
                 console.log(JSON.stringify(this.user));
-                /*
-                this.$http.post('/api/user/login', JSON.stringify(this.user)).then((response) => {
-                    console.log('Success');
+
+                this.$http.post('/api/login', JSON.stringify(this.user)).then((response) => {
+                    this.$route.router.go({name: 'home'});
                 }, (response) => {
                     console.log('Error');
+                    console.log(response);
                 });
-                */
             }
         }
     };
