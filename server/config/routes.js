@@ -25,5 +25,7 @@ module.exports = function (app, config) {
     app.route('/api/*').get(Errors[404]);
 
     // Default route
+    app.use('/dist', express.static(config.root + '/../app/dist'));
+    app.use('/src', express.static(config.root + '/../app/src'));
     app.use('/*', express.static(config.root + '/../app'));
 };

@@ -16,7 +16,6 @@ module.exports = function (app, config) {
     app.use(bodyParser.json());
 
     app.use(compression());
-    app.use(express.static(config.root + '/public'));
 
     app.use(passport.initialize());
 
