@@ -44,8 +44,5 @@ module.exports = function (app, config) {
         next();
     });
 
-    app.use('/', express.static(config.root + '/../app'));
-    app.use('/lib', express.static(config.root + '/../node_modules'));
-
     require('./routes')(app, config);
 };
