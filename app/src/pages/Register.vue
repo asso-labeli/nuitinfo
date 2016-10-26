@@ -7,19 +7,19 @@
             <h2 class="title" style="padding-top: 0">Informations de connexion</h2>
             <div class="formField">
                 <div class="labelWrapper">
-                    <label for="email"><span class="special">Email :</span></label>
+                    <label for="email"><span class="special">Adresse e-mail :</span></label>
                 </div>
                 <div class="contentWrapper">
-                    <input id="email" type="email" v-model="user.email" required="required"/>
+                    <input id="email" type="email" v-model="user.password" required="required"/>
                 </div>
             </div>
 
             <div class="formField">
                 <div class="labelWrapper">
-                    <label for="email"><span class="special">Mot de passe :</span></label>
+                    <label for="pass"><span class="special">Mot de passe :</span></label>
                 </div>
                 <div class="contentWrapper">
-                    <input id="email" type="email" v-model="user.password" required="required"/>
+                    <input id="password" type="password" v-model="user.password" required="required"/>
                 </div>
             </div>
 
