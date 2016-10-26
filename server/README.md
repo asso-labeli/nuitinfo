@@ -41,3 +41,4 @@ Route | Description | Authentication
 Route | Description | Authentication
 ----- | ----------- | --------------
 **GET** /statistics/users | Get numbers of users | No
+**GET** /statistics/teams| Get numbers of teams | No
