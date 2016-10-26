@@ -15,7 +15,7 @@ router.get('/users', (req, res) => {
             return Response.selectError(res, err);
         }
         if (!result[0] || !result[0].users){
-            return Response.notFound(res, 'users');
+            return Response.resourceNotFound(res, 'users');
         }
 
         Response.success(res, 'Statistics of users', {
@@ -33,7 +33,7 @@ router.get('/teams', (req, res) => {
         }
 
         if (!result[0] || !result[0].teams){
-            return Response.notFound(res, 'teams');
+            return Response.resourceNotFound(res, 'teams');
         }
 
         Response.success(res, 'Statistics of teams', {

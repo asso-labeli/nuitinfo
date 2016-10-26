@@ -19,6 +19,7 @@ let codes = {
   invalidParameter: -32,
   surveyClosed: -41,
   tooManyItems: -42,
+  resourceNotFound: -43,
   authenticationFailed: -51
 };
 
@@ -199,6 +200,14 @@ function authenticationFailed(res, message, data){
   });
 }
 
+function resourceNotFound(res, resource){
+  sendResponse(res, 204, {
+    message: 'No ' + resource + ' available',
+    data: null,
+    success: codes.resourceNotFound
+  });
+}
+
 module.exports = formatResponse;
 module.exports.success = success;
 module.exports.notLogged = notLogged;
@@ -220,5 +229,6 @@ module.exports.serverError = serverError;
 module.exports.surveyClosed = surveyClosed;
 module.exports.tooManyItems = tooManyItems;
 module.exports.authenticationFailed = authenticationFailed;
+module.exports.resourceNotFound = resourceNotFound;
 module.exports.Codes = codes;
 module.exports.MongoCodes = mongoCodes;
