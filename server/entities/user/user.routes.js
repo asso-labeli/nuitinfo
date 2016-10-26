@@ -9,5 +9,6 @@ let router = express.Router();
 router.post('/', User.exCreate);
 router.put('/', User.exEdit);
 router.get('/:id', User.exGet);
+router.get('/', User.exGetAll);
 
 module.exports = router;
