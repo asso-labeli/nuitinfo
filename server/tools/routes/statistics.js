@@ -14,6 +14,9 @@ router.get('/users', (req, res) => {
         if (err){
             return Response.selectError(res, err);
         }
+        if (!result[0] || !result[0].users){
+            return Response.notFound(res, 'users');
+        }
 
         Response.success(res, 'Statistics of users', {
             users: result[0].users
@@ -27,6 +30,10 @@ router.get('/teams', (req, res) => {
     }], (err, result) => {
         if (err){
             return Response.selectError(res, err);
+        }
+
+        if (!result[0] || !result[0].teams){
+            return Response.notFound(res, 'teams');
         }
 
         Response.success(res, 'Statistics of teams', {
