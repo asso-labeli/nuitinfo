@@ -81,8 +81,8 @@
 
             <h2 class="title">Compte CREMI</h2>
             <div class="checkbox-line">
-                <label for="isDesktop">Possèdes-tu un compte au CREMI : </label>
-                <input type="checkbox" id="isDesktop" v-model="user.cremiAccount.needed"/>
+                <label for="cremiOwner">Possèdes-tu un compte au CREMI : </label>
+                <input type="checkbox" id="cremiOwner" v-model="cremiOwner"/>
             </div>
 
             <div v-if="!user.cremiAccount.needed">
@@ -132,6 +132,7 @@
     export default {
         data () {
             return {
+                cremiOwner: false,
                 user: {
                     email: '',
                     password: '',
@@ -145,7 +146,7 @@
                         hasWiFi: true,
                     },
                     cremiAccount: {
-                        needed: false,
+                        needed: !this.cremiOwner,
                         studentNumber: null,
                         studentMail: "",
                         charter: false
