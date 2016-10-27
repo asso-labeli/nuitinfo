@@ -98,6 +98,12 @@ module.exports = function (teamSchema) {
             .exec(callback);
     };
 
+    teamSchema.statics.getAll = function (params, callback){
+        mongoose.model('Team')
+            .find()
+            .exec(callback);
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {
@@ -250,6 +256,20 @@ module.exports = function (teamSchema) {
             }
 
             Response.success(res, 'Team found', team);
+        });
+    };
+
+    teamSchema.statics.exGetAll = function (req, res) {
+        mongoose.model('Team').getAll({}, (err, teams) => {
+            if (err) {
+                return Response.selectError(err);
+            }
+
+            if (!teams || teams.length === 0){
+                return Response.resourceNotFound(res, 'teams');
+            }
+
+            Response.success(res, 'Teams found', teams);
         });
     };
 };

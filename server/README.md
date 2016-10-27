@@ -29,6 +29,7 @@ Route | Description | Authentication
 **PUT** /team | Edit a team | Yes
 **DELETE** /team | Remove a team | Yes
 **GET** /team/:id | Get team with specific id | No
+**GET** /team | Get all teams | No
 
 ### Application
 
