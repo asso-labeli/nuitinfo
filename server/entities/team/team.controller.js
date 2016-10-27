@@ -81,7 +81,7 @@ module.exports = function (teamSchema) {
     teamSchema.statics.addUser = function(params, callback){
         mongoose.model('Team').update(
             {_id: params.team._id},
-            {$push: { 'members.list' : params.team._id}},
+            {$push: { 'members.list' : params.user._id}},
             (err) => {
                 if (err) {
                     return callback(err);
@@ -89,6 +89,13 @@ module.exports = function (teamSchema) {
 
                 callback();
             });
+    };
+
+    teamSchema.statics.getById = function(params, callback){
+        mongoose.model('Team')
+            .findById(params.id)
+            .populate('members.leader members.list')
+            .exec(callback);
     };
 
     /* Express methods verifications */
@@ -229,6 +236,20 @@ module.exports = function (teamSchema) {
             }
 
             return Response.success(res, 'Team deleted');
+        });
+    };
+
+    teamSchema.statics.exGet = function (req, res) {
+        mongoose.model('Team').getById(req.params, (err, team) => {
+            if (err) {
+                return Response.selectError(err);
+            }
+
+            if (!team) {
+                return Response.resourceNotFound(res, 'team');
+            }
+
+            Response.success(res, 'Team found', team);
         });
     };
 };

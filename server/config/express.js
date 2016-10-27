@@ -16,7 +16,6 @@ module.exports = function (app, config) {
     app.use(bodyParser.json());
 
     app.use(compression());
-    app.use(express.static(config.root + '/public'));
 
     app.use(passport.initialize());
 
@@ -43,9 +42,6 @@ module.exports = function (app, config) {
 
         next();
     });
-
-    app.use('/', express.static(config.root + '/../app'));
-    app.use('/lib', express.static(config.root + '/../node_modules'));
 
     require('./routes')(app, config);
 };

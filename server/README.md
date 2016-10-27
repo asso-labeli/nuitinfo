@@ -18,6 +18,8 @@ Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /user | Add a new user | No
 **PUT** /user | Edit logged user | Yes
+**GET** /user | Get list of all users | No
+**GET** /user/:id | Get user with specific id | No
 
 ### Team
 
@@ -26,6 +28,7 @@ Route | Description | Authentication
 **POST** /team | Add a new team | Yes
 **PUT** /team | Edit a team | Yes
 **DELETE** /team | Remove a team | Yes
+**GET** /team/:id | Get team with specific id | No
 
 ### Application
 
@@ -39,3 +42,4 @@ Route | Description | Authentication
 Route | Description | Authentication
 ----- | ----------- | --------------
 **GET** /statistics/users | Get numbers of users | No
+**GET** /statistics/teams| Get numbers of teams | No

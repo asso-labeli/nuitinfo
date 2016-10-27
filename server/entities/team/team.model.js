@@ -26,7 +26,8 @@ let teamSchema = new Schema({
             default: true
         },
         list : [{
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Application'
         }]
     },
     members : {

@@ -67,29 +67,38 @@
             };
         },
         mounted () {
+            console.log(this);
             this.$http.get('/src/data/home/schedule.json').then((response) => {
                 response.json().then((data) => {
                     this.title = data.title;
                     this.days = data.days;
-                })
+                });
             }, (response) => {
 
             });
             this.$http.get('/src/data/home/presentation.json').then((response) => {
                 response.json().then((data) => {
                     this.paragraphs = data.paragraphs;
-                })
+                });
             }, (response) => {
 
             });
-            /*
-                        this.$http.get('/api/statistics/users').then((response) => {
-                            response.json().then((data) => {
-                                this.users = data.value;
-                            })
-                        }, (response) => {
-                        });
-                        */
+
+            this.$http.get('/api/statistics/users').then((response) => {
+                response.json().then((statistics) => {
+                    this.users = statistics.data.users;
+                });
+            }, (response) => {
+            });
+
+            this.$http.get('/api/statistics/teams').then((response) => {
+                response.json().then((statistics) => {
+                    if (statistics) {
+                        this.users = statistics.data.teams;
+                    }
+                });
+            }, (response) => {
+            });
         }
     };
 </script>
