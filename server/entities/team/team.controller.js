@@ -81,7 +81,7 @@ module.exports = function (teamSchema) {
     teamSchema.statics.addUser = function(params, callback){
         mongoose.model('Team').update(
             {_id: params.team._id},
-            {$push: { 'members.list' : params.team._id}},
+            {$push: { 'members.list' : params.user._id}},
             (err) => {
                 if (err) {
                     return callback(err);
