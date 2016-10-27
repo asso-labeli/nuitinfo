@@ -91,6 +91,13 @@ module.exports = function (teamSchema) {
             });
     };
 
+    teamSchema.statics.getById = function(params, callback){
+        mongoose.model('Team')
+            .findById(params.id)
+            .populate('members.leader members.list')
+            .exec(callback);
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {
@@ -229,6 +236,20 @@ module.exports = function (teamSchema) {
             }
 
             return Response.success(res, 'Team deleted');
+        });
+    };
+
+    teamSchema.statics.exGet = function (req, res) {
+        mongoose.model('Team').getById(req.params, (err, team) => {
+            if (err) {
+                return Response.selectError(err);
+            }
+
+            if (!team) {
+                return Response.resourceNotFound(res, 'team');
+            }
+
+            Response.success(res, 'Team found', team);
         });
     };
 };

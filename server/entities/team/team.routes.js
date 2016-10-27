@@ -9,5 +9,6 @@ let router = express.Router();
 router.post('/', Team.exCreate);
 router.put('/', Team.exEdit);
 router.delete('/', Team.exDelete);
+router.get('/:id', Team.exGet);
 
 module.exports = router;
