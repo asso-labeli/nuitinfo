@@ -1,0 +1,65 @@
+[
+    {
+        "title": "Inscriptions",
+        "parts": [
+            {
+                "title": "Je souhaite participer et créer une équipe",
+                "lines": [
+                    ""
+                ]
+            },
+            {
+                "title": "Je souhaite participer mais je n'ai pas d'équipe",
+                "lines": [
+                    ""
+                ]
+            },
+            {
+                "title": "Quelle adresse e-mail pour mon équipe ?",
+                "lines": [
+                    ""
+                ]
+            },
+            {
+                "title": "Clôture des inscriptions sur le site bordelais",
+                "lines": [
+                    ""
+                ]
+            },
+            {
+                "title": "Inscription officielle sur le site de la Nuit de l'info",
+                "lines": [
+                    ""
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Administration",
+        "parts": [
+            {
+                "title": "La communication avec mon équipe ou avec mes membres",
+                "lines": [
+                    ""
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Le site",
+        "parts": [
+            {
+                "title": "Son principe et son utilité",
+                "lines": [
+                    ""
+                ]
+            },
+            {
+                "title": "Usurpation d'identité",
+                "lines": [
+                    ""
+                ]
+            }
+        ]
+    }
+]
