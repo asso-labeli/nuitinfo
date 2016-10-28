@@ -14,8 +14,8 @@ Route | Description | Authentication
 
 ```javascript
 {
-    "email" : String, // User's mail
-    "password" : String // User's password
+    "email" : String [Required], // User's mail
+    "password" : String [Required] // User's password
 }
 ```
 
@@ -34,7 +34,7 @@ Code | Description
 
 ```javascript
 {
-    "token": XXX // User JWT token
+    "token": String // User JWT token
 }
 ```
 
@@ -44,7 +44,7 @@ Code | Description
 
 ```javascript
 {
-    "email" : String, // User's mail
+    "email" : String [Required], // User's mail
 }
 ```
 
@@ -72,7 +72,7 @@ Code | Description
 
 ```javascript
 {
-    "password" : String, // New user's password
+    "password" : String [Required], // New user's password
 }
 ```
 
