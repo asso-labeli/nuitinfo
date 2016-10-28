@@ -99,6 +99,10 @@ module.exports = function (userSchema) {
     userSchema.statics.create = function (params, callback) {
         let Self = this;
 
+        params.team = undefined;
+        params.paswordRecoveryToken = undefined;
+        params.data = undefined;
+
         PassTools.hashPassword(params.password, (err, pass) => {
             if (err) {
                 return callback(err);
@@ -217,7 +221,7 @@ module.exports = function (userSchema) {
 
         mongoose.model('User').edit(req.body, (err, user) => {
             if (err) {
-                return Response.selectError(res, err);
+                return Response.editError(res, err);
             }
 
             Response.success(res, 'User edited', user);
@@ -254,7 +258,7 @@ module.exports = function (userSchema) {
 
     userSchema.statics.exGetLoggedUser = function (req, res) {
         if (!req.isLogged()){
-            return Response.notLogged(res);
+            return Response.notAllowed(res);
         }
 
         mongoose.model('User').findById(req.user._id, '-password -__v', (err, user) => {

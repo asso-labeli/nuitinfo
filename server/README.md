@@ -12,7 +12,7 @@ Route | Description | Authentication
 **POST** /passwordRecovery | Get a recovery password mail | No
 **POST** /recovery/:token | Send a password change | No
 
-### User
+### [User](/server/doc/user.md#user)
 
 Route | Description | Authentication
 ----- | ----------- | --------------
