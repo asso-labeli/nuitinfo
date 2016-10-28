@@ -15,7 +15,7 @@ require('../../config/passsport').configure(passport);
 
 router.post('/login', (req, res) => {
     if(!req.body || !req.body.email){
-        return Response.missing(res, 'login', -11);
+        return Response.missing(res, 'email', -11);
     } else if (!req.body.password){
         return Response.missing(res, 'password', -12);
     }
@@ -63,7 +63,7 @@ router.post('/passwordRecovery', (req, res) => {
         (next) => mongoose.model('User').findOne({email: req.body.email}, next),
         (user, next) => {
             if (!user) {
-                Response.notFound(res, 'email');
+                Response.resourceNotFound(res, 'user');
                 return next({
                     alreadySent: true
                 });
@@ -104,7 +104,7 @@ router.post('/recovery/:token', (req, res) => {
         (next) => mongoose.model('User').findOne({passwordRecoveryToken: req.params.token}, next),
         (user, next) => {
             if (!user) {
-                Response.notFound(res, 'token');
+                Response.resourceNotFound(res, 'user');
                 return next({
                     alreadySent: true
                 });
