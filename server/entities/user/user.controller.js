@@ -227,7 +227,7 @@ module.exports = function (userSchema) {
     userSchema.statics.exGet = function (req, res) {
         mongoose.model('User').getById(req.params, (err, user) => {
             if (err) {
-                return Response.selectError(err);
+                return Response.selectError(res, err);
             }
 
             if (!user) {
@@ -241,7 +241,7 @@ module.exports = function (userSchema) {
     userSchema.statics.exGetAll = function (req, res) {
         mongoose.model('User').getAll({}, (err, users) => {
             if (err) {
-                return Response.selectError(err);
+                return Response.selectError(res, err);
             }
 
             if (!users || users.length === 0){
@@ -249,6 +249,24 @@ module.exports = function (userSchema) {
             }
 
             Response.success(res, 'Users found', users);
+        });
+    };
+
+    userSchema.statics.exGetLoggedUser = function (req, res) {
+        if (!req.isLogged()){
+            return Response.notLogged(res);
+        }
+
+        mongoose.model('User').findById(req.user._id, '-password -__v', (err, user) => {
+            if (err) {
+                return Response.selectError(res, err);
+            }
+
+            if (!user){
+                return Response.resourceNotFound(res, 'user');
+            }
+
+            Response.success(res, 'Logged user', user);
         });
     };
 };

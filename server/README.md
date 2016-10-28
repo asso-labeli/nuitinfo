@@ -18,6 +18,7 @@ Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /user | Add a new user | No
 **PUT** /user | Edit logged user | Yes
+**GET** /user/me | Get informations on logged user | Yes
 **GET** /user | Get list of all users | No
 **GET** /user/:id | Get user with specific id | No
 

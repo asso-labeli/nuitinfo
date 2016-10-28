@@ -8,6 +8,7 @@ let router = express.Router();
 
 router.post('/', User.exCreate);
 router.put('/', User.exEdit);
+router.get('/me', User.exGetLoggedUser);
 router.get('/:id', User.exGet);
 router.get('/', User.exGetAll);
 
