@@ -161,6 +161,7 @@
 
                 this.$http.post('/api/user', JSON.stringify(this.user)).then((response) => {
                     console.log('Success');
+                    this.$router.go({name: 'register'});
                 }, (response) => {
                     console.log('Error');
                 });

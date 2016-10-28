@@ -16,7 +16,8 @@
             return {
                 title: "Nuit de l'Info 2016 - Édition Bordelaise"
             }
-        }
+        },
+        cookies: {}
     };
 </script>
 

@@ -26,7 +26,7 @@
             this.$http.get('/src/data/sponsors/sponsors.json').then((response) => {
                 response.json().then((data) => {
                     this.sponsors = data.sponsors;
-                })
+                });
             }, (response) => {
             });
         }

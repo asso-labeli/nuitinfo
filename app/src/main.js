@@ -50,26 +50,5 @@ const router = new VueRouter({
 new Vue({
     el: '#app',
     router: router,
-    cookies: {
-        get: function (key) {
-            let name = key + "=";
-            let ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        },
-        set: function (key, value) {
-            let expires = Date.now();
-            expires.setTime(expires.getTime() + (60 * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + '; expires=' + expires.toUTCString() + ";path=/";
-        }
-    },
     render: h => h(require('./App.vue'))
 });

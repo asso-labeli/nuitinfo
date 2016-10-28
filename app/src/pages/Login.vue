@@ -22,6 +22,7 @@
 </template>
 
 <script>
+    import * as cookie from '../libraries/cookies';
     export default {
         data () {
             return {
@@ -33,13 +34,14 @@
         },
         methods: {
             login() {
-                console.log(JSON.stringify(this.user));
-
                 this.$http.post('/api/login', JSON.stringify(this.user)).then((response) => {
-                    this.$route.router.go({name: 'home'});
+                    console.log(this);
+                    response.json().then((message) => {
+                        console.log(message);
+                        cookie.set('token', message.data.token)
+                    });
                 }, (response) => {
                     console.log('Error');
-                    console.log(response);
                 });
             }
         }
