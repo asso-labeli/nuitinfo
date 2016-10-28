@@ -4,7 +4,7 @@
 
 All these routes are available from `/api/`.
 
-### Authentication
+### [Authentication](/server/doc/auth.md#authentication)
 
 Route | Description | Authentication
 ----- | ----------- | --------------
