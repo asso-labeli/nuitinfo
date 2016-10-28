@@ -90,6 +90,6 @@ Code | Description
 
 ##### Data
 
-```javascript
+```
 User's entry
 ```
