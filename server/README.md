@@ -22,7 +22,7 @@ Route | Description | Authentication
 **GET** /user | Get list of all users | No
 **GET** /user/:id | Get user with specific id | No
 
-### Team
+### [Team](/server/doc/team.md#team)
 
 Route | Description | Authentication
 ----- | ----------- | --------------

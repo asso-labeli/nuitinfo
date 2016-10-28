@@ -11,7 +11,8 @@ module.exports = function (teamSchema) {
     teamSchema.statics.create = function (params, callback) {
         let Self = this;
 
-        console.log(params);
+        params.data = undefined;
+        params.members.list = [];
 
         let team = new Self(params);
 
@@ -22,17 +23,13 @@ module.exports = function (teamSchema) {
         let Self = this;
 
         async.waterfall([
-            (next) => Self.findById(params._id, next),
+            (next) => Self.findOne({'members.leader': params.leaderId}, next),
             (team, next) => {
-                if (!team) {
-                    next('Team not found');
+                if (!team || !team._id) {
+                    next('No editable team found');
                 }
 
-                if (team.members.leader.equals(params.leaderId)) {
-                    Self.update({_id: params._id}, {$set: params}, next);
-                } else {
-                    next('Logged user isn\'t the leader of the team');
-                }
+                Self.update({_id: params._id}, {$set: params}, next);
             }
         ], (err, team) => {
             if (err) {
@@ -47,17 +44,13 @@ module.exports = function (teamSchema) {
         let Self = this;
 
         async.waterfall([
-            (next) => Self.findById(params._id, next),
+            (next) => Self.findOne({'members.leader': params.leaderId}, next),
             (team, next) => {
-                if (!team) {
-                    next('Team not found');
+                if (!team || !team._id) {
+                    next('No editable team found');
                 }
 
-                if (team.members.leader.equals(params.leaderId)) {
-                    mongoose.model('Team').remove({_id: params._id}, next);
-                } else {
-                    next('Logged user isn\'t the leader of the team');
-                }
+                Self.remove({_id: team._id}, next);
             }
         ], (err, team) => {
             if (err) {
@@ -77,11 +70,11 @@ module.exports = function (teamSchema) {
             }]
         }, callback);
     };
-    
-    teamSchema.statics.addUser = function(params, callback){
+
+    teamSchema.statics.addUser = function (params, callback) {
         mongoose.model('Team').update(
             {_id: params.team._id},
-            {$push: { 'members.list' : params.user._id}},
+            {$push: {'members.list': params.user._id}},
             (err) => {
                 if (err) {
                     return callback(err);
@@ -91,14 +84,14 @@ module.exports = function (teamSchema) {
             });
     };
 
-    teamSchema.statics.getById = function(params, callback){
+    teamSchema.statics.getById = function (params, callback) {
         mongoose.model('Team')
             .findById(params.id)
             .populate('members.leader members.list')
             .exec(callback);
     };
 
-    teamSchema.statics.getAll = function (params, callback){
+    teamSchema.statics.getAll = function (params, callback) {
         mongoose.model('Team')
             .find()
             .exec(callback);
@@ -118,37 +111,6 @@ module.exports = function (teamSchema) {
         callback({alreadySent: true});
     }
 
-    function checkParametersExistsForEdit(req, res, callback) {
-        if (!req.body || !req.body._id) {
-            Response.missing(res, '_id', -11);
-            return callback({alreadySent: true});
-        }
-
-        if (req.body.members) {
-            req.body.members = undefined;
-        }
-
-        if (req.body.applications) {
-            req.body.applications = undefined;
-        }
-
-        if (req.body.data) {
-            req.body.data = undefined;
-        }
-
-        callback();
-    }
-
-    function checkParametersExistsForDelete(req, res, callback) {
-        if (!req.body || !req.body._id) {
-            Response.missing(res, '_id', -11);
-        } else {
-            return callback();
-        }
-
-        callback({alreadySent: true});
-    }
-
     /* Express calls */
 
     teamSchema.statics.exCreate = function (req, res) {
@@ -161,7 +123,7 @@ module.exports = function (teamSchema) {
             // Check if user already have team
             (next) => mongoose.model('Team').findTeamForUser({user: req.user._id}, next),
             (team, next) => {
-                if (!team || !team._id){
+                if (!team || !team._id) {
                     return next();
                 }
 
@@ -206,20 +168,14 @@ module.exports = function (teamSchema) {
             return Response.notAllowed(res);
         }
 
-        async.waterfall([
-            (next) => checkParametersExistsForEdit(req, res, next),
-            (next) => {
-                req.body.leaderId = req.user._id;
-                mongoose.model('Team').edit(req.body, next);
-            }
-        ], (err) => {
-            if (err && err.alreadySent) {
-                return;
-            } else if (err) {
+        req.body.leaderId = req.user._id;
+
+        mongoose.model('Team').edit(req.body, (err) => {
+            if (err) {
                 return Response.editError(res, err);
             }
 
-            return Response.success(res, 'Edit successful');
+            return Response.success(res, 'Edit successful', {});
         });
     };
 
@@ -228,16 +184,10 @@ module.exports = function (teamSchema) {
             return Response.notAllowed(res);
         }
 
-        async.waterfall([
-            (next) => checkParametersExistsForDelete(req, res, next),
-            (next) => {
-                req.body.leaderId = req.user._id;
-                mongoose.model('Team').delete(req.body, next);
-            }
-        ], (err) => {
-            if (err && err.alreadySent) {
-                return;
-            } else if (err) {
+        req.body.leaderId = req.user._id;
+
+        mongoose.model('Team').delete(req.body, (err) => {
+            if (err) {
                 return Response.deleteError(res, err);
             }
 
@@ -265,7 +215,7 @@ module.exports = function (teamSchema) {
                 return Response.selectError(err);
             }
 
-            if (!teams || teams.length === 0){
+            if (!teams || teams.length === 0) {
                 return Response.resourceNotFound(res, 'teams');
             }
 

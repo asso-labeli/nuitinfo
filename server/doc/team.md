@@ -1,0 +1,152 @@
+# Team
+
+## Overview
+
+Route | Description | Authentication
+----- | ----------- | --------------
+[**POST** /team](#post-team) | Add a new team | Yes
+[**PUT** /team](#put-team) | Edit a team | Yes
+[**DELETE** /team](#delete-team) | Remove a team | Yes
+[**GET** /team/:id](#get-teamid) | Get team with specific id | No
+[**GET** /team](#get-team) | Get all teams | No
+
+## POST /team
+
+#### Body parameters
+
+```javascript
+{
+    "name" : String [Required],
+    "email": String [Required],
+    "description": String,
+    "logisticsRequirements": String, // Description of requirements
+    "openForApplications": Boolean, // True if team searches members
+    "cremiRoom": String // Desired room
+}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-11 | Missing name
+-12 | Missing email
+-21 | Team with email or mail already exists (see message for the field)
+-29 | Internal error in MongoDB during insertion
+-51 | Not allowed
+
+##### Data
+
+```
+Team's entry
+```
+
+## PUT /team
+
+#### Body parameters
+
+```javascript
+{
+    "name" : String [Required],
+    "email": String [Required],
+    "description": String,
+    "logisticsRequirements": String, // Description of requirements
+    "openForApplications": Boolean, // True if team searches members
+    "cremiRoom": String // Desired room,
+    "members": {
+        "leader": ObjectId,
+        "list": [ObjectId] // List of the members of the team, without leader
+    }
+}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-26 | Error in MongoDB during edition
+-51 | Not allowed
+
+##### Data
+
+```
+{}
+```
+
+## DELETE /team
+
+#### Body parameters
+
+```javascript
+{}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-28 | Error in MongoDB during deletion
+-51 | Not allowed
+
+##### Data
+
+```javascript
+{}
+```
+
+## GET /team/:id
+
+#### Body parameters
+
+```javascript
+{}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-27 | Error in MongoDB during selection
+-43 | No team found
+
+##### Data
+
+```
+Team's entry with members.leader and members.list populated
+```
+
+## GET /team
+
+#### Body parameters
+
+```javascript
+{}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-27 | Error in MongoDB during selection
+-43 | No teams found
+
+##### Data
+
+```
+Team's entries
+```
