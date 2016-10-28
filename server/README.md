@@ -37,6 +37,8 @@ Route | Description | Authentication
 ----- | ----------- | --------------
 **POST** /application/fromUser | Add a new application from a user | Yes
 **POST** /application/fromTeam | Add a new application from a team | Yes
+**POST** /application/accept | Accept an application | Yes
+**POST** /application/refuse | Refuse an application | Yes
 
 ### Statistics
 
