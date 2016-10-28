@@ -4,9 +4,9 @@
 
 Route | Description | Authentication
 ----- | ----------- | --------------
-**POST** /login | Log an user | No
-**POST** /passwordRecovery | Get a recovery password mail | No
-**POST** /recovery/:token | Send a password change | No
+[**POST** /login](#post-login) | Log an user | No
+[**POST** /passwordRecovery](#post-passwordrecovery) | Get a recovery password mail | No
+[**POST** /recovery/:token](#post-recoverytoken) | Send a password change | No
 
 ## POST /login
 
@@ -23,7 +23,8 @@ Route | Description | Authentication
 
 ##### Success code
 
------ | -----
+Code | Description
+---|---
 1 | Success
 -11 | Missing email
 -12 | Missing password
@@ -51,7 +52,8 @@ Route | Description | Authentication
 
 ##### Success code
 
------ | -----
+Code | Description
+---|---
 1 | Success
 -11 | Missing email
 -27 | Internal error during select in MongoDB
@@ -78,7 +80,8 @@ Route | Description | Authentication
 
 ##### Success code
 
------ | -----
+Code | Description
+---|---
 1 | Success
 -11 | Missing password
 -27 | Internal error during select in MongoDB
