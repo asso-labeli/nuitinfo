@@ -67,7 +67,6 @@
             };
         },
         mounted () {
-            console.log(this);
             this.$http.get('/src/data/home/schedule.json').then((response) => {
                 response.json().then((data) => {
                     this.title = data.title;
@@ -85,18 +84,24 @@
             });
 
             this.$http.get('/api/statistics/users').then((response) => {
-                response.json().then((statistics) => {
-                    this.users = statistics.data.users;
-                });
+                console.log('users', response.status);
+                if (response.status === 200) {
+                    response.json().then((statistics) => {
+                        this.users = statistics.data.users;
+                    });
+                }
             }, (response) => {
             });
 
             this.$http.get('/api/statistics/teams').then((response) => {
-                response.json().then((statistics) => {
-                    if (statistics) {
-                        this.users = statistics.data.teams;
-                    }
-                });
+                console.log('teams', response.status);
+                if (response.status === 200) {
+                    response.json().then((statistics) => {
+                        if (statistics) {
+                            this.users = statistics.data.teams;
+                        }
+                    });
+                }
             }, (response) => {
             });
         }

@@ -18,3 +18,7 @@ export function set(key, value) {
     expires.setTime(expires.getTime() + (60 * 24 * 60 * 60 * 1000));
     document.cookie = key + '=' + value + '; expires=' + expires.toUTCString() + ";path=/";
 }
+
+export function remove(key) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}

@@ -40,6 +40,14 @@ const router = new VueRouter({
         component: require('./pages/Recovery.vue'),
         name: 'recovery'
     }, {
+        path: '/dashboard',
+        component: require('./pages/Dashboard.vue'),
+        name: 'dashboard'
+    }, {
+        path: '/logout',
+        component: require('./pages/Logout.vue'),
+        name: 'logout'
+    }, {
         path: '*',
         component: require('./pages/Lost.vue'),
         name: 'lost'

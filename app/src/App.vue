@@ -9,6 +9,8 @@
 <script>
     import NuitInfoMenu from './elements/Menu.vue';
     import NuitInfoFooter from './elements/Footer.vue';
+    import user from './stores/UserStore';
+
     export default {
         name: 'app',
         components: {NuitInfoMenu, NuitInfoFooter},
@@ -17,7 +19,24 @@
                 title: "Nuit de l'Info 2016 - Édition Bordelaise"
             }
         },
-        cookies: {}
+        mounted(){
+            console.log(user.state.token);
+            console.log(user.getToken());
+            if (user.getToken() !== null) {
+                console.log("token");
+                this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    response.json().then((message) => {
+                        console.log(message);
+                        if (message.success === 1) {
+                            console.log("success");
+                            user.setUser(message.data);
+                        }
+                    });
+                }, (response) => {
+                    console.log('Error');
+                });
+            }
+        }
     };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div id="recovery">
         <h1>Récupération</h1>
-        <form v-on:submit.prevent="recovery">
+        <form v-on:submit.prevent="recover">
             <div>
                 <label for="email">Adresse e-mail :</label>
                 <input type="email" id="email" v-model="email"/>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import user from '../stores/UserStore';
     export default {
         data () {
             return {
@@ -23,15 +24,9 @@
             };
         },
         methods: {
-            login() {
+            recover() {
                 console.log(JSON.stringify(this.email));
-                /*
-                this.$http.post('/api/user/recovery', JSON.stringify(this.email)).then((response) => {
-                    console.log('Success');
-                }, (response) => {
-                    console.log('Error');
-                });
-                */
+                console.log(user.state);
             }
         }
     };

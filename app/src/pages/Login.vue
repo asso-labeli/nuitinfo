@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import * as cookie from '../libraries/cookies';
+    import user from '../stores/UserStore';
     export default {
         data () {
             return {
@@ -37,8 +37,8 @@
                 this.$http.post('/api/login', JSON.stringify(this.user)).then((response) => {
                     console.log(this);
                     response.json().then((message) => {
-                        console.log(message);
-                        cookie.set('token', message.data.token)
+                        user.setToken(message.data.token);
+                        this.$router.push({name: 'dashboard'});
                     });
                 }, (response) => {
                     console.log('Error');
