@@ -29,23 +29,26 @@
 </template>
 
 <script>
+    import dataStore from '../stores/DataStore';
     export default {
         data () {
             return {
-                faq: [],
-                skills: []
+                faq: dataStore.get('help.faq', []),
+                skills: dataStore.get('help.skills', [])
             };
         },
         mounted () {
             this.$http.get('/src/data/help/skills.json').then((response) => {
                 response.json().then((data) => {
                     this.skills = data;
-                })
+                    dataStore.set('help.skills', data.skills);
+                });
             });
             this.$http.get('/src/data/help/faq.json').then((response) => {
                 response.json().then((data) => {
                     this.faq = data;
-                })
+                    dataStore.set('help.faq', data.faq);
+                });
             });
         }
     };

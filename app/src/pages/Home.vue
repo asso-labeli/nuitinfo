@@ -56,21 +56,24 @@
 </template>
 
 <script>
+    import dataStore from '../stores/DataStore';
     export default {
         data () {
             return {
-                title: "Planning de la Nuit",
-                paragraphs: [],
-                days: [],
-                users: 0,
-                teams: 0
+                title: dataStore.get('home.title', "Planning de la Nuit"),
+                paragraphs: dataStore.get('home.paragraphs', []),
+                days: dataStore.get('home.days', []),
+                users: dataStore.get('home.users', 0),
+                teams: dataStore.get('home.teams', 0)
             };
         },
         mounted () {
             this.$http.get('/src/data/home/schedule.json').then((response) => {
                 response.json().then((data) => {
                     this.title = data.title;
+                    dataStore.set('home.title', data.title);
                     this.days = data.days;
+                    dataStore.set('home.days', data.days);
                 });
             }, (response) => {
 
@@ -78,6 +81,7 @@
             this.$http.get('/src/data/home/presentation.json').then((response) => {
                 response.json().then((data) => {
                     this.paragraphs = data.paragraphs;
+                    dataStore.set('home.paragraphs', data.paragraphs);
                 });
             }, (response) => {
 
@@ -88,6 +92,7 @@
                 if (response.status === 200) {
                     response.json().then((statistics) => {
                         this.users = statistics.data.users;
+                        dataStore.set('home.users', statistics.data.users);
                     });
                 }
             }, (response) => {
@@ -97,9 +102,8 @@
                 console.log('teams', response.status);
                 if (response.status === 200) {
                     response.json().then((statistics) => {
-                        if (statistics) {
-                            this.users = statistics.data.teams;
-                        }
+                        this.users = statistics.data.teams;
+                        dataStore.set('home.teams', statistics.data.teams);
                     });
                 }
             }, (response) => {
