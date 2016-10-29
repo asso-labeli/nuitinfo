@@ -4,7 +4,7 @@
 
 All these routes are available from `/api/`.
 
-### Authentication
+### [Authentication](/server/doc/auth.md#authentication)
 
 Route | Description | Authentication
 ----- | ----------- | --------------
@@ -12,7 +12,7 @@ Route | Description | Authentication
 **POST** /passwordRecovery | Get a recovery password mail | No
 **POST** /recovery/:token | Send a password change | No
 
-### User
+### [User](/server/doc/user.md#user)
 
 Route | Description | Authentication
 ----- | ----------- | --------------
@@ -22,7 +22,7 @@ Route | Description | Authentication
 **GET** /user | Get list of all users | No
 **GET** /user/:id | Get user with specific id | No
 
-### Team
+### [Team](/server/doc/team.md#team)
 
 Route | Description | Authentication
 ----- | ----------- | --------------

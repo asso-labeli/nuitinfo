@@ -20,15 +20,9 @@ let teamSchema = new Schema({
     logisticsRequirements : {
         type: String
     },
-    applications : {
-        open : {
-            type: Boolean,
-            default: true
-        },
-        list : [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Application'
-        }]
+    openForApplications : {
+        type: Boolean,
+        default: true
     },
     members : {
         leader : {
