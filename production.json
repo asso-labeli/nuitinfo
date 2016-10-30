@@ -1,0 +1,12 @@
+{
+  "apps" : [{
+    "name"        : "NdI - Server",
+    "script"      : "server.js",
+    "cwd"         : "server/",
+    "error_file"  : "NDI_ERR.log",
+    "out_file"    : "NDI_OUT.log",
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }]
+}
