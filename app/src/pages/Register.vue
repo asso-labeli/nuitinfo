@@ -1,6 +1,6 @@
 <template>
     <div id="register">
-        <h1>Enregistrement</h1>
+        <h1>{{title}}</h1>
         <form v-on:submit.prevent="register" class="userForm">
             <input type="hidden" name="post" value="post"/>
 
@@ -132,6 +132,7 @@
     export default {
         data () {
             return {
+                title: "Enregistrement",
                 cremiOwner: false,
                 user: {
                     email: '',
@@ -153,6 +154,9 @@
                     mailForRecruitment: true,
                 }
             };
+        },
+        mounted(){
+            console.log(this.$route.path);
         },
         methods: {
             register() {
