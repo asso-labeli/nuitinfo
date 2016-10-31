@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node ./server/server.js",
-    "serve": "pm2 start production.json",
+    "serve": "pm2 start production.json --no-daemon",
     "build": "cd app && npm i && npm run build"
   },
   "repository": {
