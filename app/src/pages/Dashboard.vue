@@ -3,13 +3,16 @@
         <h1>Dashboard</h1>
         <div>
             <h2>Hello, {{userState.firstName}}</h2>
+            <counter></counter>
         </div>
     </div>
 </template>
 
 <script>
+    import Counter from '../elements/Counter.vue';
     import user from '../stores/UserStore'
     export default {
+        components: {Counter},
         data () {
             return {
                 userState: user.state
