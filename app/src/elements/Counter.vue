@@ -73,6 +73,7 @@
                 self.count.days = (th - h) / 24;
             }
 
+            a();
             window.setInterval(a, 999);
         }
     }
