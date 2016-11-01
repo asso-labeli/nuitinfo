@@ -62,6 +62,69 @@
                 </div>
             </div>
 
+            <h2 class="title">Information scolaires</h2>
+
+            <div class="formField">
+                <div class="labelWrapper">
+                    <label for="school"><span class="special">Établissement :</span></label>
+                </div>
+                <div class="contentWrapper">
+                    <select id="school" name="school" required="required" v-model="user.school.institution">
+                        <option v-for="i in institutions" v-bind:value="i._id">{{i.name}}</option>
+                        <option value="0">Autre</option>
+                    </select>
+                </div>
+            </div>
+            <div class="formField" v-if="user.school.institution === '0'">
+                <div class="labelWrapper">
+                    <label for="newInstitution"><span class="special">Autre établissement :</span></label>
+                </div>
+                <div class="contentWrapper">
+                    <input id="newInstitution" type="text" v-model="newInstitution" required="required"/>
+                </div>
+            </div>
+
+            <div class="formField">
+                <div class="labelWrapper">
+                    <label for="studyLevel"><span class="special">Année en cours :</span></label>
+                </div>
+                <div class="contentWrapper">
+                    <select id="studyLevel" name="studyLevel" required="required" v-model="user.school.studyYear">
+                        <option value="1">Bac +1</option>
+                        <option value="2">Bac +2</option>
+                        <option value="3">Bac +3</option>
+                        <option value="4">Bac +4</option>
+                        <option value="5">Bac +5</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="formField">
+                <div class="labelWrapper">
+                    <label for="course"><span class="special">Filière :</span></label>
+                </div>
+                <div class="contentWrapper">
+                    <select id="course" name="course" required="required" v-model="user.school.pathway">
+                        <option value="Informatique" selected="selected">Informatique (Université/Écoles)</option>
+                        <option value="Miage">MIAGE</option>
+                        <option value="IUT Info">DUT Informatique</option>
+                        <option value="MMI">DUT Métiers du Multimedia et de l'Internet</option>
+                        <option value="DAWIN">Licence DAWIN</option>
+                        <option value="ACPI">Licence ACPI</option>
+                        <option value="BioInfo">Bio-Informatique</option>
+                        <option value="0">Autre</option>
+                    </select>
+                </div>
+            </div>
+            <div class="formField" v-if="user.school.pathway === '0'">
+                <div class="labelWrapper">
+                    <label for="newPathway"><span class="special">Autre formation :</span></label>
+                </div>
+                <div class="contentWrapper">
+                    <input id="newPathway" type="text" v-model="newPathway" required="required"/>
+                </div>
+            </div>
+
             <h2 class="title">Logistique</h2>
             <div class="checkbox-line">
                 <label for="hasMaterial">Comptes-tu apporter <b>ton propre matériel</b> : </label>
@@ -135,6 +198,10 @@
             return {
                 title: "Enregistrement",
                 cremiOwner: false,
+                newPathway: '',
+                newSchool: '',
+                newInstitution: '',
+                institutions: [],
                 user: {
                     email: '',
                     password: '',
@@ -142,6 +209,11 @@
                     lastName: '',
                     birthday: '',
                     biography: '',
+                    school: {
+                        institution: '',
+                        studyYear: 1,
+                        pathway: 'Informatique'
+                    },
                     material: {
                         hasMaterial: true,
                         isDesktop: false,
@@ -162,6 +234,14 @@
             }
         },
         mounted(){
+            this.$http.get('/api/institution').then((response) => {
+                if (response.status === 200) {
+                    response.json().then((message) => {
+                        this.institutions = message.data;
+                    });
+                }
+            });
+
             if (this.editionMode) {
                 this.title = "Édition de profil";
                 this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
@@ -180,21 +260,43 @@
         },
         methods: {
             register() {
-                this.user.cremiAccount.needed = !this.cremiOwner;
+                var self = this;
 
-                if (this.editionMode) {
-                    this.$http.put('/api/user', JSON.stringify(this.user), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
-                        this.$router.push({name: 'dashboard'});
+                function send() {
+                    if (self.editionMode) {
+                        self.$http.put('/api/user', JSON.stringify(self.user), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                            self.$router.push({name: 'dashboard'});
+                        }, (response) => {
+                            console.warn('Erreur de modification');
+                        });
+                    } else {
+                        self.$http.post('/api/user', JSON.stringify(self.user)).then((response) => {
+                            self.$router.push({name: 'login'});
+                        }, (response) => {
+                            console.warn('Erreur d\'ajout d\'un utilisateur');
+                        });
+                    }
+                }
+
+                this.user.cremiAccount.needed = !this.cremiOwner;
+                if (this.user.school.pathway === '0') {
+                    this.user.school.pathway = this.newPathway;
+                }
+                if (this.user.school.institution === '0') {
+                    this.$http.post('/api/institution', JSON.stringify({name: this.newInstitution})).then((response) => {
+                        if (response.status === 200) {
+                            response.json().then((message) => {
+                                this.user.school.institution = message.data._id;
+                                send();
+                            });
+                        }
                     }, (response) => {
-                        console.warn('Erreur de modification');
+                        console.warn('Erreur d\'ajout d\'une institution');
                     });
                 } else {
-                    this.$http.post('/api/user', JSON.stringify(this.user)).then((response) => {
-                        this.$router.push({name: 'login'});
-                    }, (response) => {
-                        console.warn('Erreur d\'ajout d\'un utilisateur');
-                    });
+                    send();
                 }
+
             }
         }
     };

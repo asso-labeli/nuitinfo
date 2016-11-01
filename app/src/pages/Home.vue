@@ -42,11 +42,16 @@
         <div class="statistics">
             <h2 class="title"><a href="/stats">Statistiques</a></h2>
             <div class="flexbox flexbox-wrap flexbox-center">
-                <div class="participants">{ <a href="#"><span>participants : <span
-                        class="integer">{{ users }}</span></span></a>
+                <div class="participants">{
+                    <a href="#">
+                        <span>participants : <span class="integer">{{ users }}</span></span>
+                    </a>
                     ,
                 </div>
-                <div class="teams">&nbsp;<a href="#"><span>teams :  <span class="integer">{{ teams }}</span></span></a>
+                <div class="teams">&nbsp;
+                    <a href="#">
+                        <span>teams :  <span class="integer">{{ teams }}</span></span>
+                    </a>
                     }
                 </div>
             </div>
@@ -68,6 +73,7 @@
             };
         },
         mounted () {
+
             this.$http.get('/src/data/home/schedule.json').then((response) => {
                 response.json().then((data) => {
                     this.title = data.title;
@@ -75,16 +81,13 @@
                     this.days = data.days;
                     dataStore.set('home.days', data.days);
                 });
-            }, (response) => {
-
             });
+
             this.$http.get('/src/data/home/presentation.json').then((response) => {
                 response.json().then((data) => {
                     this.paragraphs = data.paragraphs;
                     dataStore.set('home.paragraphs', data.paragraphs);
                 });
-            }, (response) => {
-
             });
 
             this.$http.get('/api/statistics/users').then((response) => {
@@ -93,19 +96,20 @@
                         this.users = statistics.data.users;
                         dataStore.set('home.users', statistics.data.users);
                     });
+                } else {
+                    this.users = 0;
                 }
-            }, (response) => {
             });
 
             this.$http.get('/api/statistics/teams').then((response) => {
-                console.log('teams', response.status);
                 if (response.status === 200) {
                     response.json().then((statistics) => {
-                        this.users = statistics.data.teams;
+                        this.teams = statistics.data.teams;
                         dataStore.set('home.teams', statistics.data.teams);
                     });
+                } else {
+                    this.teams = 0;
                 }
-            }, (response) => {
             });
         }
     };
