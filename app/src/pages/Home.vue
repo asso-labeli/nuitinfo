@@ -88,7 +88,6 @@
             });
 
             this.$http.get('/api/statistics/users').then((response) => {
-                console.log('users', response.status);
                 if (response.status === 200) {
                     response.json().then((statistics) => {
                         this.users = statistics.data.users;

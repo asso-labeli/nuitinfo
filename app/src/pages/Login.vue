@@ -35,13 +35,12 @@
         methods: {
             login() {
                 this.$http.post('/api/login', JSON.stringify(this.user)).then((response) => {
-                    console.log(this);
                     response.json().then((message) => {
                         user.setToken(message.data.token);
                         this.$router.push({name: 'dashboard'});
                     });
                 }, (response) => {
-                    console.log('Error');
+                    console.warn('Erreur Login.vue /api/login');
                 });
             }
         }

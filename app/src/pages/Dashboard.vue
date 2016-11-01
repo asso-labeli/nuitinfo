@@ -23,12 +23,11 @@
         },
         mounted (){
             this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
-                console.log('Success');
                 response.json().then((message) => {
                     user.setUser(message.data);
                 });
             }, (response) => {
-                console.log('Error');
+                console.warn('Erreur Dashboard.vue /api/user/me');
             });
         },
         methods: {}
