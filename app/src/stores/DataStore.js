@@ -18,7 +18,7 @@ class DataStore {
     };
 
     get(key, _default = null) {
-        if (!this.state.hasOwnProperty(key) || this.state['key'] === null || this.state['key'] === undefined || this.state['key'] === "") {
+        if (!this.state.hasOwnProperty(key) || this.state[key] === null || this.state[key] === undefined || this.state[key] === "") {
             if (this.isStorageAvailable('localStorage')) {
                 if (window.localStorage[key] !== null) {
                     return window.localStorage.getItem(key);
