@@ -1,7 +1,7 @@
 <template>
     <div id="lost">
         <h1>Perdu ?</h1>
-        <a href="/">Retour à l'accueil</a>
+        <router-link :to="{name: 'home'}">Retour à l'accueil</router-link>
     </div>
 </template>
 
