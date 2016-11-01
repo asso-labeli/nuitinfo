@@ -5,9 +5,6 @@ let express = require('express');
 let fs = require('fs');
 
 module.exports = function (app, config) {
-
-
-
     let files = fs.readdirSync(config.root + '/entities');
 
     for (let file of files) {
@@ -15,6 +12,7 @@ module.exports = function (app, config) {
     }
 
     app.use('/api/application', require('../entities/application/application.routes'));
+    app.use('/api/institution', require('../entities/institution/institution.routes'));
     app.use('/api/user', require('../entities/user/user.routes'));
     app.use('/api/team', require('../entities/team/team.routes'));
 
