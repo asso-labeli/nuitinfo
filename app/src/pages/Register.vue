@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="formField">
+            <div class="formField" v-if="!editionMode">
                 <div class="labelWrapper">
                     <label for="pass"><span class="special">Mot de passe :</span></label>
                 </div>
@@ -156,33 +156,45 @@
                 }
             };
         },
+        computed: {
+            editionMode: function() {
+                return this.$route.path === '/edit' || this.$route.path === '/edit/';
+            }
+        },
         mounted(){
-            if (this.$route.path === '/edit') {
+            if (this.editionMode) {
                 this.title = "Édition de profil";
-                if (user.state.logged) {
-                    this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
-                        response.json().then((message) => {
-                            if (message.success === 1) {
-                                user.setUser(message.data);
-                            }
-                        });
-                    }, (response) => {
-                        console.warn('Error');
+                this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    response.json().then((message) => {
+                        if (message.success === 1) {
+                            user.setUser(message.data);
+                            this.user = message.data;
+                            this.user.birthday = this.user.birthday.slice(0, 10);
+                            this.cremiOwner = !message.data.cremiAccount.needed;
+                        }
                     });
-                }
+                }, (response) => {
+                    console.warn('Erreur de récupération des informations de profil');
+                });
             }
         },
         methods: {
             register() {
                 this.user.cremiAccount.needed = !this.cremiOwner;
-                console.log(JSON.stringify(this.user));
 
-                this.$http.post('/api/user', JSON.stringify(this.user)).then((response) => {
-                    console.log('Success');
-                    this.$router.go({name: 'register'});
-                }, (response) => {
-                    console.log('Error');
-                });
+                if (this.editionMode) {
+                    this.$http.put('/api/user', JSON.stringify(this.user), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                        this.$router.push({name: 'dashboard'});
+                    }, (response) => {
+                        console.warn('Erreur de modification');
+                    });
+                } else {
+                    this.$http.post('/api/user', JSON.stringify(this.user)).then((response) => {
+                        this.$router.push({name: 'login'});
+                    }, (response) => {
+                        console.warn('Erreur d\'ajout d\'un utilisateur');
+                    });
+                }
             }
         }
     };

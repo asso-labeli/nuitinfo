@@ -3,7 +3,10 @@
         <h1>Dashboard</h1>
         <div>
             <h2>Hello, {{userState.firstName}}</h2>
+
             <counter></counter>
+
+            <router-link :to="{name: 'edit'}">Éditer mon profil</router-link>
         </div>
     </div>
 </template>
