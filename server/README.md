@@ -41,6 +41,13 @@ Route | Description | Authentication
 **POST** /application/accept | Accept an application | Yes
 **POST** /application/refuse | Refuse an application | Yes
 
+### [Institution](/server/doc/institution.md#institution)
+
+Route | Description | Authentication
+----- | ----------- | --------------
+**POST** /institution | Add a new institution | No
+**GET** /institution | Get institutions | No
+
 ### Statistics
 
 Route | Description | Authentication
