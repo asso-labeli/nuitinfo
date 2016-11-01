@@ -45,7 +45,8 @@ Route | Description | Authentication
 
 Route | Description | Authentication
 ----- | ----------- | --------------
-**POST** /institution/ | Add a new institution | No
+**POST** /institution | Add a new institution | No
+**GET** /institution | Get institutions | No
 
 ### Statistics
 

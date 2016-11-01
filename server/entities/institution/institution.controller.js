@@ -48,4 +48,18 @@ module.exports = function (institutionSchema) {
             Response.success(res, 'Institution added', institution);
         });
     };
+
+    institutionSchema.statics.exGet = function (req, res) {
+        mongoose.model('Institution').find({}, '-__v', (err, institutions) => {
+            if (err){
+                return Response.selectError(res, err);
+            }
+
+            if (!institutions || !institutions.length){
+                return Response.resourceNotFound(res, 'institutions');
+            }
+
+            Response.success(res, 'Institutions found', institutions);
+        });
+    };
 };
