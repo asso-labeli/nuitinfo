@@ -129,6 +129,7 @@
 </template>
 
 <script>
+    import user from '../stores/UserStore';
     export default {
         data () {
             return {
@@ -144,19 +145,32 @@
                     material: {
                         hasMaterial: true,
                         isDesktop: false,
-                        hasWiFi: true,
+                        hasWiFi: true
                     },
                     cremiAccount: {
                         studentNumber: null,
                         studentMail: "",
                         charter: false
                     },
-                    mailForRecruitment: true,
+                    mailForRecruitment: true
                 }
             };
         },
         mounted(){
-            console.log(this.$route.path);
+            if (this.$route.path === '/edit') {
+                this.title = "Édition de profil";
+                if (user.state.logged) {
+                    this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                        response.json().then((message) => {
+                            if (message.success === 1) {
+                                user.setUser(message.data);
+                            }
+                        });
+                    }, (response) => {
+                        console.warn('Error');
+                    });
+                }
+            }
         },
         methods: {
             register() {

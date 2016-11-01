@@ -24,6 +24,10 @@ const router = new VueRouter({
         component: require('./pages/Register.vue'),
         name: 'register'
     }, {
+        path: '/edit',
+        component: require('./pages/Register.vue'),
+        name: 'edit'
+    }, {
         path: '/challenges',
         component: require('./pages/Challenges.vue'),
         name: 'challenges'
