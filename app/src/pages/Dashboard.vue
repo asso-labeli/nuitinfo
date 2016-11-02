@@ -3,7 +3,10 @@
         <h1>Dashboard</h1>
         <div>
             <h2>Hello, {{userState.firstName}}</h2>
+
             <counter></counter>
+
+            <router-link :to="{name: 'edit'}">Éditer mon profil</router-link>
         </div>
     </div>
 </template>
@@ -20,12 +23,11 @@
         },
         mounted (){
             this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
-                console.log('Success');
                 response.json().then((message) => {
                     user.setUser(message.data);
                 });
             }, (response) => {
-                console.log('Error');
+                console.warn('Erreur Dashboard.vue /api/user/me');
             });
         },
         methods: {}

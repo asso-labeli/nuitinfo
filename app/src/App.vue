@@ -20,20 +20,15 @@
             }
         },
         mounted(){
-            console.log(user.state.token);
-            console.log(user.getToken());
             if (user.getToken() !== null) {
-                console.log("token");
                 this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     response.json().then((message) => {
-                        console.log(message);
                         if (message.success === 1) {
-                            console.log("success");
                             user.setUser(message.data);
                         }
                     });
                 }, (response) => {
-                    console.log('Error');
+                    console.warn('Erreur App.vue /api/user/me');
                 });
             }
         }
