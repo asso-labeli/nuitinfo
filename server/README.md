@@ -64,9 +64,10 @@ Route | Description | Authentication
 **POST** /institution | Add a new institution | No
 **GET** /institution | Get institutions | No
 
-### Statistics
+### [Statistics](/server/doc/statistics.md#statistics)
 
 Route | Description | Authentication
 ----- | ----------- | --------------
 **GET** /statistics/users | Get numbers of users | No
 **GET** /statistics/teams| Get numbers of teams | No
+**GET** /statistics/users/byInstitution | Get numbers of users by institution | No
