@@ -71,3 +71,4 @@ Route | Description | Authentication
 **GET** /statistics/users | Get numbers of users | No
 **GET** /statistics/teams| Get numbers of teams | No
 **GET** /statistics/users/byInstitution | Get numbers of users by institution | No
+**GET** /statistics/users/byYear | Get numbers of users by study year | No

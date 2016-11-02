@@ -78,4 +78,19 @@ router.get('/users/byInstitution', (req, res) => {
     });
 });
 
+router.get('/users/byYear', (req, res) => {
+    mongoose.model('User').aggregate([{
+        $group: {_id: '$school.studyYear', users : {$sum : 1}}
+    }], (err, result) => {
+        if (err){
+            return Response.selectError(res, err);
+        }
+        if (!result || !result[0]){
+            return Response.resourceNotFound(res, 'users');
+        }
+
+        Response.success(res, 'Statistics of users by institution', result);
+    });
+});
+
 module.exports = router;
