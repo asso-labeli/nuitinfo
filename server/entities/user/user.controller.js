@@ -13,7 +13,7 @@ const editableFields = {
     biography: true,
     birthday: true,
     school: {
-        institution : true,
+        institution: true,
         studyYear: true,
         pathway: true
     },
@@ -77,13 +77,13 @@ module.exports = function (userSchema) {
         );
     };
 
-    function recursiveEdit(parametersObject, newParams, user){
-        for (let key in parametersObject){
-            if (!parametersObject.hasOwnProperty(key)){
+    function recursiveEdit(parametersObject, newParams, user) {
+        for (let key in parametersObject) {
+            if (!parametersObject.hasOwnProperty(key)) {
                 continue;
             }
 
-            if (parametersObject[key] instanceof Object && newParams[key]){
+            if (parametersObject[key] instanceof Object && newParams[key]) {
                 recursiveEdit(parametersObject[key], newParams[key], user[key]);
             } else if (newParams[key]) {
                 user[key] = newParams[key];
@@ -91,7 +91,7 @@ module.exports = function (userSchema) {
         }
     }
 
-    function editUserParameters(params, user){
+    function editUserParameters(params, user) {
         recursiveEdit(editableFields, params, user);
     }
 
@@ -121,7 +121,7 @@ module.exports = function (userSchema) {
         ], callback);
     };
 
-    userSchema.statics.edit = function(params, callback){
+    userSchema.statics.edit = function (params, callback) {
         async.waterfall([
             (next) => mongoose.model('User').findById(params.user, next),
             (user, next) => {
@@ -136,7 +136,7 @@ module.exports = function (userSchema) {
         ], callback);
     };
 
-    userSchema.statics.changeTeam = function(params, callback){
+    userSchema.statics.changeTeam = function (params, callback) {
         mongoose.model('User').update(
             {_id: params.user._id},
             {team: params.team._id},
@@ -149,7 +149,7 @@ module.exports = function (userSchema) {
             });
     };
 
-    userSchema.statics.getById = function(params, callback){
+    userSchema.statics.getById = function (params, callback) {
         mongoose.model('User')
             .findById(params.id)
             .select('firstName lastName school team biography')
@@ -157,7 +157,7 @@ module.exports = function (userSchema) {
             .exec(callback);
     };
 
-    userSchema.statics.getAll = function (params, callback){
+    userSchema.statics.getAll = function (params, callback) {
         mongoose.model('User')
             .find()
             .select('firstName lastName school team biography')
@@ -254,7 +254,7 @@ module.exports = function (userSchema) {
                 return Response.selectError(res, err);
             }
 
-            if (!users || users.length === 0){
+            if (!users || users.length === 0) {
                 return Response.resourceNotFound(res, 'users');
             }
 
@@ -263,20 +263,29 @@ module.exports = function (userSchema) {
     };
 
     userSchema.statics.exGetLoggedUser = function (req, res) {
-        if (!req.isLogged()){
+        if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
 
-        mongoose.model('User').findById(req.user._id, '-password -__v', (err, user) => {
-            if (err) {
-                return Response.selectError(res, err);
-            }
+        mongoose.model('User').findById(req.user._id)
+            .select('-password -__v')
+            .populate('team')
+            .exec((err, user) => {
+                if (err) {
+                    return Response.selectError(res, err);
+                }
 
-            if (!user){
-                return Response.resourceNotFound(res, 'user');
-            }
+                if (!user) {
+                    return Response.resourceNotFound(res, 'user');
+                }
 
-            Response.success(res, 'Logged user', user);
-        });
+                user = user.toObject();
+
+                if (user.team){
+                    user.team.isLeader = user._id.equals(user.team.members.leader);
+                }
+
+                Response.success(res, 'Logged user', user);
+            });
     };
 };
