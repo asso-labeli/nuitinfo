@@ -6,7 +6,7 @@ Route | Description | Authentication
 ----- | ----------- | --------------
 [**GET** /statistics/users](#get-statisticsusers) | Get numbers of users | No
 [**GET** /statistics/teams](#get-statisticsteams) | Get numbers of teams | No
-[**GET** /statistics/users/byInstitution]](#get-statisticsusersbyinstitution) | Get numbers of users by institution | No
+[**GET** /statistics/users/byInstitution](#get-statisticsusersbyinstitution) | Get numbers of users by institution | No
 
 ## GET /statistics/users
 
