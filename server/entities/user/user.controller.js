@@ -4,6 +4,7 @@ let Response = require('../../tools/response');
 let mongoose = require('mongoose');
 let async = require('async');
 let PassTools = require('../../tools/passTools');
+let Mail = require('../../config/mail');
 
 const editableFields = {
     lastName: true,
@@ -103,16 +104,21 @@ module.exports = function (userSchema) {
         params.paswordRecoveryToken = undefined;
         params.data = undefined;
 
-        PassTools.hashPassword(params.password, (err, pass) => {
-            if (err) {
-                return callback(err);
+        async.waterfall([
+            (next) => PassTools.hashPassword(params.password, next),
+            (pass, next) => {
+                params.password = pass;
+
+                let user = new Self(params);
+
+                user.save(next);
+            },
+            (user, requests, next) => {
+                Mail.sendSubscribeMail({
+                    to: user.email
+                }, (err) => next(err, user));
             }
-            params.password = pass;
-
-            let user = new Self(params);
-
-            user.save(callback);
-        });
+        ], callback);
     };
 
     userSchema.statics.edit = function(params, callback){

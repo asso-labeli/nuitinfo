@@ -24,8 +24,22 @@ const passwordRecoveryMail = {
         'Sinon, ignorez simplement ce mail.\r\n\r\n',
         'A bientôt pour la Nuit ! :)\r\n\r\n',
         'Loco, le robot mailer de la Nuit de l\'Info'
-    ],
-    linkElement : 2
+    ]
+};
+
+const subscribeMail = {
+    subject : 'Inscription à la Nuit de l\'Info',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Vous êtes maintenant inscrit sur le site de la Nuit de l\'Info de Bordeaux.\r\n',
+        'Pour vous connecter, il suffit de rentrer votre adresse e-mail et votre mot de passe',
+        ' renseigné lors de l\'inscription.',
+        '\r\n\r\n',
+        'Vous pouvez d\'ores et déjà vous connecter sur le site pour trouver ou ',
+        'créer une équipe.\r\n\r\n',
+        'A bientôt pour la Nuit ! :)\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
 };
 
 function sendPasswordRecoveryMail(params, callback){
@@ -43,6 +57,21 @@ function sendPasswordRecoveryMail(params, callback){
     });
 }
 
+function sendSubscribeMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: subscribeMail.subject,
+        text: subscribeMail.text
+            .join('')
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
 module.exports = {
-    sendPasswordRecoveryMail: sendPasswordRecoveryMail
+    sendPasswordRecoveryMail: sendPasswordRecoveryMail,
+    sendSubscribeMail: sendSubscribeMail
 };
