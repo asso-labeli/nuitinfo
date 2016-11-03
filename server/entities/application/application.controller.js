@@ -231,7 +231,7 @@ module.exports = function (applicationSchema) {
                 return Response.deleteError(res, err);
             }
 
-            Response.success(res, 'Application accepted');
+            Response.success(res, 'Application accepted', {});
         });
     };
 
@@ -255,7 +255,7 @@ module.exports = function (applicationSchema) {
                 return Response.deleteError(res, err);
             }
 
-            Response.success(res, 'Application refused');
+            Response.success(res, 'Application refused', {});
         });
     };
 };

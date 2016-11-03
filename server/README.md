@@ -48,7 +48,7 @@ Route | Description | Authentication
 **GET** /team/:id | Get team with specific id | No
 **GET** /team | Get all teams | No
 
-### Application
+### [Application](/server/doc/application.md#application)
 
 Route | Description | Authentication
 ----- | ----------- | --------------
