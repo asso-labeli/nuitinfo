@@ -6,18 +6,21 @@
                 <h4>
                     <router-link :to="{name: 'displayUser',params: {id: user._id}}">{{user.firstName | capitalize}} {{user.lastName | uppercase}}</router-link>
                 </h4>
-                <div class="school"><span class="special">Établissement :</span> {{user.school.institution}}</div>
+                <div class="school"><span class="special">Établissement :</span> {{user.school.institution.name}}</div>
                 <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span class="integer">{{user.school.studyYear}}</span></span></div>
                 <span class="special">Biographie :</span>
                 <div class="bio">{{user.biography}}</div>
             </div>
+            <separator></separator>
         </div>
     </div>
 </template>
 
 <script>
+    import Separator from '../elements/Separator.vue';
     import dataStore from '../stores/DataStore';
     export default {
+        components: {Separator},
         filters: {
             capitalize: function(value) {
                 if (!value) {
@@ -43,7 +46,6 @@
             this.$http.get('/api/user').then((response) => {
                 if (response.status === 200) {
                     response.json().then((message) => {
-                        console.log(message.data);
                         this.users = message.data;
                         dataStore.set('users', message.data);
                     });
@@ -64,5 +66,9 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+    }
+
+    #users h4 {
+        text-align: center;
     }
 </style>
