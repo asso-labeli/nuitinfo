@@ -24,9 +24,29 @@ const router = new VueRouter({
         component: require('./pages/Register.vue'),
         name: 'register'
     }, {
-        path: '/edit',
+        path: '/users',
+        component: require('./pages/Users.vue'),
+        name: 'users'
+    }, {
+        path: '/user/edit',
         component: require('./pages/Register.vue'),
         name: 'edit'
+    }, {
+        path: '/user/:id',
+        component: require('./pages/DisplayUser.vue'),
+        name: 'displayUser'
+    }, {
+        path: '/teams',
+        component: require('./pages/Team.vue'),
+        name: 'teams'
+    }, {
+        path: '/team/create',
+        component: require('./pages/CreateTeam.vue'),
+        name: 'createTeam'
+    }, {
+        path: '/team/edit',
+        component: require('./pages/CreateTeam.vue'),
+        name: 'editTeam'
     }, {
         path: '/challenges',
         component: require('./pages/Challenges.vue'),

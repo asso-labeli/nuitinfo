@@ -2,8 +2,6 @@
     <div id="register">
         <h1>{{title}}</h1>
         <form v-on:submit.prevent="register" class="userForm">
-            <input type="hidden" name="post" value="post"/>
-
             <h2 class="title" style="padding-top: 0">Informations de connexion</h2>
             <div class="formField">
                 <div class="labelWrapper">
@@ -230,7 +228,7 @@
         },
         computed: {
             editionMode: function() {
-                return this.$route.path === '/edit' || this.$route.path === '/edit/';
+                return this.$route.path === '/user/edit' || this.$route.path === '/user/edit/';
             }
         },
         mounted(){

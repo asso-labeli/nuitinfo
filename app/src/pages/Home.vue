@@ -43,15 +43,15 @@
             <h2 class="title"><a href="/stats">Statistiques</a></h2>
             <div class="flexbox flexbox-wrap flexbox-center">
                 <div class="participants">{
-                    <a href="#">
+                    <router-link :to="{name: 'users'}">
                         <span>participants : <span class="integer">{{ users }}</span></span>
-                    </a>
+                    </router-link>
                     ,
                 </div>
                 <div class="teams">&nbsp;
-                    <a href="#">
+                    <router-link :to="{name: 'teams'}">
                         <span>teams :  <span class="integer">{{ teams }}</span></span>
-                    </a>
+                    </router-link>
                     }
                 </div>
             </div>

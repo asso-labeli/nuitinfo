@@ -4,7 +4,17 @@
         <div>
             <h2>Hello, {{userState.firstName}}</h2>
 
+            <h2 class="title">La Nuit</h2>
             <counter></counter>
+
+            <h2 class="title">Ton équipe</h2>
+            <team></team>
+
+            <h2 class="title">Toi</h2>
+            <div>
+                <div class="special">Bio :</div>
+                <p>{{biography}}</p>
+            </div>
 
             <router-link :to="{name: 'edit'}">Éditer mon profil</router-link>
         </div>
@@ -13,18 +23,21 @@
 
 <script>
     import Counter from '../elements/Counter.vue';
+    import Team from '../elements/Team.vue';
     import user from '../stores/UserStore'
     export default {
-        components: {Counter},
+        components: {Counter, Team},
         data () {
             return {
-                userState: user.state
+                userState: user.state,
+                biography: ''
             };
         },
         mounted (){
             this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                 response.json().then((message) => {
                     user.setUser(message.data);
+                    this.biography = message.data.biography;
                 });
             }, (response) => {
                 console.warn('Erreur Dashboard.vue /api/user/me');
