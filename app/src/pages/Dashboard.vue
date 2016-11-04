@@ -12,6 +12,7 @@
 
             <h2 class="title">Toi</h2>
             <div>
+                <div><span class="special">Email :</span> {{userState.email}}</div>
                 <div class="special">Bio :</div>
                 <p>{{biography}}</p>
             </div>
