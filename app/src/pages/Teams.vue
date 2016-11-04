@@ -1,26 +1,40 @@
 <template>
-    <h1>La liste des équipes</h1>
-    <div v-for="team in teams">
-        <div>{{team.name}}</div>
-        <div>{{team.descrition}}</div>
-        <div v-if="team.logisticsRequirements">Cette équipe recrute des membres</div>
-        <div v-else>Cette équipe ne recrute pas de membre</div>
+    <div id="teams">
+        <h1>La liste des équipes</h1>
+        <h4><span>Nombre d'équipes : <span class="integer">{{teams.length}}</span></span></h4>
+        <div v-for="team in teams">
+            <div class="team">
+                <h4 class="center">
+                    <b>{{team.name}}</b>
+                </h4>
+                <div class="applicationState">Candidatures <b v-if="team.openForApplications">ouvertes</b><b v-else>fermées</b></div>
+                <span class="special">Description :</span>
+                <div class="description">{{team.description}}</div>
+                <div v-if="team.openForApplications && displayApplication">
+                    <a v-on:click.stop.prevent="apply(team._id)">Postuler dans cette équipe</a>
+                </div>
+            </div>
+            <separator></separator>
+        </div>
     </div>
 </template>
 
 <script>
+    import user from '../stores/UserStore';
     import dataStore from '../stores/DataStore';
+    import Separator from '../elements/Separator.vue';
     export default {
+        components: {Separator},
         data(){
             return {
-                teams: dataStore.get('teams', [])
+                teams: dataStore.get('teams', []),
+                displayApplication: false
             };
         },
         mounted(){
             this.$http.get('/api/team').then((response) => {
                 if (response.status === 200) {
                     response.json().then((message) => {
-                        console.log(message.data);
                         this.teams = message.data;
                         dataStore.set('teams', message.data);
                     });
@@ -28,6 +42,51 @@
                     this.teams = [];
                 }
             });
+
+            if (user.getToken()) {
+                this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    if (response.status === 200) {
+                        response.json().then((message) => {
+                            user.setUser(message.data);
+                            this.displayApplication = !message.data.hasOwnProperty('team');
+                        });
+                    } else {
+                        this.displayApplication = false;
+                    }
+                });
+            } else {
+                this.displayApplication = false;
+            }
+        },
+        methods: {
+            apply: function(teamID) {
+                if (user.getToken()) {
+                    this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                        if (response.status === 200) {
+                            response.json().then((message) => {
+                                user.setUser(message.data);
+                                this.$http.post('/api/application/fromUser', JSON.stringify({
+                                    user: user.getID(),
+                                    team: teamID
+                                }), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                                    this.$router.push({name: 'dashboard'})
+                                })
+                            });
+                        }
+                    });
+                }
+            }
         }
     }
 </script>
+
+<style>
+    @media screen and (min-width: 700px) {
+        #teams {
+            padding: 10px;
+            padding-bottom: 5vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    }
+</style>

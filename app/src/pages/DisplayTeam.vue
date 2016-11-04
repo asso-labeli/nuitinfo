@@ -1,6 +1,6 @@
 <template>
-    <div id="displayUser">
-        <h1>Affichage utilisateur</h1>
+    <div id="displayTeam">
+        <h1>Affichage équipe</h1>
     </div>
 </template>
 
@@ -16,7 +16,7 @@
 
 <style>
     @media screen and (min-width: 700px) {
-        #displayUser {
+        #displayTeam {
             padding: 10px;
             padding-bottom: 5vh;
             max-width: 1200px;

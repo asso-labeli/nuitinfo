@@ -7,6 +7,7 @@ class UserStore {
 
     init() {
         this.state.email = null;
+        this.state.id = null;
         this.state.firstName = null;
         this.state.lastName = null;
         this.state.token = null;
@@ -49,6 +50,10 @@ class UserStore {
 
     getEmail() {
         return this.state.email;
+    };
+
+    getID() {
+        return this.state.id;
     };
 
     logout() {

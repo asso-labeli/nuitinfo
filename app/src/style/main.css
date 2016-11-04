@@ -433,3 +433,15 @@ progress::-webkit-progress-value, progress::-moz-progress-value, progress::-o-pr
         flex-wrap: wrap;
         align-items: center;
 }
+
+.center {
+        text-align: center;
+}
+
+.capitalized {
+        text-transform: capitalize;
+}
+
+.upperCased {
+        text-transform: uppercase;
+}

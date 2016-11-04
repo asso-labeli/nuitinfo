@@ -32,12 +32,8 @@ const router = new VueRouter({
         component: require('./pages/Register.vue'),
         name: 'edit'
     }, {
-        path: '/user/:id',
-        component: require('./pages/DisplayUser.vue'),
-        name: 'displayUser'
-    }, {
         path: '/teams',
-        component: require('./pages/Team.vue'),
+        component: require('./pages/Teams.vue'),
         name: 'teams'
     }, {
         path: '/team/create',
@@ -47,6 +43,10 @@ const router = new VueRouter({
         path: '/team/edit',
         component: require('./pages/CreateTeam.vue'),
         name: 'editTeam'
+    }, {
+        path: '/team/:id',
+        component: require('./pages/DisplayTeam.vue'),
+        name: 'displayTeam'
     }, {
         path: '/challenges',
         component: require('./pages/Challenges.vue'),
