@@ -16,7 +16,7 @@ module.exports = function (applicationSchema) {
                     return callback(err);
                 }
 
-                if (application.params.equals(user.team.members.leader)) {
+                if (params.user.equals(user.team.members.leader)) {
                     return callback(null, application);
                 }
 
@@ -42,6 +42,7 @@ module.exports = function (applicationSchema) {
                     if (application.fromTeam && application.user.equals(params.user)) {
                         return next(undefined, application);
                     } else if (application.fromUser) {
+                        // In this case, params.user is the logged user
                         return checkApplicationHasGoodTeam(application, params, next);
                     } else {
                         return next('Application\'s user isn\'t the same than logged user');
