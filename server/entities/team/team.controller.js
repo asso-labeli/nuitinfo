@@ -74,7 +74,7 @@ module.exports = function (teamSchema) {
     teamSchema.statics.addUser = function (params, callback) {
         mongoose.model('Team').update(
             {_id: params.team._id},
-            {$push: {'members.list': params.user._id}},
+            {$addToSet: {'members.list': params.user._id}},
             (err) => {
                 if (err) {
                     return callback(err);
@@ -110,6 +110,16 @@ module.exports = function (teamSchema) {
             .exec(callback);
     };
 
+    teamSchema.statics.changeLeader = function (params, callback) {
+        mongoose.model('Team')
+            .update({team: params.team._id},
+                {$and : [
+                    {$addToSet: {'members.list' : params.oldLeader._id}},
+                    {$pull: {'members.list': params.newLeader._id}},
+                    {$set: {'members.list': params.newLeader._id}}
+                ]}, callback);
+    };
+
     /* Express methods verifications */
 
     function checkParametersExistsForCreate(req, res, callback) {
@@ -127,6 +137,16 @@ module.exports = function (teamSchema) {
     function checkParametersExistsForKick(req, res, callback){
         if (!req.body || !req.body.user) {
             Response.missing(res, 'user', -11);
+        } else {
+            return callback();
+        }
+
+        callback({alreadySent: true});
+    }
+
+    function checkParametersExistsForChangeLeader(req, res, callback){
+        if (!req.body || !req.body.leader) {
+            Response.missing(res, 'leader', -11);
         } else {
             return callback();
         }
@@ -248,7 +268,7 @@ module.exports = function (teamSchema) {
 
     teamSchema.statics.exKick = function (req, res) {
         if (!req.isLogged()){
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([
@@ -277,6 +297,46 @@ module.exports = function (teamSchema) {
             }
 
             Response.success(res, 'Team successfully edited', {});
+        });
+    };
+
+    teamSchema.statics.exChangeLeader = function (req, res) {
+        if (!req.isLogged()){
+            return Response.notLogged(res);
+        }
+
+        async.waterfall([
+            (next) => checkParametersExistsForChangeLeader(req, res, next),
+            (next) => mongoose.model('Team').findOne({'members.leader': req.user._id}, next),
+            (team, next) => {
+                if (!team || !team._id){
+                    Response.notAllowed(res);
+
+                    return next({alreadySent: true});
+                }
+
+                for (let member of team.members.list){
+                    if (member.equals(req.body.leader)){
+                        next(undefined, {
+                            team: team,
+                            oldLeader: team.members.leader,
+                            newLeader: req.body.leader
+                        });
+                    }
+                }
+
+                Response.resourceNotFound(res, 'user in team');
+                next({alreadySent: true});
+            },
+            (params, next) => mongoose.model('Team').changeLeader(params, next)
+        ], (err) => {
+            if (err && err.alreadySent){
+                return;
+            } else if (err) {
+                return Response.editError(res, err);
+            }
+
+            Response.success(res, 'Leader changed', {});
         });
     };
 };

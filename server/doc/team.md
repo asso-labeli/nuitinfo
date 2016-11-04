@@ -10,6 +10,7 @@ Route | Description | Authentication
 [**GET** /team/:id](#get-teamid) | Get team with specific id | No
 [**GET** /team](#get-team) | Get all teams | No
 [**POST** /team/kick](#post-teamkick) | Kick a member | Yes
+[**POST** /team/changeLeader](#post-teamchangeleader) | Change leader of a team| Yes
 
 
 ## POST /team
@@ -170,7 +171,36 @@ Team's entries
 Code | Description
 ---|---
 1 | Success
+-1 | Not logged
 -11 | Missing user
+-26 | Error in MongoDB during edition
+-51 | Authentication failed : Not the leader of the team
+
+##### Data
+
+```
+{}
+```
+
+## POST /team/changeLeader
+
+#### Body parameters
+
+```javascript
+{
+    "leader": ObjectId [Required] // New leader of the team
+}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-1 | Not logged
+-11 | Missing leader
 -26 | Error in MongoDB during edition
 -51 | Authentication failed / Not the leader of the team
 

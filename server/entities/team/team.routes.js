@@ -12,5 +12,6 @@ router.delete('/', Team.exDelete);
 router.get('/:id', Team.exGet);
 router.get('/', Team.exGetAll);
 router.post('/kick', Team.exKick);
+router.post('/changeLeader', Team.exChangeLeader);
 
 module.exports = router;
