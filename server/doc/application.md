@@ -8,6 +8,7 @@ Route | Description | Authentication
 [**POST** /application/fromTeam](#post-applicationfromteam) | Add a new application from a team | Yes
 [**POST** /application/accept](#post-applicationaccept) | Accept an application | Yes
 [**POST** /application/refuse](#post-applicationrefuse) | Refuse an application | Yes
+[**GET** /application/forUser](#get-applicationforuser) | Get applications for a user | Yes
 
 ## POST /application/fromUser
 
@@ -122,3 +123,28 @@ Code | Description
 ```javascript
 {}
 ```
+## GET /application/forUser
+
+#### Body parameters
+
+```javascript
+{}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-27 | Internal error in MongoDB during selection
+-43 | No applications found
+-51 | Authentication Failed
+
+##### Data
+
+```javascript
+[Applications's entries]
+```
+

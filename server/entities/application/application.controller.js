@@ -7,16 +7,16 @@ let async = require('async');
 module.exports = function (applicationSchema) {
     /* Tools functions */
 
-    function checkApplicationHasGoodTeam(application, params, callback){
+    function checkApplicationHasGoodTeam(application, params, callback) {
         mongoose.model('User')
             .findById(params.user)
             .populate('team')
             .exec((err, user) => {
-                if (err){
+                if (err) {
                     return callback(err);
                 }
 
-                if (application.params.equals(user.team.members.leader)){
+                if (application.params.equals(user.team.members.leader)) {
                     return callback(null, application);
                 }
 
@@ -257,5 +257,25 @@ module.exports = function (applicationSchema) {
 
             Response.success(res, 'Application refused', {});
         });
+    };
+
+    applicationSchema.statics.exGetForUser = function (req, res) {
+        if (!req.isLogged()) {
+            return Response.notAllowed(res);
+        }
+
+        mongoose.model('Application').find({user: req.user._id})
+            .populate('team')
+            .exec((err, applications) => {
+                if (err) {
+                    return Response.selectError(res, err);
+                }
+
+                if (!applications) {
+                    return Response.resourceNotFound(res, 'application');
+                }
+
+                Response.success(res, 'Applications found', applications);
+            });
     };
 };
