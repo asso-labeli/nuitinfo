@@ -5,14 +5,16 @@
                 <b>{{team.name}}</b>
             </h4>
             <span class="special">Description :</span>
-            <div class="description">{{team.description}}</div>
+            <div class="description" v-html="nl2br(team.description)"></div>
             <div class="leader"><span class="special">Leader :</span>
                 <span class="capitalized">{{team.members.leader.firstName}}</span>
                 <span class="upperCased">{{team.members.leader.lastName}}</span>
-                <router-link :to="{name: 'displayUser', params: {id: team.members.leader._id}}">Voir le profil</router-link>
+                <router-link :to="{name: 'displayUser', params: {id: team.members.leader._id}}">Voir le profil
+                </router-link>
             </div>
             <div v-if="team.members.list.length > 0">
-                <span class="special">Membre<span v-if="team.members.list.length > 1">s</span> ({{team.members.list.length}}):</span>
+                <span class="special">Membre<span
+                        v-if="team.members.list.length > 1">s</span> ({{team.members.list.length}}):</span>
                 <div>
                     <ul>
                         <li v-for="member in team.members.list">
@@ -32,7 +34,9 @@
                         <li v-for="application in applications">
                             <span class="capitalized">{{application.user.firstName}}</span>
                             <span class="upperCased">{{application.user.lastName}}</span>
-                            <router-link :to="{name: 'displayUser', params: {id: application.user._id}}">Voir le profil</router-link>
+                            <router-link :to="{name: 'displayUser', params: {id: application.user._id}}">Voir le
+                                profil
+                            </router-link>
                             <a v-on:click.stop.prevent="accept(application._id)">Accepter</a>
                             <a v-on:click.stop.prevent="refuse(application._id)">Refuser</a>
                         </li>
@@ -75,12 +79,16 @@
             };
         },
         methods: {
-            accept: function(applicationID) {
+            nl2br: function (str) {
+                str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
+            },
+            accept: function (applicationID) {
                 this.$http.post('/api/application/accept', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response1) => {
                     this.$router.push({name: 'dashboard'});
                 });
             },
-            refuse: function(applicationID) {
+            refuse: function (applicationID) {
                 this.$http.post('/api/application/refuse', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response1) => {
                     this.$router.push({name: 'dashboard'});
                 });
