@@ -11,5 +11,6 @@ router.put('/', Team.exEdit);
 router.delete('/', Team.exDelete);
 router.get('/:id', Team.exGet);
 router.get('/', Team.exGetAll);
+router.post('/kick', Team.exKick);
 
 module.exports = router;

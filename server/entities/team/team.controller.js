@@ -84,6 +84,19 @@ module.exports = function (teamSchema) {
             });
     };
 
+    teamSchema.statics.removeUser = function (params, callback){
+        mongoose.model('Team').update(
+            {_id: params.team._id},
+            {$pull: {'members.list': params.user._id}},
+            (err) => {
+                if (err) {
+                    return callback(err);
+                }
+
+                callback();
+            });
+    };
+
     teamSchema.statics.getById = function (params, callback) {
         mongoose.model('Team')
             .findById(params.id)
@@ -104,6 +117,16 @@ module.exports = function (teamSchema) {
             Response.missing(res, 'name', -11);
         } else if (!req.body.email) {
             Response.missing(res, 'email', -12);
+        } else {
+            return callback();
+        }
+
+        callback({alreadySent: true});
+    }
+
+    function checkParametersExistsForKick(req, res, callback){
+        if (!req.body || !req.body.user) {
+            Response.missing(res, 'user', -11);
         } else {
             return callback();
         }
@@ -220,6 +243,40 @@ module.exports = function (teamSchema) {
             }
 
             Response.success(res, 'Teams found', teams);
+        });
+    };
+
+    teamSchema.statics.exKick = function (req, res) {
+        if (!req.isLogged()){
+            return Response.notAllowed(res);
+        }
+
+        async.waterfall([
+            (next) => checkParametersExistsForKick(req, res, next),
+            (next) => mongoose.model('Team').findOne({'members.leader': req.user._id}, next),
+            (team, next) => {
+                if (!team || !team._id){
+                    Response.notAllowed(res);
+
+                    return next({alreadySent: true});
+                }
+
+                next(undefined, team);
+            },
+            (next) => mongoose.model('Team').removeUser({
+                team: team,
+                user: {
+                    _id: req.body.user
+                }
+            }, next)
+        ], (err) => {
+            if (err && err.alreadySent){
+                return;
+            } else if (err) {
+                return Response.editError(res, err);
+            }
+
+            Response.success(res, 'Team successfully edited', {});
         });
     };
 };

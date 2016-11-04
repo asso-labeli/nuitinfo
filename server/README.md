@@ -47,6 +47,8 @@ Route | Description | Authentication
 **DELETE** /team | Remove a team | Yes
 **GET** /team/:id | Get team with specific id | No
 **GET** /team | Get all teams | No
+**POST** /team/kick | Kick a member | Yes
+
 
 ### [Application](/server/doc/application.md#application)
 

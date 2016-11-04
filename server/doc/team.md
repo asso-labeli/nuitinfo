@@ -9,6 +9,8 @@ Route | Description | Authentication
 [**DELETE** /team](#delete-team) | Remove a team | Yes
 [**GET** /team/:id](#get-teamid) | Get team with specific id | No
 [**GET** /team](#get-team) | Get all teams | No
+[**POST** /team/kick](#post-teamkick) | Kick a member | Yes
+
 
 ## POST /team
 
@@ -149,4 +151,31 @@ Code | Description
 
 ```
 Team's entries
+```
+
+## POST /team/kick
+
+#### Body parameters
+
+```javascript
+{
+    "user": ObjectId [Required]
+}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-11 | Missing user
+-26 | Error in MongoDB during edition
+-51 | Authentication failed / Not the leader of the team
+
+##### Data
+
+```
+{}
 ```
