@@ -34,15 +34,31 @@ RUN cd /var/www && git clone https://github.com/asso-labeli/nuitinfo.git
 RUN cd /var/www/nuitinfo/ && npm i
 RUN cd /var/www/nuitinfo/app && npm i
 
-# Set ENV
+# Setup environment variables
+##
+### MongoDB
+# Set URI of your MongoDB server
 ENV MONGO_HOST vps322703.ovh.net
+# Set port of your MongoDB server (defautl : 27017)
 ENV MONGO_PORT 27017
+# Set name of your database
 ENV MONGO_DB nuitinfo
+##
+### Email deliver
+# Supported services are available here: https://github.com/nodemailer/nodemailer-wellknown#supported-services
 ENV MAIL_SERVICE custom
 ENV MAIL_ADDRESS email@default.com
 ENV MAIL_PASSWORD password
+ENV MAIL_HOST smtp.default.com
+ENV MAIL_PORT 777
+# 0 for false and 1 for true
+ENV MAIL_SECURE 1
+##
+### API settings
 ENV API_URL http://localhost:8080
-ENV WEBSERVER_URL http://localhost:8080/web
+ENV WEBSERVER_URL http://localhost:8080
+##
+### YOU HAVE TO CHANGE THE SECRET
 ENV JWT_SECRET bJC2rlw0IW7XcsV5pWrFvcAK86y9JMD4L8JLB75BBmFJ00heK6yXtXMPDglcrZhl
 ENV BCRYPT_SALT_ROUNDS 10
 
