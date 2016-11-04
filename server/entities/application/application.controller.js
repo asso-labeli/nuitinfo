@@ -264,7 +264,7 @@ module.exports = function (applicationSchema) {
             return Response.notAllowed(res);
         }
 
-        mongoose.model('Application').find({user: req.user._id})
+        mongoose.model('Application').find({user: req.user._id, fromTeam: true})
             .populate('team')
             .exec((err, applications) => {
                 if (err) {
@@ -277,5 +277,43 @@ module.exports = function (applicationSchema) {
 
                 Response.success(res, 'Applications found', applications);
             });
+    };
+
+    applicationSchema.statics.exGetForTeam = function (req, res) {
+        if (!req.isLogged()) {
+            return Response.notAllowed(res);
+        }
+
+        async.waterfall([
+            (next) => mongoose.model('Team').findOne({'members.leader': req.user._id}, next),
+            (team, next) => {
+                if (!team || !team._id) {
+                    Response.notAllowed(res);
+
+                    return next({alreadySent: true});
+                }
+
+                mongoose.model('Application').find({
+                    team: team._id,
+                    fromUser: true
+                })
+                    .populate('user')
+                    .exec(next);
+            }
+        ], (err, applications) => {
+            if (err && err.alreadySent) {
+                return;
+            }
+
+            if (err) {
+                return Response.selectError(res, err);
+            }
+
+            if (!applications) {
+                return Response.resourceNotFound(res, 'application');
+            }
+
+            Response.success(res, 'Applications found', applications);
+        });
     };
 };

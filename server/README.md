@@ -57,7 +57,7 @@ Route | Description | Authentication
 **POST** /application/accept | Accept an application | Yes
 **POST** /application/refuse | Refuse an application | Yes
 **GET** /application/forUser | Get applications for a user | Yes
-
+**GET** /application/forTeam | Get applications for a team | Yes
 
 ### [Institution](/server/doc/institution.md#institution)
 

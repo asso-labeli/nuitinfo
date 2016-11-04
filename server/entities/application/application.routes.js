@@ -10,5 +10,6 @@ router.post('/fromTeam', Application.exCreateFromTeam);
 router.post('/accept', Application.exAccept);
 router.post('/refuse', Application.exRefuse);
 router.get('/forUser', Application.exGetForUser);
+router.get('/forTeam', Application.exGetForTeam);
 
 module.exports = router;
