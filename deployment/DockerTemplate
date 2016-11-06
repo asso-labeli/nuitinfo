@@ -38,7 +38,7 @@ RUN cd /var/www/nuitinfo/app && npm i
 ##
 ### MongoDB
 # Set URI of your MongoDB server
-ENV MONGO_HOST vps322703.ovh.net
+ENV MONGO_HOST localhost
 # Set port of your MongoDB server (defautl : 27017)
 ENV MONGO_PORT 27017
 # Set name of your database
