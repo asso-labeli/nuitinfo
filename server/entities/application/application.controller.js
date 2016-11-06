@@ -16,7 +16,7 @@ module.exports = function (applicationSchema) {
                     return callback(err);
                 }
 
-                if (params.user.equals(user.team.members.leader)) {
+                if (user.team.members.leader.equals(params.user)) {
                     return callback(null, application);
                 }
 
