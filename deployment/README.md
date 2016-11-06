@@ -2,7 +2,8 @@
 
 ## Introduction
 
-Nous avons mis une installation assez facile en utilisant le système Docker.
+Nous avons mis une installation assez facile en utilisant le système Docker. 
+Avec ce système, vous n'avez pas besoin de modifier le fichier **server/config/local.env.js**
 
 ## Pré-requis
 
