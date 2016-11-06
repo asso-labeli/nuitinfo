@@ -6,6 +6,7 @@ then
     echo "./launcher generate"
     echo "./launcher build"
     echo "./launcher launch"
+    echo "./launcher launch [port]"
 else
     if [ ${1} = "generate" ]
     then
@@ -33,6 +34,7 @@ else
                 echo "./launcher generate"
                 echo "./launcher build"
                 echo "./launcher launch"
+                echo "./launcher launch [port]"
             fi
         fi
     fi
