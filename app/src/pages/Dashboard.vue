@@ -14,7 +14,7 @@
             <div>
                 <div><span class="special">Email :</span> {{userState.email}}</div>
                 <div class="special">Bio :</div>
-                <p>{{biography}}</p>
+                <p v-html="nl2br(biography)"></p>
             </div>
 
             <router-link :to="{name: 'edit'}">Éditer mon profil</router-link>
@@ -28,6 +28,12 @@
     import user from '../stores/UserStore'
     export default {
         components: {Counter, Team},
+        methods: {
+            nl2br: function (str) {
+                str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
+            }
+        },
         data () {
             return {
                 userState: user.state,
@@ -43,8 +49,7 @@
             }, (response) => {
                 console.warn('Erreur Dashboard.vue /api/user/me');
             });
-        },
-        methods: {}
+        }
     };
 </script>
 
