@@ -7,18 +7,18 @@ then
     echo "./launcher build"
     echo "./launcher launch"
 else
-    if [ ${1} -eq "generate" ]
+    if [ ${1} = "generate" ]
     then
         echo "Dockerfile generation in progress"
         cp DockerTemplate Dockerfile
         echo "You can build now"
     else
-        if [ ${1} -eq "build" ]
+        if [ ${1} = "build" ]
         then
             echo "Docker build in progress"
             docker build . -t nuitinfo
         else
-            if [ ${1} -eq "launch" ]
+            if [ ${1} = "launch" ]
             then
                 echo "Docker launch in progress"
                 docker rm -f ndi
