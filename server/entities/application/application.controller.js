@@ -64,7 +64,7 @@ module.exports = function (applicationSchema) {
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
-                .findById(application.team, (err) => next(err, user, team)),
+                .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
                 if (!user){
                     return next('No user found');
@@ -85,7 +85,7 @@ module.exports = function (applicationSchema) {
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
-                .findById(application.team, (err) => next(err, user, team)),
+                .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
                 if (!user){
                     return next('No user found');
@@ -106,7 +106,7 @@ module.exports = function (applicationSchema) {
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
-                .findById(application.team, (err) => next(err, user, team)),
+                .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
                 if (!user){
                     return next('No user found');
@@ -127,7 +127,7 @@ module.exports = function (applicationSchema) {
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
-                .findById(application.team, (err) => next(err, user, team)),
+                .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
                 if (!user){
                     return next('No user found');
