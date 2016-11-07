@@ -92,7 +92,7 @@ module.exports = function (teamSchema) {
                 stepOk),
             (stepOk) => mongoose.model('User').update(
                 {_id: params.user._id},
-                {$set : {'team': undefined}},
+                {$unset : {'team': ''}},
                 stepOk)
         ], callback);
     };
