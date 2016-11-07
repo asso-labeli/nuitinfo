@@ -60,9 +60,12 @@
 
                 <router-link :to="{name:'users'}">Recruter des membres</router-link>
                 <br/>
-                <a href="#">Éditer les informations de l'équipe</a>
+                <a v-on:click.stop.prevent="wip()">Éditer les informations de l'équipe</a>
                 <br/>
-                <a href="#">Dissoudre l'équipe</a>
+                <a v-on:click.stop.prevent="wip()">Dissoudre l'équipe</a>
+            </div>
+            <div v-else>
+                <a v-on:click.stop.prevent="leave(team._id)">Quitter l'équipe</a>
             </div>
         </div>
         <div v-else>
@@ -95,6 +98,9 @@
             };
         },
         methods: {
+            wip: function() {
+                alert('Cette fonctionnalité est en cours de développement. Désolé pour la gêne occasionnée.');
+            },
             nl2br: function(str) {
                 str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
                 return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
@@ -121,7 +127,22 @@
             },
             kick: function(userID) {
                 this.$http.post('/api/team/kick', JSON.stringify({user: userID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
-                    this.$router.push({name: 'dashboard'});
+                    this.$router.go({
+                        path: this.$route,
+                        query: {
+                            t: +new Date()
+                        }
+                    });
+                });
+            },
+            leave: function(userID) {
+                this.$http.post('/api/team/leave', JSON.stringify({}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    this.$router.go({
+                        path: this.$route,
+                        query: {
+                            t: +new Date()
+                        }
+                    });
                 });
             }
         },
