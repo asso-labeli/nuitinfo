@@ -2,20 +2,21 @@
 
 ## Overview
 
-Route | Description | Authentication
+Route | Description | Authentication
 ----- | ----------- | --------------
 [**POST** /team](#post-team) | Add a new team | Yes
 [**PUT** /team](#put-team) | Edit a team | Yes
 [**DELETE** /team](#delete-team) | Remove a team | Yes
-[**GET** /team/:id](#get-teamid) | Get team with specific id | No
+[**GET** /team/:id](#get-teamid) | Get team with specific id | No
 [**GET** /team](#get-team) | Get all teams | No
-[**POST** /team/kick](#post-teamkick) | Kick a member | Yes
-[**POST** /team/changeLeader](#post-teamchangeleader) | Change leader of a team| Yes
+[**POST** /team/kick](#post-teamkick) | Kick a member | Yes
+[**POST** /team/changeLeader](#post-teamchangeleader) | Change leader of a team| Yes
+[**POST** /team/leave](#port-teamleave) | Leave a team | Yes
 
 
 ## POST /team
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -37,11 +38,11 @@ Code | Description
 1 | Success
 -11 | Missing name
 -12 | Missing email
--21 | Team with email or mail already exists (see message for the field)
+-21 | Team with email or mail already exists (see message for the field)
 -29 | Internal error in MongoDB during insertion
 -51 | Not allowed
 
-##### Data
+##### Data
 
 ```
 Team's entry
@@ -49,7 +50,7 @@ Team's entry
 
 ## PUT /team
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -76,7 +77,7 @@ Code | Description
 -26 | Error in MongoDB during edition
 -51 | Not allowed
 
-##### Data
+##### Data
 
 ```
 {}
@@ -84,7 +85,7 @@ Code | Description
 
 ## DELETE /team
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -100,7 +101,7 @@ Code | Description
 -28 | Error in MongoDB during deletion
 -51 | Not allowed
 
-##### Data
+##### Data
 
 ```javascript
 {}
@@ -108,7 +109,7 @@ Code | Description
 
 ## GET /team/:id
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -122,9 +123,9 @@ Code | Description
 ---|---
 1 | Success
 -27 | Error in MongoDB during selection
--43 | No team found
+-43 | No team found
 
-##### Data
+##### Data
 
 ```
 Team's entry with members.leader and members.list populated
@@ -132,7 +133,7 @@ Team's entry with members.leader and members.list populated
 
 ## GET /team
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -146,9 +147,9 @@ Code | Description
 ---|---
 1 | Success
 -27 | Error in MongoDB during selection
--43 | No teams found
+-43 | No teams found
 
-##### Data
+##### Data
 
 ```
 Team's entries
@@ -156,11 +157,11 @@ Team's entries
 
 ## POST /team/kick
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
-    "user": ObjectId [Required]
+    "user": ObjectId [Required]
 }
 ```
 
@@ -171,12 +172,12 @@ Team's entries
 Code | Description
 ---|---
 1 | Success
--1 | Not logged
+-1 | Not logged
 -11 | Missing user
 -26 | Error in MongoDB during edition
--51 | Authentication failed : Not the leader of the team
+-51 | Authentication failed : Not the leader of the team
 
-##### Data
+##### Data
 
 ```
 {}
@@ -184,11 +185,11 @@ Code | Description
 
 ## POST /team/changeLeader
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
-    "leader": ObjectId [Required] // New leader of the team
+    "leader": ObjectId [Required] // New leader of the team
 }
 ```
 
@@ -202,9 +203,36 @@ Code | Description
 -1 | Not logged
 -11 | Missing leader
 -26 | Error in MongoDB during edition
--51 | Authentication failed / Not the leader of the team
+-51 | Authentication failed / Not the leader of the team
 
-##### Data
+##### Data
+
+```
+{}
+```
+
+## POST /team/leave
+
+#### Body parameters
+
+```javascript
+{}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-1 | Not logged
+-26 | Error in MongoDB during edition
+-43 | No team found
+-51 | Authentication failed
+-53 | Leader can't leave the team
+
+##### Data
 
 ```
 {}

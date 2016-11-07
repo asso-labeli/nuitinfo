@@ -339,4 +339,48 @@ module.exports = function (teamSchema) {
             Response.success(res, 'Leader changed', {});
         });
     };
+
+    teamSchema.statics.exLeave = function (req, res) {
+        if (!req.isLogged()){
+            return Response.notLogged(res);
+        }
+
+        async.waterfall([
+            (next) => mongoose.model('Team').findOne({'members.list': req.user._id}, next),
+            (team, next) => {
+                if (!team){
+                    mongoose.model('Team').findOne({'members.leader': req.user._id},
+                    (err, leaderTeam) => {
+                        if (err){
+                            return next(err);
+                        }
+
+                        if (!leaderTeam){
+                            Response.resourceNotFound(res, 'team');
+                        } else {
+                            Response.notHaveRights(res, 'Leader can\'t leave a team');
+                        }
+
+                        next({alreadySent: true});
+                    });
+                } else {
+                    mongoose.model('Team').update(
+                        {'_id': team._id},
+                        {$pull : {'members.list': req.user._id}},
+                        next
+                    );
+                }
+            }
+        ], (err) => {
+            if (err && err.alreadySent){
+                return;
+            }
+
+            if (err){
+                return Response.editError(res, err);
+            }
+
+            Response.success(res, 'Team leaved', {});
+        });
+    };
 };

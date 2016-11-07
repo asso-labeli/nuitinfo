@@ -20,7 +20,8 @@ let codes = {
   surveyClosed: -41,
   tooManyItems: -42,
   resourceNotFound: -43,
-  authenticationFailed: -51
+  authenticationFailed: -51,
+  notHaveRights: -52
 };
 
 let mongoCodes = {
@@ -208,6 +209,14 @@ function resourceNotFound(res, resource){
   });
 }
 
+function notHaveRights(res, message){
+  sendResponse(res, 400, {
+    message: message,
+    data: null,
+    success: codes.notHaveRights
+  });
+}
+
 module.exports = formatResponse;
 module.exports.success = success;
 module.exports.notLogged = notLogged;
@@ -230,5 +239,6 @@ module.exports.surveyClosed = surveyClosed;
 module.exports.tooManyItems = tooManyItems;
 module.exports.authenticationFailed = authenticationFailed;
 module.exports.resourceNotFound = resourceNotFound;
+module.exports.notHaveRights = notHaveRights;
 module.exports.Codes = codes;
 module.exports.MongoCodes = mongoCodes;
