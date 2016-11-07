@@ -85,16 +85,16 @@ module.exports = function (teamSchema) {
     };
 
     teamSchema.statics.removeUser = function (params, callback){
-        mongoose.model('Team').update(
-            {_id: params.team._id},
-            {$pull: {'members.list': params.user._id}},
-            (err) => {
-                if (err) {
-                    return callback(err);
-                }
-
-                callback();
-            });
+        async.parallel([
+            (stepOk) => mongoose.model('Team').update(
+                {_id: params.team._id},
+                {$pull: {'members.list': params.user._id}},
+                stepOk),
+            (stepOk) => mongoose.model('User').update(
+                {_id: params.user._id},
+                {$set : {'team': undefined}},
+                stepOk)
+        ], callback);
     };
 
     teamSchema.statics.getById = function (params, callback) {
@@ -364,11 +364,10 @@ module.exports = function (teamSchema) {
                         next({alreadySent: true});
                     });
                 } else {
-                    mongoose.model('Team').update(
-                        {'_id': team._id},
-                        {$pull : {'members.list': req.user._id}},
-                        next
-                    );
+                    mongoose.model('Team').removeUser({
+                        team: team,
+                        user: req.user
+                    }, next);
                 }
             }
         ], (err) => {
