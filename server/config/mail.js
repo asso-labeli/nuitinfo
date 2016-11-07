@@ -64,6 +64,48 @@ const applicationNotificationToUserMail = {
     ]
 };
 
+const userAcceptsApplicationMail = {
+    subject : 'Candidature acceptée par un utilisateur',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Votre candidature pour <person> a été acceptée.\r\n',
+        'Souhaitez-donc la bienvenue à votre nouveau membre !\r\n\r\n',
+        'Que la Nuit guide vos pas ! :)\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
+};
+
+const userRefusesApplicationMail = {
+    subject : 'Candidature rejetée par un utilisateur',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Votre candidature pour <person> a malheureusement été rejetée.\r\n\r\n',
+        'Que la Nuit vous porte conseille ! :/\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
+};
+
+const teamAcceptsApplicationMail = {
+    subject : 'Candidature acceptée par une équipe',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Votre candidature pour l\'équipe <team> a été acceptée.\r\n',
+        'Amusez-vous bien dans votre nouvelle équipe !\r\n\r\n',
+        'Et rendez-vous pour cette Nuit de folie ! :)\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
+};
+
+const teamRefusesApplicationMail = {
+    subject : 'Candidature acceptée par une équipe',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Votre candidature pour l\'équipe <team> a été refusée.\r\n',
+        'Courage pour votre recherche d\'équipe ! :S\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
+};
+
 function sendPasswordRecoveryMail(params, callback){
     transport.sendMail({
         from: from,
@@ -123,9 +165,73 @@ function sendApplicationNotificationToUserMail(params, callback){
     });
 }
 
+function sendUserAcceptsApplicationMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: userAcceptsApplicationMail.subject,
+        text: userAcceptsApplicationMail.text
+            .join('')
+            .replace('<person>', params.user.firstName + ' ' + params.user.lastName)
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
+function sendUserRefusesApplicationMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: userRefusesApplicationMail.subject,
+        text: userRefusesApplicationMail.text
+            .join('')
+            .replace('<person>', params.user.firstName + ' ' + params.user.lastName)
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
+function sendTeamAcceptsApplicationMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: teamAcceptsApplicationMail.subject,
+        text: teamAcceptsApplicationMail.text
+            .join('')
+            .replace('<team>', params.team.name)
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
+function sendTeamRefusesApplicationMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: teamRefusesApplicationMail.subject,
+        text: teamRefusesApplicationMail.text
+            .join('')
+            .replace('<team>', params.team.name)
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
 module.exports = {
     sendPasswordRecoveryMail: sendPasswordRecoveryMail,
     sendSubscribeMail: sendSubscribeMail,
     sendApplicationNotificationToTeamMail: sendApplicationNotificationToTeamMail,
-    sendApplicationNotificationToUserMail: sendApplicationNotificationToUserMail
+    sendApplicationNotificationToUserMail: sendApplicationNotificationToUserMail,
+    sendUserAcceptsApplicationMail: sendUserAcceptsApplicationMail,
+    sendUserRefusesApplicationMail: sendUserRefusesApplicationMail,
+    sendTeamAcceptsApplicationMail: sendTeamAcceptsApplicationMail,
+    sendTeamRefusesApplicationMail: sendTeamRefusesApplicationMail
 };

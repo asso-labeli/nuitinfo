@@ -25,7 +25,7 @@ module.exports = function (applicationSchema) {
             });
     }
 
-    function sendMailToTeam(application, callback){
+    function sendNewApplicationMailToTeam(application, callback){
         async.waterfall([
             (next) => mongoose.model('Team')
                 .findById(application.team, next),
@@ -42,7 +42,7 @@ module.exports = function (applicationSchema) {
         ], callback);
     }
 
-    function sendMailToUser(application, callback){
+    function sendNewApplicationMailToUser(application, callback){
         async.waterfall([
             (next) => mongoose.model('User')
                 .findById(application.user, next),
@@ -54,6 +54,90 @@ module.exports = function (applicationSchema) {
                 Mail.sendApplicationNotificationToUserMail({
                     to: user.email,
                     url: process.env.WEBSERVER_URL + '/dashboard'
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendUserAcceptsMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendUserAcceptsApplicationMail({
+                    to: team.email,
+                    user: user
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendUserRefusesMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendUserRefusesApplicationMail({
+                    to: team.email,
+                    user: user
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendTeamAcceptsMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendTeamAcceptsApplicationMail({
+                    to: user.email,
+                    team: team
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendTeamRefusesMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendTeamRefusesApplicationMail({
+                    to: user.email,
+                    team: team
                 }, next);
             }
         ], callback);
@@ -72,9 +156,9 @@ module.exports = function (applicationSchema) {
             }
 
             if (application.fromUser){
-                sendMailToTeam(application, callback);
+                sendNewApplicationMailToTeam(application, callback);
             } else {
-                sendMailToUser(application, callback);
+                sendNewApplicationMailToUser(application, callback);
             }
         });
     };
@@ -107,7 +191,16 @@ module.exports = function (applicationSchema) {
                 }, finished)
             ], (err) => next(err, application)),
             (application, next) =>
-                mongoose.model('Application').remove({user: application.user}, next)
+                mongoose.model('Application').remove({user: application.user}, (err) => {
+                    next(err, application);
+                }),
+            (application, next) => {
+                if (application.fromTeam){
+                    sendUserAcceptsMail(application, next);
+                } else {
+                    sendTeamAcceptsMail(application, next);
+                }
+            }
         ], callback);
     };
 
@@ -128,7 +221,16 @@ module.exports = function (applicationSchema) {
                 next('Application not found');
             },
             (application, next) =>
-                mongoose.model('Application').remove({_id: application._id}, next)
+                mongoose.model('Application').remove({_id: application._id}, (err) => {
+                    next(err, application);
+                }),
+            (application, next) => {
+                if (application.fromTeam){
+                    sendUserRefusesMail(application, next);
+                } else {
+                    sendTeamRefusesMail(application, next);
+                }
+            }
         ], callback);
     };
 
