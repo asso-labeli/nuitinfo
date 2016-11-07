@@ -1,5 +1,5 @@
 <template>
-    <div id="teams">
+    <div id="teams" class="page">
         <h1>La liste des équipes</h1>
         <h4><span>Nombre d'équipes : <span class="integer">{{teams.length}}</span></span></h4>
         <div v-for="team in teams">
@@ -8,10 +8,16 @@
                     <b>{{team.name}}</b>
                 </h4>
                 <div class="applicationState">Candidatures <b v-if="team.openForApplications">ouvertes</b><b v-else>fermées</b></div>
-                <span class="special">Description :</span>
-                <div class="description">{{team.description}}</div>
                 <div v-if="team.openForApplications && displayApplication">
                     <a v-on:click.stop.prevent="apply(team._id)">Postuler dans cette équipe</a>
+                </div>
+                <div>
+                    <span class="integer">{{team.members.list.length + 1}}</span> <span class="special">membre<span v-if="team.members.list.length > 0">s</span>
+                </div>
+                <span class="special">Description :</span>
+                <div class="description">{{team.description}}</div>
+                <div>
+                    <router-link :to="{name: 'displayTeam', params: {id: team._id}}">Afficher le profil</router-link>
                 </div>
             </div>
             <separator></separator>
@@ -78,6 +84,7 @@
             }
         }
     }
+
 </script>
 
 <style>
@@ -89,4 +96,5 @@
             margin: 0 auto;
         }
     }
+
 </style>

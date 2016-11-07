@@ -1,5 +1,5 @@
 <template>
-    <div id="logout">
+    <div id="logout" class="page">
         <h1>Déconnexion en cours</h1>
     </div>
 </template>

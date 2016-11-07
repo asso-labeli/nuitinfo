@@ -1,5 +1,5 @@
 <template>
-    <div id="help">
+    <div id="help" class="page">
         <h1>Guide &amp; Aide</h1>
 
         <div class="questions">

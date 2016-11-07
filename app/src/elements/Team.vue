@@ -9,17 +9,23 @@
             <div class="leader"><span class="special">Leader :</span>
                 <span class="capitalized">{{team.members.leader.firstName}}</span>
                 <span class="upperCased">{{team.members.leader.lastName}}</span>
+                <span>&lt;<a v-bind:href="'mailto:' + team.members.leader.email">{{team.members.leader.email}}</a>&gt;</span>
                 <router-link :to="{name: 'displayUser', params: {id: team.members.leader._id}}">Voir le profil
                 </router-link>
             </div>
             <div v-if="team.members.list.length > 0">
                 <span class="special">Membre<span
-                        v-if="team.members.list.length > 1">s</span> ({{team.members.list.length}}):</span>
+                        v-if="team.members.list.length > 1">s</span> ({{team.members.list.length}}) :</span>
                 <div>
                     <ul>
                         <li v-for="member in team.members.list">
                             <span class="capitalized">{{member.firstName}}</span>
                             <span class="upperCased">{{member.lastName}}</span>
+                            <span>&lt;<a v-bind:href="'mailto:' + member.email">{{member.email}}</a>&gt;</span>
+                            <router-link :to="{name: 'displayUser', params: {id: member._id}}" class="blue">Voir le
+                                profil
+                            </router-link>
+                            <a v-if="teamLeader" v-on:click.stop.prevent="kick(member._id)" class="red">Expulser</a>
                         </li>
                     </ul>
                 </div>
@@ -28,21 +34,29 @@
                 <span class="special">Aucun membre</span>
             </div>
             <div v-if="teamLeader">
-                <span class="special">Candidatures en attente de réponse :</span>
+
+                <span class="special">Demandes logistiques :</span>
+                <div class="logisticsRequirements" v-html="nl2br(team.logisticsRequirements)"></div>
+
+                <separator></separator>
+
                 <div>
+                    <span class="special">Candidatures en attente de réponse ({{applications.length}}) :</span>
                     <ul>
                         <li v-for="application in applications">
                             <span class="capitalized">{{application.user.firstName}}</span>
                             <span class="upperCased">{{application.user.lastName}}</span>
-                            <router-link :to="{name: 'displayUser', params: {id: application.user._id}}">Voir le
+                            <span>&lt;<a v-bind:href="'mailto:' + application.user.email">{{application.user.email}}</a>&gt;</span>
+                            <router-link :to="{name: 'displayUser', params: {id: application.user._id}}" class="blue">Voir le
                                 profil
                             </router-link>
                             <a v-on:click.stop.prevent="accept(application._id)">Accepter</a>
-                            <a v-on:click.stop.prevent="refuse(application._id)">Refuser</a>
+                            <a v-on:click.stop.prevent="refuse(application._id)" class="red">Refuser</a>
                         </li>
                     </ul>
                 </div>
 
+                <separator></separator>
 
                 <router-link :to="{name:'users'}">Recruter des membres</router-link>
                 <br/>
@@ -67,7 +81,9 @@
 
 <script>
     import user from '../stores/UserStore';
+    import Separator from '../elements/Separator.vue';
     export default {
+        components: {Separator},
         data() {
             return {
                 hasTeam: false,
@@ -79,17 +95,32 @@
             };
         },
         methods: {
-            nl2br: function (str) {
+            nl2br: function(str) {
                 str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
                 return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
             },
-            accept: function (applicationID) {
-                this.$http.post('/api/application/accept', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response1) => {
-                    this.$router.push({name: 'dashboard'});
+            accept: function(applicationID) {
+                this.$http.post('/api/application/accept', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    this.$router.go({
+                        path: this.$route,
+                        query: {
+                            t: +new Date()
+                        }
+                    });
                 });
             },
-            refuse: function (applicationID) {
-                this.$http.post('/api/application/refuse', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response1) => {
+            refuse: function(applicationID) {
+                this.$http.post('/api/application/refuse', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    this.$router.go({
+                        path: this.$route,
+                        query: {
+                            t: +new Date()
+                        }
+                    });
+                });
+            },
+            kick: function(userID) {
+                this.$http.post('/api/team/kick', JSON.stringify({user: userID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     this.$router.push({name: 'dashboard'});
                 });
             }
@@ -116,8 +147,12 @@
                         }
                     }
                 });
-            }, (response) => {
+            }, (error) => {
                 console.warn('Erreur Team.vue /api/user/me');
+
+                error.json().then((message) => {
+                    console.warn(message);
+                });
             });
         }
     }

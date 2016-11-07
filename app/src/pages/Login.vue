@@ -1,5 +1,5 @@
 <template>
-    <div id="login">
+    <div id="login" class="page">
         <h1>Connexion</h1>
         <form v-on:submit.prevent="login">
             <div>
@@ -31,6 +31,18 @@
                     password: ""
                 }
             };
+        },
+        mounted() {
+            if (user.getToken()) {
+                this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    response.json().then((message) => {
+                        user.setUser(message.data);
+                        this.$router.push({name: 'dashboard'});
+                    });
+                }, (response) => {
+                    console.warn('Erreur Login.vue /api/user/me');
+                });
+            }
         },
         methods: {
             login() {

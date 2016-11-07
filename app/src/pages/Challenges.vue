@@ -1,5 +1,5 @@
 <template>
-    <div id="challenges">
+    <div id="challenges" class="page">
         <h1>Défis</h1>
     </div>
 </template>

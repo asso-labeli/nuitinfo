@@ -1,5 +1,5 @@
 <template>
-    <div id="users">
+    <div id="users" class="page">
         <h1>La liste des participants</h1>
         <h4><span>Nombre de participants : <span class="integer">{{users.length}}</span></span></h4>
         <div v-for="user in users">
@@ -24,6 +24,9 @@
                     <div v-if="displayApplication">
                         <a v-on:click.stop.prevent="apply(user._id)">Recruter ce participant</a>
                     </div>
+                </div>
+                <div>
+                    <router-link :to="{name: 'displayUser', params: {id: user._id}}">Afficher le profil</router-link>
                 </div>
             </div>
             <separator></separator>

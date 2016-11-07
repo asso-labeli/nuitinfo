@@ -151,7 +151,7 @@ div.questions p {
         text-transform: capitalize;
 }
 
-div.description, div.bio, div.application {
+div.description, div.bio, div.application, div.logisticsRequirements {
         margin: 2px 2px 2px 10px;
         font-size: 0.9em;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div id="register">
+    <div id="register" class="page">
         <h1>{{title}}</h1>
         <form v-on:submit.prevent="register" class="userForm">
             <h2 class="title" style="padding-top: 0">Informations de connexion</h2>

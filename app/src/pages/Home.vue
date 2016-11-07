@@ -1,21 +1,21 @@
 <template>
-    <div id="home" class="responsive">
+    <div id="home" class="responsive page">
 
-        <h1>Nuit de l'Info 2016 - Édition Bordelaise</h1>
+        <h1>Nuit de l'Info <span class="integer">2016</span> - Édition Bordelaise</h1>
 
         <div class="presentation" v-for="part in paragraphs">
             <h2 class="title">{{ part.title }}</h2>
-            <div>
+            <div class="paragraph">
                 <span v-for="line in part.content" v-html="line + '<br/>'"></span>
             </div>
         </div>
 
         <div class="agenda" id="calendar">
             <h2 class="title">{{ title }}</h2>
-            <div v-for="day in days">
+            <div v-for="day in days" class="day">
                 <h4>{{ day.title }}</h4>
                 <div class="event" v-for="event in day.events">
-                    <div class="date">&nbsp;<span class="orange">*</span> {{ event.hour }}</div>
+                    <div class="date">&nbsp;<span class="orange">*</span> <span class="integer">{{ event.hour }}</span></div>
                     <span class="details" v-html="event.content"></span>
                 </div>
             </div>
@@ -31,6 +31,13 @@
                     <span>goto </span>
                     <router-link :to="{name: 'register'}">S'inscrire<span class="special">;</span></router-link>
                 </div>
+
+                <div class="big special">
+                    <span>goto </span>
+                    <router-link :to="{name: 'login'}">Se connecter<span class="special">;</span>
+                    </router-link>
+                </div>
+
                 <div class="big special">
                     <span>goto </span>
                     <router-link :to="{name: 'recovery'}">Perte de votre compte<span class="special">;</span>
@@ -114,5 +121,19 @@
         }
     };
 </script>
+
+<style scoped>
+    .paragraph {
+        margin-bottom: 2em;
+    }
+
+    .day {
+        margin-bottom: 1em;
+    }
+
+    .register {
+        margin-bottom: 1.5em;
+    }
+</style>
 
 

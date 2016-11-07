@@ -9,7 +9,7 @@ class AlertStore {
         this.state.alerts.push({
             message: message,
             type: type
-        })
+        });
     }
 
     getAlerts() {
