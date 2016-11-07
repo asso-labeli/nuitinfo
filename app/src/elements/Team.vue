@@ -4,9 +4,14 @@
             <h4 class="center">
                 <b>{{team.name}}</b>
             </h4>
+            <div class="email">
+                <span class="special">Adresse email de l'équipe:</span>
+                <span>&lt;<a v-bind:href="'mailto:' + team.members.leader.email">{{team.email}}</a>&gt;</span>
+            </div>
             <span class="special">Description :</span>
             <div class="description" v-html="nl2br(team.description)"></div>
-            <div class="leader"><span class="special">Leader :</span>
+            <div class="leader">
+                <span class="special">Leader :</span>
                 <span class="capitalized">{{team.members.leader.firstName}}</span>
                 <span class="upperCased">{{team.members.leader.lastName}}</span>
                 <span>&lt;<a v-bind:href="'mailto:' + team.members.leader.email">{{team.members.leader.email}}</a>&gt;</span>
