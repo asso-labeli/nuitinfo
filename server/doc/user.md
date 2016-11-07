@@ -2,17 +2,17 @@
 
 ## Overview
 
-Route | Description | Authentication
+Route | Description | Authentication
 ----- | ----------- | --------------
-[**POST** /user](#post-user) | Add a new user | No
+[**POST** /user](#post-user) | Add a new user | No
 [**PUT** /user](#put-user) | Edit logged user | Yes
-[**GET** /user/me](#get-userme) | Get informations on logged user | Yes
-[**GET** /user](#get-user) | Get list of all users | No
+[**GET** /user/me](#get-userme) | Get informations on logged user | Yes
+[**GET** /user](#get-user) | Get list of all users | No
 [**GET** /user/:id](#get-userid) | Get user with specific id | No
 
 ## POST /user
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -52,10 +52,10 @@ Code | Description
 -12 | Missing lastName
 -13 | Missing email
 -14 | Missing password
--21 | User with email already exists
+-21 | User with email already exists
 -29 | Internal error in MongoDB during insertion
 
-##### Data
+##### Data
 
 ```
 User's entry
@@ -63,7 +63,7 @@ User's entry
 
 ## PUT /user
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -101,7 +101,7 @@ Code | Description
 -26 | Internal error in MongoDB during edition
 -51 | Not allowed
 
-##### Data
+##### Data
 
 ```
 User's entry updated
@@ -109,7 +109,7 @@ User's entry updated
 
 ## GET /user/me
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -126,7 +126,7 @@ Code | Description
 -43 | No user found
 -51 | Not allowed
 
-##### Data
+##### Data
 
 ```
 User's entry without password
@@ -134,7 +134,7 @@ User's entry without password
 
 ## GET /user
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -150,7 +150,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No users found
 
-##### Data
+##### Data
 
 ```javascript
 [{
@@ -168,7 +168,7 @@ Code | Description
 
 ## GET /user/:id
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -184,7 +184,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No user found
 
-##### Data
+##### Data
 
 ```javascript
 {

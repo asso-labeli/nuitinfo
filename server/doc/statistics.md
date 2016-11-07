@@ -2,7 +2,7 @@
 
 ## Overview
 
-Route | Description | Authentication
+Route | Description | Authentication
 ----- | ----------- | --------------
 [**GET** /statistics/users](#get-statisticsusers) | Get numbers of users | No
 [**GET** /statistics/teams](#get-statisticsteams) | Get numbers of teams | No
@@ -11,7 +11,7 @@ Route | Description | Authentication
 
 ## GET /statistics/users
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -27,7 +27,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No users found
 
-##### Data
+##### Data
 
 ```javascript
 {
@@ -37,7 +37,7 @@ Code | Description
 
 ## GET /statistics/teams
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -53,7 +53,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No teams found
 
-##### Data
+##### Data
 
 ```javascript
 {
@@ -63,7 +63,7 @@ Code | Description
 
 ## GET /statistics/users/byInstitution
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -79,7 +79,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No users found
 
-##### Data
+##### Data
 
 ```javascript
 [{
@@ -93,7 +93,7 @@ Code | Description
 
 ## GET /statistics/users/byInstitution
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -109,7 +109,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No users found
 
-##### Data
+##### Data
 
 ```javascript
 [{
@@ -123,7 +123,7 @@ Code | Description
 
 ## GET /statistics/users/byYear
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -139,7 +139,7 @@ Code | Description
 -27 | Internal error in MongoDB during selection
 -43 | No users found
 
-##### Data
+##### Data
 
 ```javascript
 [{

@@ -2,14 +2,14 @@
 
 ## Overview
 
-Route | Description | Authentication
+Route | Description | Authentication
 ----- | ----------- | --------------
 [**POST** /institution](#post-institution) | Add a new institution | No
-[**GET** /institution](#get-institution) | Get institutions | No
+[**GET** /institution](#get-institution) | Get institutions | No
 
 ## POST /institution
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -27,7 +27,7 @@ Code | Description
 -11 | Missing name
 -29 | Internal error during MongoDB insertion
 
-##### Data
+##### Data
 
 ```
 Institution's entry created
@@ -35,7 +35,7 @@ Institution's entry created
 
 ## GET /institution
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -51,7 +51,7 @@ Code | Description
 -27 | Internal error during MongoDB selection
 -43 | No institutions found
 
-##### Data
+##### Data
 
 ```
 Institution's entry created

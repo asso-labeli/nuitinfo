@@ -2,18 +2,18 @@
 
 ## Overview
 
-Route | Description | Authentication
+Route | Description | Authentication
 ----- | ----------- | --------------
-[**POST** /application/fromUser](#post-applicationfromuser) | Add a new application from a user | Yes
+[**POST** /application/fromUser](#post-applicationfromuser) | Add a new application from a user | Yes
 [**POST** /application/fromTeam](#post-applicationfromteam) | Add a new application from a team | Yes
-[**POST** /application/accept](#post-applicationaccept) | Accept an application | Yes
-[**POST** /application/refuse](#post-applicationrefuse) | Refuse an application | Yes
-[**GET** /application/forUser](#get-applicationforuser) | Get applications for a user | Yes
-[**GET** /application/forTeam](#get-applicationforteam) | Get applications for a team | Yes
+[**POST** /application/accept](#post-applicationaccept) | Accept an application | Yes
+[**POST** /application/refuse](#post-applicationrefuse) | Refuse an application | Yes
+[**GET** /application/forUser](#get-applicationforuser) | Get applications for a user | Yes
+[**GET** /application/forTeam](#get-applicationforteam) | Get applications for a team | Yes
 
 ## POST /application/fromUser
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -35,7 +35,7 @@ Code | Description
 -29 | Internal error in MongoDB during insertion
 -51 | Authentication Failed
 
-##### Data
+##### Data
 
 ```javascript
 Application's entry
@@ -43,7 +43,7 @@ Application's entry
 
 ## POST /application/fromTeam
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -65,7 +65,7 @@ Code | Description
 -29 | Internal error in MongoDB during insertion
 -51 | Authentication Failed
 
-##### Data
+##### Data
 
 ```javascript
 Application's entry
@@ -73,7 +73,7 @@ Application's entry
 
 ## POST /application/accept
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -92,7 +92,7 @@ Code | Description
 -28 | Internal error in MongoDB during deletion
 -51 | Authentication Failed
 
-##### Data
+##### Data
 
 ```javascript
 {}
@@ -100,7 +100,7 @@ Code | Description
 
 ## POST /application/refuse
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {
@@ -119,7 +119,7 @@ Code | Description
 -28 | Internal error in MongoDB during deletion
 -51 | Authentication Failed
 
-##### Data
+##### Data
 
 ```javascript
 {}
@@ -127,7 +127,7 @@ Code | Description
 
 ## GET /application/forUser
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -144,7 +144,7 @@ Code | Description
 -43 | No applications found
 -51 | Authentication Failed
 
-##### Data
+##### Data
 
 ```javascript
 [Applications's entries]
@@ -152,7 +152,7 @@ Code | Description
 
 ## GET /application/forTeam
 
-#### Body parameters
+#### Body parameters
 
 ```javascript
 {}
@@ -169,7 +169,7 @@ Code | Description
 -43 | No applications found
 -51 | Authentication Failed
 
-##### Data
+##### Data
 
 ```javascript
 [Applications's entries]
