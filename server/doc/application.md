@@ -9,6 +9,7 @@ Route | Description | Authentication
 [**POST** /application/accept](#post-applicationaccept) | Accept an application | Yes
 [**POST** /application/refuse](#post-applicationrefuse) | Refuse an application | Yes
 [**GET** /application/forUser](#get-applicationforuser) | Get applications for a user | Yes
+[**GET** /application/forUser/waiting](#get-applicationforuserwaiting) | Get waiting applications for a user | Yes
 [**GET** /application/forTeam](#get-applicationforteam) | Get applications for a team | Yes
 
 ## POST /application/fromUser
@@ -29,11 +30,11 @@ Route | Description | Authentication
 Code | Description
 ---|---
 1 | Success
+-1 | Not logged
 -11 | Missing user
 -12 | Missing team
 -13 | Missing fromTeam/fromUser flag
 -29 | Internal error in MongoDB during insertion
--51 | Authentication Failed
 
 ##### Data
 
@@ -59,11 +60,11 @@ Application's entry
 Code | Description
 ---|---
 1 | Success
+-1 | Not logged
 -11 | Missing user
 -12 | Missing team
 -13 | Missing fromTeam/fromUser flag
 -29 | Internal error in MongoDB during insertion
--51 | Authentication Failed
 
 ##### Data
 
@@ -88,9 +89,9 @@ Application's entry
 Code | Description
 ---|---
 1 | Success
+-1 | Not logged
 -11 | Missing application
 -28 | Internal error in MongoDB during deletion
--51 | Authentication Failed
 
 ##### Data
 
@@ -140,9 +141,34 @@ Code | Description
 Code | Description
 ---|---
 1 | Success
+-1 | Not logged
 -27 | Internal error in MongoDB during selection
 -43 | No applications found
--51 | Authentication Failed
+
+##### Data
+
+```javascript
+[Applications's entries]
+```
+
+## GET /application/forUser/waiting
+
+#### Body parameters
+
+```javascript
+{}
+```
+
+#### Return
+
+##### Success code
+
+Code | Description
+---|---
+1 | Success
+-1 | Not logged
+-27 | Internal error in MongoDB during selection
+-43 | No applications found
 
 ##### Data
 
@@ -165,9 +191,9 @@ Code | Description
 Code | Description
 ---|---
 1 | Success
+-1 | Not logged
 -27 | Internal error in MongoDB during selection
 -43 | No applications found
--51 | Authentication Failed
 
 ##### Data
 

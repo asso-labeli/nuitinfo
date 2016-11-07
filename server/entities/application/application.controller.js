@@ -264,7 +264,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exCreateFromUser = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         req.body.fromUser = true;
@@ -313,7 +313,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exCreateFromTeam = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         req.body.fromTeam = true;
@@ -361,7 +361,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exAccept = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([
@@ -385,7 +385,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exRefuse = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([
@@ -409,7 +409,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exGetForUser = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         mongoose.model('Application').find({user: req.user._id, fromTeam: true})
@@ -427,9 +427,29 @@ module.exports = function (applicationSchema) {
             });
     };
 
+    applicationSchema.statics.exGetWaitingApplications = function(req, res) {
+        if (!req.isLogged()){
+            return Response.notLogged(res);
+        }
+
+        mongoose.model('Application').find({user: req.user._id, fromUser: true})
+            .populate('team')
+            .exec((err, applications) => {
+                if (err) {
+                    return Response.selectError(res, err);
+                }
+
+                if (!applications) {
+                    return Response.resourceNotFound(res, 'application');
+                }
+
+                Response.success(res, 'Applications found', applications);
+            });
+    };
+
     applicationSchema.statics.exGetForTeam = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([
