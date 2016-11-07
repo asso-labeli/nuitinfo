@@ -42,10 +42,6 @@ h2 {
         font-weight: 900;
 }
 
-h2:first-child {
-        padding-top: 0;
-}
-
 h3 {
         margin: 0;
         padding: 0;
