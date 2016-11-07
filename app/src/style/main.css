@@ -42,10 +42,6 @@ h2 {
         font-weight: 900;
 }
 
-h2:first-child {
-        padding-top: 0;
-}
-
 h3 {
         margin: 0;
         padding: 0;
@@ -79,7 +75,7 @@ h4 {
         padding-bottom: 0.5em;
 }
 
-.title a {
+.title a, .blue {
         color: #0081FF;
 }
 
@@ -444,4 +440,8 @@ progress::-webkit-progress-value, progress::-moz-progress-value, progress::-o-pr
 
 .upperCased {
         text-transform: uppercase;
+}
+
+.page {
+        min-height: calc(86vh - 40px);
 }

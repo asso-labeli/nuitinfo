@@ -20,7 +20,7 @@
             }
         },
         mounted(){
-            if (user.getToken() !== null) {
+            if (user.getToken()) {
                 this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     response.json().then((message) => {
                         if (message.success === 1) {

@@ -1,5 +1,5 @@
 <template>
-    <div id="lost">
+    <div id="lost" class="page">
         <h1>Perdu ?</h1>
         <router-link :to="{name: 'home'}">Retour à l'accueil</router-link>
     </div>

@@ -1,5 +1,5 @@
 <template>
-    <div id="createTeam">
+    <div id="createTeam" class="page">
         <h1>{{title}}</h1>
         <form v-on:submit.prevent="register" class="teamForm">
 

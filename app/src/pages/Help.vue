@@ -1,5 +1,5 @@
 <template>
-    <div id="help">
+    <div id="help" class="page">
         <h1>Guide &amp; Aide</h1>
 
         <div class="questions">
@@ -54,7 +54,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     @media screen and (min-width: 700px) {
         #help {
             padding: 10px;
@@ -62,5 +62,9 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+    }
+
+    h2 {
+        padding-top: 1em !important;
     }
 </style>

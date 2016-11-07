@@ -5,31 +5,39 @@
             {
                 "title": "Je souhaite participer et créer une équipe",
                 "lines": [
-                    ""
+                    "Il suffit de s'inscrire et une fois sur ton tableau de bord, il te sera possible de créer une équipe."
                 ]
             },
             {
                 "title": "Je souhaite participer mais je n'ai pas d'équipe",
                 "lines": [
-                    ""
+                    "Il suffit de s'inscrire et tu pourras ensuite postuler auprès des équipes qui ont laissé leurs candidatures ouvertes."
                 ]
             },
             {
                 "title": "Quelle adresse e-mail pour mon équipe ?",
                 "lines": [
-                    ""
+                    "Celle de ton choix, tu peux créer une adresse e-mail dédiée à l'équipe pour la durée de la Nuit.",
+                    "Il est aussi possible de réutiliser l'adresse e-email utilisée lors de la création de ton compte participant"
                 ]
             },
             {
                 "title": "Clôture des inscriptions sur le site bordelais",
                 "lines": [
-                    ""
+                    "Pour des raisons d'organisation, aucun participant ne pourra s'inscrire après le 27 novembre 2016.",
+                    "Pour des cas EXCEPTIONNELS, le chef d'équipe peut envoyer un mail à nuitinfo@labeli.org pour inscrire un nouveau participant qui sera affecté à son équipe.",
+                    "Passé le 30 novembre 2016, plus rien ne pourra être modifié.",
+                    "Attention, les dates sont provisoires et sont susceptibles d'être modifiées en fonction du planning officiel de la Nuit de l'Info"
                 ]
             },
             {
                 "title": "Inscription officielle sur le site de la Nuit de l'info",
                 "lines": [
-                    ""
+                    "Une fois que votre équipe est prête et que vos candidatures sont closes, vous devez vous inscrire sur le site officiel de la Nuit.",
+                    "Les inscriptions sur le site officiel s'arrêtent le Mercredi 30 novembre 2016.",
+                    "Les organisateurs vous enverront des mails pour vous le rappeler dès le 27 novembre 2016.",
+                    "Nous sommes en train de contacter les administrateurs du site officiel de la Nuit de l'Info pour vous épargner cette tâche redondante",
+                    "Attention, les dates sont provisoires et sont susceptibles d'être modifiées en fonction du planning officiel de la Nuit de l'Info"
                 ]
             }
         ]
@@ -40,7 +48,9 @@
             {
                 "title": "La communication avec mon équipe ou avec mes membres",
                 "lines": [
-                    ""
+                    "Une fois que votre candidature est acceptée, l'adresse e-mail de votre équipe s'affiche sur votre profil.",
+                    "Et l'administrateur d'une équipe peut voir les adresses e-mail des membres et des candidats de son équipe.",
+                    "Nous vous conseillons de mettre en place une team Slack ou Mattermost pour vous permettre de communiquer du mieux possible"
                 ]
             }
         ]
@@ -51,13 +61,17 @@
             {
                 "title": "Son principe et son utilité",
                 "lines": [
-                    ""
+                    "Le site permet aux étudiants bordelais de se regrouper pour former des équipes.",
+                    "Il permet aussi une meilleure logistique en répondant dans la mesure du possible aux demandes faites par les équipes.",
+                    "Ce site permet aussi de visualiser le nombre d'étudiants et d'organiser un buffet en conséquence."
                 ]
             },
             {
                 "title": "Usurpation d'identité",
                 "lines": [
-                    ""
+                    "Un compte à votre nom a été créé et il usurpe votre identité pour d'obscures raisons.",
+                    "Il vous suffit d'écrire un mail à nuitinfo@labeli.org avec votre adresse étudiante (ou avec une justification de votre identité)",
+                    "Le compte en question sera effacé dans les plus brefs délais après réception du mail."
                 ]
             }
         ]

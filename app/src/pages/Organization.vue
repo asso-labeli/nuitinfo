@@ -1,5 +1,5 @@
 <template>
-    <div id="sponsorship">
+    <div id="sponsorship" class="page">
         <h1>Organisation</h1>
         <h2>Envie de devenir partenaire de l'événement bordelais ?</h2>
         <p>Vous trouverez notre plaquette d'information pour nos partenaires privés à <a href="">cette adresse</a></p>

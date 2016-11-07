@@ -1,5 +1,5 @@
 <template>
-    <div id="mapping">
+    <div id="mapping" class="page">
         <h1>Emplacement des équipes</h1>
     </div>
 </template>

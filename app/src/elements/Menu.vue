@@ -18,11 +18,6 @@
                         Défis
                     </div>
                 </router-link>
-                <router-link v-if="!logged" :to="{name: 'login'}" exact>
-                    <div class="tab">
-                        Connexion
-                    </div>
-                </router-link>
                 <router-link v-if="!logged" :to="{name: 'register'}" exact>
                     <div class="tab">
                         Inscription
@@ -31,6 +26,11 @@
                 <router-link v-if="logged" :to="{name: 'dashboard'}" exact>
                     <div class="tab">
                         Tableau de bord
+                    </div>
+                </router-link>
+                <router-link v-if="!logged" :to="{name: 'login'}" exact>
+                    <div class="tab">
+                        Connexion
                     </div>
                 </router-link>
                 <router-link v-if="logged" :to="{name: 'logout'}" exact>
@@ -53,16 +53,16 @@
                         <router-link :to="{name: 'challenges'}" exact>Défis</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name: 'login'}" exact>Connexion</router-link>
+                        <router-link v-if="!logged" :to="{name: 'register'}" exact>Inscription</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name: 'register'}" exact>Inscription</router-link>
+                        <router-link v-if="!logged" :to="{name: 'login'}" exact>Connexion</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name: 'dashboard'}" exact>Tableau de bord</router-link>
+                        <router-link v-if="logged" :to="{name: 'dashboard'}" exact>Tableau de bord</router-link>
                     </li>
                     <li>
-                        <router-link :to="{name: 'logout'}" exact>Déconnexion</router-link>
+                        <router-link v-if="logged" :to="{name: 'logout'}" exact>Déconnexion</router-link>
                     </li>
                 </ul>
             </nav>

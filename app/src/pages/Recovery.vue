@@ -1,5 +1,5 @@
 <template>
-    <div id="recovery">
+    <div id="recovery" class="page">
         <h1>Récupération</h1>
         <form v-on:submit.prevent="recover">
             <div>

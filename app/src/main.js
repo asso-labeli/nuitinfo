@@ -32,6 +32,10 @@ const router = new VueRouter({
         component: require('./pages/Register.vue'),
         name: 'edit'
     }, {
+        path: '/user/:id',
+        component: require('./pages/DisplayUser.vue'),
+        name: 'displayUser'
+    }, {
         path: '/teams',
         component: require('./pages/Teams.vue'),
         name: 'teams'
@@ -77,7 +81,6 @@ const router = new VueRouter({
         name: 'lost'
     }]
 });
-
 
 new Vue({
     el: '#app',
