@@ -107,7 +107,7 @@ module.exports = function (applicationSchema) {
                 }, finished)
             ], (err) => next(err, application)),
             (application, next) =>
-                mongoose.model('Application').remove({_id: application._id}, next)
+                mongoose.model('Application').remove({user: application.user}, next)
         ], callback);
     };
 
