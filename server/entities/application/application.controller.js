@@ -3,6 +3,7 @@
 let Response = require('../../tools/response');
 let mongoose = require('mongoose');
 let async = require('async');
+let Mail = require('../../config/mail');
 
 module.exports = function (applicationSchema) {
     /* Tools functions */
@@ -24,6 +25,40 @@ module.exports = function (applicationSchema) {
             });
     }
 
+    function sendMailToTeam(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('Team')
+                .findById(application.team, next),
+            (team, next) => {
+                if (!team){
+                    return next('No team found');
+                }
+
+                Mail.sendApplicationNotificationToTeamMail({
+                    to: team.email,
+                    url: process.env.WEBSERVER_URL + '/dashboard'
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendMailToUser(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => {
+                if (!user){
+                    return next('No user found');
+                }
+
+                Mail.sendApplicationNotificationToUserMail({
+                    to: user.email,
+                    url: process.env.WEBSERVER_URL + '/dashboard'
+                }, next);
+            }
+        ], callback);
+    }
+
     /* Controller methods */
 
     applicationSchema.statics.create = function (params, callback) {
@@ -31,7 +66,17 @@ module.exports = function (applicationSchema) {
 
         let application = new Self(params);
 
-        application.save(callback);
+        application.save((err) => {
+            if (err){
+                return callback(err);
+            }
+
+            if (application.fromUser){
+                sendMailToTeam(application, callback);
+            } else {
+                sendMailToUser(application, callback);
+            }
+        });
     };
 
     applicationSchema.statics.accept = function (params, callback) {

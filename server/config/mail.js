@@ -37,7 +37,29 @@ const subscribeMail = {
         '\r\n\r\n',
         'Vous pouvez d\'ores et déjà vous connecter sur le site pour trouver ou ',
         'créer une équipe.\r\n\r\n',
-        'A bientôt pour la Nuit ! :)\r\n\r\n',
+        'Rendez-vous le 1er Décembre pour la plus belle des nuits ! :)\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
+};
+
+const applicationNotificationToTeamMail = {
+    subject : 'Nouveau candidat pour votre équipe',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Une nouvelle candidature a été déposée auprès de votre équipe.\r\n',
+        'Pour la consulter, rendez-vous sur le dashboard du site : <link>.\r\n\r\n',
+        'Que la Nuit soit avec vous ! :)\r\n\r\n',
+        'Loco, le robot mailer de la Nuit de l\'Info'
+    ]
+};
+
+const applicationNotificationToUserMail = {
+    subject : 'Nouvelle candidature d\'une équipe',
+    text : [
+        'Bonjour,\r\n\r\n',
+        'Une nouvelle candidature a été déposée auprès de vous.\r\n',
+        'Pour la consulter, rendez-vous sur le dashboard du site : <link>.\r\n\r\n',
+        'Que la Nuit soit avec vous ! :)\r\n\r\n',
         'Loco, le robot mailer de la Nuit de l\'Info'
     ]
 };
@@ -71,7 +93,39 @@ function sendSubscribeMail(params, callback){
     });
 }
 
+function sendApplicationNotificationToTeamMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: applicationNotificationToTeamMail.subject,
+        text: applicationNotificationToTeamMail.text
+            .join('')
+            .replace('<link>', params.url)
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
+function sendApplicationNotificationToUserMail(params, callback){
+    transport.sendMail({
+        from: from,
+        to: params.to,
+        subject: applicationNotificationToUserMail.subject,
+        text: applicationNotificationToUserMail.text
+            .join('')
+            .replace('<link>', params.url)
+    }, (err) => {
+        if (callback){
+            callback(err);
+        }
+    });
+}
+
 module.exports = {
     sendPasswordRecoveryMail: sendPasswordRecoveryMail,
-    sendSubscribeMail: sendSubscribeMail
+    sendSubscribeMail: sendSubscribeMail,
+    sendApplicationNotificationToTeamMail: sendApplicationNotificationToTeamMail,
+    sendApplicationNotificationToUserMail: sendApplicationNotificationToUserMail
 };
