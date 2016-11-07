@@ -283,7 +283,7 @@ module.exports = function (teamSchema) {
 
                 next(undefined, team);
             },
-            (next) => mongoose.model('Team').removeUser({
+            (team, next) => mongoose.model('Team').removeUser({
                 team: team,
                 user: {
                     _id: req.body.user
