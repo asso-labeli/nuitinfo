@@ -153,7 +153,7 @@ module.exports = function (userSchema) {
         mongoose.model('User')
             .findById(params.id)
             .select('firstName lastName school team biography')
-            .populate('team')
+            .populate('team school.institution')
             .exec(callback);
     };
 

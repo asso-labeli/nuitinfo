@@ -3,6 +3,7 @@
 let Response = require('../../tools/response');
 let mongoose = require('mongoose');
 let async = require('async');
+let Mail = require('../../config/mail');
 
 module.exports = function (applicationSchema) {
     /* Tools functions */
@@ -24,6 +25,124 @@ module.exports = function (applicationSchema) {
             });
     }
 
+    function sendNewApplicationMailToTeam(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('Team')
+                .findById(application.team, next),
+            (team, next) => {
+                if (!team){
+                    return next('No team found');
+                }
+
+                Mail.sendApplicationNotificationToTeamMail({
+                    to: team.email,
+                    url: process.env.WEBSERVER_URL + '/dashboard'
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendNewApplicationMailToUser(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => {
+                if (!user){
+                    return next('No user found');
+                }
+
+                Mail.sendApplicationNotificationToUserMail({
+                    to: user.email,
+                    url: process.env.WEBSERVER_URL + '/dashboard'
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendUserAcceptsMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err, team) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendUserAcceptsApplicationMail({
+                    to: team.email,
+                    user: user
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendUserRefusesMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err, team) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendUserRefusesApplicationMail({
+                    to: team.email,
+                    user: user
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendTeamAcceptsMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err, team) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendTeamAcceptsApplicationMail({
+                    to: user.email,
+                    team: team
+                }, next);
+            }
+        ], callback);
+    }
+
+    function sendTeamRefusesMail(application, callback){
+        async.waterfall([
+            (next) => mongoose.model('User')
+                .findById(application.user, next),
+            (user, next) => mongoose.model('Team')
+                .findById(application.team, (err, team) => next(err, user, team)),
+            (user, team, next) => {
+                if (!user){
+                    return next('No user found');
+                } else if (!team) {
+                    return next('No team found');
+                }
+
+                Mail.sendTeamRefusesApplicationMail({
+                    to: user.email,
+                    team: team
+                }, next);
+            }
+        ], callback);
+    }
+
     /* Controller methods */
 
     applicationSchema.statics.create = function (params, callback) {
@@ -31,7 +150,17 @@ module.exports = function (applicationSchema) {
 
         let application = new Self(params);
 
-        application.save(callback);
+        application.save((err) => {
+            if (err){
+                return callback(err);
+            }
+
+            if (application.fromUser){
+                sendNewApplicationMailToTeam(application, callback);
+            } else {
+                sendNewApplicationMailToUser(application, callback);
+            }
+        });
     };
 
     applicationSchema.statics.accept = function (params, callback) {
@@ -62,7 +191,16 @@ module.exports = function (applicationSchema) {
                 }, finished)
             ], (err) => next(err, application)),
             (application, next) =>
-                mongoose.model('Application').remove({_id: application._id}, next)
+                mongoose.model('Application').remove({user: application.user}, (err) => {
+                    next(err, application);
+                }),
+            (application, next) => {
+                if (application.fromTeam){
+                    sendUserAcceptsMail(application, next);
+                } else {
+                    sendTeamAcceptsMail(application, next);
+                }
+            }
         ], callback);
     };
 
@@ -83,7 +221,16 @@ module.exports = function (applicationSchema) {
                 next('Application not found');
             },
             (application, next) =>
-                mongoose.model('Application').remove({_id: application._id}, next)
+                mongoose.model('Application').remove({_id: application._id}, (err) => {
+                    next(err, application);
+                }),
+            (application, next) => {
+                if (application.fromTeam){
+                    sendUserRefusesMail(application, next);
+                } else {
+                    sendTeamRefusesMail(application, next);
+                }
+            }
         ], callback);
     };
 
@@ -117,7 +264,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exCreateFromUser = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         req.body.fromUser = true;
@@ -166,7 +313,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exCreateFromTeam = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         req.body.fromTeam = true;
@@ -214,7 +361,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exAccept = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([
@@ -238,7 +385,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exRefuse = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([
@@ -262,7 +409,7 @@ module.exports = function (applicationSchema) {
 
     applicationSchema.statics.exGetForUser = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         mongoose.model('Application').find({user: req.user._id, fromTeam: true})
@@ -280,9 +427,29 @@ module.exports = function (applicationSchema) {
             });
     };
 
+    applicationSchema.statics.exGetWaitingApplications = function(req, res) {
+        if (!req.isLogged()){
+            return Response.notLogged(res);
+        }
+
+        mongoose.model('Application').find({user: req.user._id, fromUser: true})
+            .populate('team')
+            .exec((err, applications) => {
+                if (err) {
+                    return Response.selectError(res, err);
+                }
+
+                if (!applications) {
+                    return Response.resourceNotFound(res, 'application');
+                }
+
+                Response.success(res, 'Applications found', applications);
+            });
+    };
+
     applicationSchema.statics.exGetForTeam = function (req, res) {
         if (!req.isLogged()) {
-            return Response.notAllowed(res);
+            return Response.notLogged(res);
         }
 
         async.waterfall([

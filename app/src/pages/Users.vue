@@ -11,12 +11,14 @@
                     </b>
                 </h4>
                 <div class="school"><span class="special">Établissement :</span> {{user.school.institution.name}}</div>
-                <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span class="integer">{{user.school.studyYear}}</span></span></div>
+                <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span
+                        class="integer">{{user.school.studyYear}}</span></span></div>
                 <span class="special">Biographie :</span>
                 <div class="bio">{{user.biography}}</div>
-                <div v-if="user.hasOwnProperty('team')">
+                <div v-if="checkTeam(user)">
                     Ce participant est dans l'équipe "
-                    <router-link :to="{name: 'displayTeam', params: {id: user.team._id}}">{{user.team.name}}</router-link>
+                    <router-link
+                            :to="{name: 'displayTeam', params: {id: user.team._id}}">{{user.team.name}}</router-link>
                     "
                 </div>
                 <div v-else>
@@ -42,11 +44,12 @@
         components: {Separator},
         data(){
             return {
-                users: dataStore.get('users', []),
+                users: [],
                 displayApplication: false
             };
         },
         mounted(){
+//            this.users = dataStore.get('users', []);
             this.$http.get('/api/user').then((response) => {
                 if (response.status === 200) {
                     response.json().then((message) => {
@@ -74,7 +77,10 @@
             }
         },
         methods: {
-            apply: function(userID) {
+            checkTeam: function (user) {
+                return user.hasOwnProperty('team') && user.team !== null;
+            },
+            apply: function (userID) {
                 if (user.getToken()) {
                     this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                         if (response.status === 200) {
