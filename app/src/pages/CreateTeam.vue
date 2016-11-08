@@ -67,12 +67,12 @@
                     email: "",
                     description: "",
                     logisticsRequirements: "",
-                    openForApplications: true,
+                    openForApplications: true
                 }
             }
         },
         computed: {
-            editionMode: function() {
+            editionMode: function () {
                 return this.$route.path === '/team/edit' || this.$route.path === '/team/edit/';
             }
         },
@@ -88,6 +88,21 @@
             });
             if (this.editionMode) {
                 this.title = "Édition d'équipe";
+                this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                    response.json().then((message) => {
+                        if (message.success === 1) {
+                            user.setUser(message.data);
+                            let me = message.data;
+                            if (me.hasOwnProperty('team') && me.team !== null) {
+                                if (me.team.isLeader) {
+                                    this.team = me.team;
+                                }
+                            }
+                        }
+                    });
+                }, (response) => {
+                    console.warn('Erreur de récupération des informations de profil');
+                });
             }
         },
         methods: {
