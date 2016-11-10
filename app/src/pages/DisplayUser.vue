@@ -42,7 +42,7 @@
                 this.$http.get('/api/user/' + userID).then((response) => {
                     response.json().then((message) => {
                         this.user = message.data;
-                        this.displayTeam = true;
+                        this.displayUser = true;
                     });
                 });
 
