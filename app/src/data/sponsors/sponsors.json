@@ -5,7 +5,7 @@
       "partners": [
         {
           "name": "Label[i]",
-          "logo": "",
+            "logo": "/src/style/assets/sponsors/labeli.png",
           "description": "",
           "website": "http://labeli.org"
         },
@@ -17,7 +17,7 @@
         },
         {
           "name": "UF Informatique",
-          "logo": "",
+            "logo": "/src/style/assets/sponsors/iut.png",
           "description": "",
           "website": "http://www.u-bordeaux.fr/Formation/Composantes-de-formation/College-Sciences-et-technologies/Unite-de-formation-d-informatique"
         }
@@ -40,7 +40,7 @@
         },
         {
           "name": "FSDIE",
-          "logo": "",
+            "logo": "/src/style/assets/sponsors/fsdie.png",
           "description": "Fonds de Solidarité et de Développement des Initiatives Étudiantes",
           "website": "http://www.u-bordeaux.fr/Campus/Vie-associative/Projets-etudiants-FSDIE"
         }
@@ -57,7 +57,7 @@
         },
         {
           "name": "OVH",
-          "logo": "",
+            "logo": "/src/style/assets/sponsors/ovh.png",
           "description": "Leader européen de l'hébergement web et du cloud.",
           "website": "https://ovh.com/fr"
         }

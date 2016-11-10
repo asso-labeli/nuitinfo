@@ -6,9 +6,12 @@
         <div v-for="sponsor in sponsors">
             <h2 class="title">{{ sponsor.type }}</h2>
             <div v-for="partner in sponsor.partners">
-                <a v-bind:href="partner.website" target="_blank">
-                    <img v-bind:src="partner.logo"
-                         v-bind:alt="'Logo de ' + partner.name"/>{{ partner.name }}</a>
+                <a v-bind:href="partner.website" target="_blank" class="sponsor">
+                    <div class="logo">
+                        <img v-bind:src="partner.logo" v-bind:alt="'Logo de ' + partner.name"/>
+                    </div>
+                    <span>{{ partner.name }}</span>
+                </a>
                 <div>{{ partner.description }}</div>
             </div>
         </div>
@@ -43,5 +46,27 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+    }
+
+    .sponsor {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .sponsor .logo {
+        display: flex;
+        flex-direction: row;
+        width: 150px;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .sponsor img {
+        max-width: 100px;
+        max-height: 50px;
     }
 </style>
