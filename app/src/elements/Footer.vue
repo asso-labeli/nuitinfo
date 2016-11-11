@@ -12,9 +12,10 @@
                         target="_blank">UF Info</a></div>
                 <div id="cremi"><a href="http://www.emi.u-bordeaux.fr/" target="_blank">CREMI</a></div>
                 <div id="fsdie"><a href="http://www.u-bordeaux.fr/" target="_blank">Université de Bordeaux</a></div>
-                <div id="cgi"><a href="http://www.cgi-recrute.fr/" target="_blank">CGI</a></div>
+                <div id="cgi"><a href="https://www.groupeonepoint.com/emploi-carriere/offres-demplois/" target="_blank">OnePoint</a></div>
                 <div id="ovh"><a href="https://www.ovh.com/" target="_blank">OVH</a></div>
                 <div id="iut"><a href="http://www.iut.u-bordeaux.fr/general/" target="_blank">IUT Bordeaux</a></div>
+                <div id="abeii"><a href="http://www.iut.u-bordeaux.fr/general/" target="_blank">Abeii</a></div>
             </div>
         </div>
     </footer>

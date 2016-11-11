@@ -3,12 +3,12 @@
         <h1>Organisation</h1>
         <h2>Envie de devenir partenaire de l'événement bordelais ?</h2>
         <p>Vous trouverez notre plaquette d'information pour nos partenaires privés à <a href="">cette adresse</a></p>
-        <div v-for="sponsor in sponsors">
+        <div v-for="sponsor in sponsors" class="categories">
             <h2 class="title">{{ sponsor.type }}</h2>
-            <div v-for="partner in sponsor.partners">
+            <div v-for="partner in sponsor.partners" class="sponsor-description">
                 <a v-bind:href="partner.website" target="_blank" class="sponsor">
                     <div class="logo">
-                        <img v-bind:src="partner.logo" v-bind:alt="'Logo de ' + partner.name"/>
+                        <img v-bind:src="partner.logo" v-bind:alt="'Logo de ' + partner.name" v-if="partner.logo !== ''"/>
                     </div>
                     <span>{{ partner.name }}</span>
                 </a>
@@ -38,7 +38,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     @media screen and (min-width: 700px) {
         #sponsorship {
             padding: 10px;
@@ -69,4 +69,17 @@
         max-width: 100px;
         max-height: 50px;
     }
+
+    .categories {
+        margin-top: 2em;
+    }
+
+    .sponsor-description {
+        margin-top: 1em;
+    }
+
+    .sponsor-description:first-child {
+        margin-top: 0;
+    }
+
 </style>
