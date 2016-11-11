@@ -6,6 +6,7 @@ then
     echo "./launcher generate"
     echo "./launcher build"
     echo "./launcher run"
+    echo "./launcher logs"
     echo "./launcher run [port]"
 else
     if [ ${1} = "generate" ]
@@ -19,22 +20,28 @@ else
             echo "Docker build in progress"
             docker build . -t nuitinfo
         else
-            if [ ${1} = "run" ]
+            if [ ${1} = "logs" ]
             then
-                echo "Docker launch in progress"
-                docker rm -f ndi
-                if [ $# -eq 2 ]
-                then
-                    docker run -p 8080:${2} --name ndi -d nuitinfo
-                else
-                    docker run -p 8080:8080 --name ndi -d nuitinfo
-                fi
+                docker logs -f ndi
             else
-                echo "Usage"
-                echo "./launcher generate"
-                echo "./launcher build"
-                echo "./launcher run"
-                echo "./launcher run [port]"
+                if [ ${1} = "run" ]
+                then
+                    echo "Docker launch in progress"
+                    docker rm -f ndi
+                    if [ $# -eq 2 ]
+                    then
+                        docker run -p 8080:${2} --name ndi -d nuitinfo
+                    else
+                        docker run -p 8080:8080 --name ndi -d nuitinfo
+                    fi
+                else
+                    echo "Usage"
+                    echo "./launcher generate"
+                    echo "./launcher build"
+                    echo "./launcher run"
+                    echo "./launcher logs"
+                    echo "./launcher run [port]"
+                fi
             fi
         fi
     fi
