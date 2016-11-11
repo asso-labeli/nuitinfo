@@ -67,7 +67,6 @@
 
                 <router-link :to="{name:'users'}">Recruter des membres</router-link>
                 <br/>
-                <!--<a v-on:click.stop.prevent="wip()">Éditer les informations de l'équipe</a>-->
                 <router-link :to="{name: 'editTeam', params: {id : team._id}}">
                     Éditer les informations de l'équipe
                 </router-link>

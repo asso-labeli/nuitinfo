@@ -25,6 +25,7 @@
         },
         methods: {
             recover() {
+                alert('Cette fonctionnalité est en cours de développement. Contactez le support si vous avez besoin de récupérer votre compte.');
                 console.log(JSON.stringify(this.email));
                 console.log(user.state);
             }
