@@ -3,11 +3,11 @@
 if [[ $# -eq 0 ]]
 then
     echo "Usage"
-    echo "./launcher generate"
-    echo "./launcher build"
-    echo "./launcher run"
-    echo "./launcher logs"
-    echo "./launcher run [port]"
+    echo "./launcher.sh generate"
+    echo "./launcher.sh build"
+    echo "./launcher.sh run"
+    echo "./launcher.sh logs"
+    echo "./launcher.sh run [port]"
 else
     if [ ${1} = "generate" ]
     then
@@ -36,11 +36,11 @@ else
                     fi
                 else
                     echo "Usage"
-                    echo "./launcher generate"
-                    echo "./launcher build"
-                    echo "./launcher run"
-                    echo "./launcher logs"
-                    echo "./launcher run [port]"
+                    echo "./launcher.sh generate"
+                    echo "./launcher.sh build"
+                    echo "./launcher.sh run"
+                    echo "./launcher.sh logs"
+                    echo "./launcher.sh run [port]"
                 fi
             fi
         fi
