@@ -15,7 +15,7 @@
                     <span class="integer">{{team.members.list.length + 1}}</span> <span class="special">membre<span v-if="team.members.list.length > 0">s</span>
                 </div>
                 <span class="special">Description :</span>
-                <div class="description">{{team.description}}</div>
+                <div class="description">{{nl2br(team.description)}}</div>
                 <div>
                     <router-link :to="{name: 'displayTeam', params: {id: team._id}}">Afficher le profil</router-link>
                 </div>
@@ -65,6 +65,10 @@
             }
         },
         methods: {
+            nl2br: function(str) {
+                str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
+            },
             apply: function(teamID) {
                 if (user.getToken()) {
                     this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {

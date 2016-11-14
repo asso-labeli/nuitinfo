@@ -14,7 +14,7 @@
                 <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span
                         class="integer">{{user.school.studyYear}}</span></span></div>
                 <span class="special">Biographie :</span>
-                <div class="bio">{{user.biography}}</div>
+                <div class="bio">{{nl2br(user.biography)}}</div>
                 <div v-if="checkTeam(user)">
                     Ce participant est dans l'équipe "
                     <router-link
@@ -77,10 +77,14 @@
             }
         },
         methods: {
-            checkTeam: function (user) {
+            checkTeam: function(user) {
                 return user.hasOwnProperty('team') && user.team !== null;
             },
-            apply: function (userID) {
+            nl2br: function(str) {
+                str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
+            },
+            apply: function(userID) {
                 if (user.getToken()) {
                     this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                         if (response.status === 200) {
