@@ -15,7 +15,7 @@
                     <span class="integer">{{team.members.list.length + 1}}</span> <span class="special">membre<span v-if="team.members.list.length > 0">s</span>
                 </div>
                 <span class="special">Description :</span>
-                <div class="description">{{nl2br(team.description)}}</div>
+                <div class="description" v-html="nl2br(team.description)"></div>
                 <div>
                     <router-link :to="{name: 'displayTeam', params: {id: team._id}}">Afficher le profil</router-link>
                 </div>
