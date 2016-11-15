@@ -14,7 +14,7 @@
                 <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span
                         class="integer">{{user.school.studyYear}}</span></span></div>
                 <span class="special">Biographie :</span>
-                <div class="bio">{{nl2br(user.biography)}}</div>
+                <div class="bio" v-html="nl2br(user.biography)"></div>
                 <div v-if="checkTeam(user)">
                     Ce participant est dans l'équipe "
                     <router-link
