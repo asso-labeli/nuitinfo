@@ -52,7 +52,7 @@
 
 <script>
     import user from '../stores/UserStore';
-    import tools from '../libraries/tools';
+    import * as tools from '../libraries/tools';
     export default {
         data(){
             return {
