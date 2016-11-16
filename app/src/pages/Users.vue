@@ -43,6 +43,7 @@
     import user from '../stores/UserStore';
     import Separator from '../elements/Separator.vue';
     import dataStore from '../stores/DataStore';
+    import * as tools from '../libraries/tools';
     export default {
         components: {Separator},
         data(){
