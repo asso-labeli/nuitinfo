@@ -131,10 +131,6 @@
     }
 
     @media screen and (min-width: 700px) {
-        #content {
-            min-height: calc(95vh - 40px);
-        }
-
         h1 {
             text-align: center;
             margin: 50px 0px;

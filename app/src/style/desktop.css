@@ -1,310 +1,290 @@
 #content {
-        min-height: calc(95vh - 40px);
+    min-height: calc(95vh - 40px);
 }
 
 a#goHome:hover {
-        background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.25);
 }
 
 header .content {
-        max-width: 1200px;
-        text-align: right;
-        margin: auto;
-        background-image: url('./assets/favicon.png');
-        background-repeat: no-repeat;
-        background-position: 0 50%;
+    max-width: 1200px;
+    text-align: right;
+    margin: auto;
+    background-image: url('./assets/favicon.png');
+    background-repeat: no-repeat;
+    background-position: 0 50%;
 }
 
 header #goHome {
-        float: left;
-        display: inline-block;
-        height: 58px;
-        width: 64px;
+    float: left;
+    display: inline-block;
+    height: 58px;
+    width: 64px;
 }
 
 header .button {
-        margin: 10px;
+    margin: 10px;
 }
 
 header .button:last-child {
-        margin-right: 0;
+    margin-right: 0;
 }
 
 nav#menu {
-        display: flex;
-        justify-content: flex-end;
+    height: 58px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 nav#smallmenu {
-        display: none;
+    display: none;
 }
 
 footer {
-        padding: 10px;
+    padding: 10px;
 }
 
 footer .content {
-        max-width: 1200px;
-        margin: auto;
+    max-width: 1200px;
+    margin: auto;
 }
 
 footer .credits div:first-child {
-        margin-left: 25px;
+    margin-left: 25px;
 }
 
 footer .credits div {
-        margin-right: 25px;
-        display: inline;
+    margin-right: 25px;
+    display: inline;
 }
 
 .radioTitle, .selectTitle {
-        display: inline-block;
-        margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 h1 {
-        text-align: center;
-        margin: 50px 0px;
+    text-align: center;
+    margin: 50px 0px;
 }
 
 .center {
-        display: block;
-        margin: auto;
-        text-align: center;
+    display: block;
+    margin: auto;
+    text-align: center;
 }
 
-.responsive {
-        padding: 10px;
-        padding-bottom: 5vh;
-        max-width: 1200px;
-        margin: 0 auto;
+.page {
+    padding: 10px;
+    padding-bottom: 5vh;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .loginForm {
-        width: 200px;
-        text-align: center;
+    width: 200px;
+    text-align: center;
 }
 
 .date {
-        display: inline-block;
-        width: 150px;
-        font-size: 1.4em;
-        vertical-align: middle;
+    display: inline-block;
+    width: 150px;
+    font-size: 1.4em;
+    vertical-align: middle;
 }
 
 .register .button, .fluxRSS .button, .adminPanel .button {
-        display: block;
-        font-size: 2em;
-        width: 350px;
-        text-align: center;
-        padding: 10px;
-        margin: 10px auto;
+    display: block;
+    font-size: 2em;
+    width: 350px;
+    text-align: center;
+    padding: 10px;
+    margin: 10px auto;
 }
 
 .adminPanel .button {
-        font-size: 1.5em;
-        width: 450px;
+    font-size: 1.5em;
+    width: 450px;
 }
 
 .statistics .participants, .statistics .teams {
-        font-size: 1.4em;
-        text-align: center;
-        margin: 10px 0px;
+    font-size: 1.4em;
+    text-align: center;
+    margin: 10px 0px;
 }
 
 textarea {
-        display: block;
-        margin-left: 15px;
-        padding: 5px;
-        width: 94%;
-        height: 10em;
+    display: block;
+    margin-left: 15px;
+    padding: 5px;
+    width: 94%;
+    height: 10em;
 }
 
 div.questions p {
-        margin: 0 5px 10px 5px;
-        font-size: 0.95em;
+    margin: 0 5px 10px 5px;
+    font-size: 0.95em;
 }
 
 .error {
-        color: #740000;
-        border: 1px #740000 solid;
-        border-top: none;
+    color: #740000;
+    border: 1px #740000 solid;
+    border-top: none;
 }
 
 .valid {
-        color: #005D00;
-        border: 1px #005D00 solid;
-        border-top: none;
+    color: #005D00;
+    border: 1px #005D00 solid;
+    border-top: none;
 }
 
 .teamsList div.team, .usersList div.user {
-        margin: 10px;
+    margin: 10px;
 }
 
 .teamsList div.team h4, .usersList div.user h4, div.info div.member h4 {
-        text-align: center;
-        margin-bottom: 5px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .usersList div.user h4, div.info div.member h4 {
-        text-align: center;
-        text-transform: capitalize;
+    text-align: center;
+    text-transform: capitalize;
 }
 
 div.description, div.bio, div.application, div.logisticsRequirements {
-        margin: 2px 2px 2px 10px;
-        font-size: 0.9em;
+    margin: 2px 2px 2px 10px;
+    font-size: 0.9em;
 }
 
 div.teamActions a {
-        margin: 0 20px;
+    margin: 0 20px;
 }
 
 .accept:before {
-        margin-right: 3px;
-        content: url('./assets/accept_icon.png');
+    margin-right: 3px;
+    content: url('./assets/accept_icon.png');
 }
 
 .refuse:before {
-        margin-right: 3px;
-        content: url('./assets/refuse_icon.png');
+    margin-right: 3px;
+    content: url('./assets/refuse_icon.png');
 }
 
 .fluxRSS p {
-        font-size: 1em;
+    font-size: 1em;
 }
 
 pre.lists {
-        word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 table {
-        border-collapse: collapse
+    border-collapse: collapse
 }
 
 tr {
-        border-bottom: 1px #CCC solid;
+    border-bottom: 1px #CCC solid;
 }
 
 tr:last-child {
-        border: none;
+    border: none;
 }
 
 .usersList table tbody {
-        font-size: 0.9em;
+    font-size: 0.9em;
 }
 
 td.description, td.requests, td.bio {
-        padding: 5px;
-        font-size: 0.8em;
+    padding: 5px;
+    font-size: 0.8em;
 }
 
 td.email, td.name {
-        text-align: center
+    text-align: center
 }
 
 .openedApplications, .closedApplications {
-        width: 10px;
-        border: none;
-        background-image: url('./assets/open.png');
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
+    width: 10px;
+    border: none;
+    background-image: url('./assets/open.png');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
 }
 
 .closedApplications {
-        background-image: url('./assets/close.png');
-}
-
-#page.admin .usersList {
-        max-width: 1400px;
-}
-
-#page.admin .usersList td, #page.admin .usersList tr {
-        padding-left: 5px;
+    background-image: url('./assets/close.png');
 }
 
 .twitterList {
-        max-height: 600px;
-        overflow: auto;
+    max-height: 600px;
+    overflow: auto;
 }
 
 .twitterList nav {
-        display: table;
-        border-spacing: 10px 15px;
+    display: table;
+    border-spacing: 10px 15px;
 }
 
 div.tweet {
-        display: table-row;
-        border-spacing: 0;
+    display: table-row;
+    border-spacing: 0;
 }
 
 div.tweet div.twitterAvatar {
-        display: table-cell;
-        vertical-align: middle;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 div.tweet div.twitterAvatar img {
-        display: table-column;
-        width: 48px;
-        height: 48px;
+    display: table-column;
+    width: 48px;
+    height: 48px;
 }
 
 div.tweet div.tweetInfo {
-        display: table-cell;
-        vertical-align: top
+    display: table-cell;
+    vertical-align: top
 }
 
 div.tweet a.twitterUser {
-        display: inline-block;
-        font-size: 1.05em;
+    display: inline-block;
+    font-size: 1.05em;
 }
 
 div.tweet span.twitterUser {
-        font-size: 0.75em;
-        color: #777;
-        margin-left: 5px;
+    font-size: 0.75em;
+    color: #777;
+    margin-left: 5px;
 }
 
 div.tweet div.tweetContent {
-        font-size: 0.95em;
+    font-size: 0.95em;
 }
 
 div.tweet div.tweetDetails {
-        font-size: 0.8em;
+    font-size: 0.8em;
 }
 
 div.tweet div.tweetDetails a {
-        margin-right: 20px;
-}
-
-#page.users .button {
-        margin-right: 25px;
-}
-
-#page.sponsors .sponsor {
-        text-align: center;
-        margin: 10px 0;
-}
-
-#page.sponsors .sponsor img {
-        width: 400px;
+    margin-right: 20px;
 }
 
 .iframe-responsive-wrapper {
-        width: 770px;
-        margin: auto;
+    width: 770px;
+    margin: auto;
 }
 
 .iframe-responsive-wrapper .iframe-ratio {
-        display: none;
+    display: none;
 }
 
 .iframe-responsive-wrapper iframe {
-        width: 100%;
-        height: 810px;
+    width: 100%;
+    height: 810px;
 }
 
 header a.router-link-active {
-        border-left: 2px solid #0056AB;
-        background: rgba(33, 143, 193, 0.26);
+    border-left: 2px solid #0056AB;
+    background: rgba(33, 143, 193, 0.26);
 }

@@ -11,12 +11,17 @@
                     </b>
                 </h4>
                 <div class="school"><span class="special">Établissement :</span> {{user.school.institution.name}}</div>
-                <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span class="integer">{{user.school.studyYear}}</span></span></div>
-                <span class="special">Biographie :</span>
-                <div class="bio">{{user.biography}}</div>
-                <div v-if="user.hasOwnProperty('team')">
+                <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span
+                        class="integer">{{user.school.studyYear}}</span></span></div>
+                <div v-if="!isEmpty(user.biography)">
+                    <span class="special">Biographie :</span>
+                    <div class="bio" v-html="nl2br(user.biography)"></div>
+                </div>
+                <div v-if="checkTeam(user)">
                     Ce participant est dans l'équipe "
-                    <router-link :to="{name: 'displayTeam', params: {id: user.team._id}}">{{user.team.name}}</router-link>
+                    <router-link
+                            :to="{name: 'displayTeam', params: {id: user.team._id}}">{{user.team.name}}
+                    </router-link>
                     "
                 </div>
                 <div v-else>
@@ -38,11 +43,12 @@
     import user from '../stores/UserStore';
     import Separator from '../elements/Separator.vue';
     import dataStore from '../stores/DataStore';
+    import * as tools from '../libraries/tools';
     export default {
         components: {Separator},
         data(){
             return {
-                users: dataStore.get('users', []),
+                users: [],
                 displayApplication: false
             };
         },
@@ -74,6 +80,16 @@
             }
         },
         methods: {
+            isEmpty: function(o) {
+                return tools.isEmpty(o);
+            },
+            checkTeam: function(user) {
+                return user.hasOwnProperty('team') && user.team !== null;
+            },
+            nl2br: function(str) {
+                str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
+            },
             apply: function(userID) {
                 if (user.getToken()) {
                     this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
@@ -93,6 +109,7 @@
             }
         }
     }
+
 </script>
 
 
@@ -105,4 +122,5 @@
             margin: 0 auto;
         }
     }
+
 </style>

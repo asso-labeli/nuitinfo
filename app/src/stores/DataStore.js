@@ -4,7 +4,7 @@ class DataStore {
         this.state = {};
     };
 
-    isStorageAvailable(type) {
+    static isStorageAvailable(type) {
         try {
             var storage = window[type],
                 x = '__storage_test__';
@@ -19,7 +19,7 @@ class DataStore {
 
     get(key, _default = null) {
         if (!this.state.hasOwnProperty(key) || this.state[key] === null || this.state[key] === undefined || this.state[key] === "") {
-            if (this.isStorageAvailable('localStorage')) {
+            if (DataStore.isStorageAvailable('localStorage')) {
                 if (window.localStorage[key] !== null) {
                     return window.localStorage.getItem(key);
                 }
@@ -31,14 +31,14 @@ class DataStore {
     };
 
     set(key, value) {
-        if (this.isStorageAvailable('localStorage')) {
+        if (DataStore.isStorageAvailable('localStorage')) {
             window.localStorage.setItem(key, value);
         }
         this.state[key] = value;
     };
 
     remove(key) {
-        if (this.isStorageAvailable('localStorage')) {
+        if (DataStore.isStorageAvailable('localStorage')) {
             window.localStorage.removeItem(key);
         }
         this.state['key'] = null;

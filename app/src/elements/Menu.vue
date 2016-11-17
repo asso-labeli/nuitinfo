@@ -79,9 +79,16 @@
             };
         },
         computed: {
-            logged: function() {
+            logged: function () {
                 return this.userState.logged;
             }
         }
     };
 </script>
+
+
+<style scoped>
+    .content {
+        heigth: 58px;
+    }
+</style>

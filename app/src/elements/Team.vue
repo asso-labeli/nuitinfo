@@ -14,7 +14,8 @@
                 <span class="special">Leader :</span>
                 <span class="capitalized">{{team.members.leader.firstName}}</span>
                 <span class="upperCased">{{team.members.leader.lastName}}</span>
-                <span>&lt;<a v-bind:href="'mailto:' + team.members.leader.email">{{team.members.leader.email}}</a>&gt;</span>
+                <span>&lt;<a
+                        v-bind:href="'mailto:' + team.members.leader.email">{{team.members.leader.email}}</a>&gt;</span>
                 <router-link :to="{name: 'displayUser', params: {id: team.members.leader._id}}">Voir le profil
                 </router-link>
             </div>
@@ -52,7 +53,8 @@
                             <span class="capitalized">{{application.user.firstName}}</span>
                             <span class="upperCased">{{application.user.lastName}}</span>
                             <span>&lt;<a v-bind:href="'mailto:' + application.user.email">{{application.user.email}}</a>&gt;</span>
-                            <router-link :to="{name: 'displayUser', params: {id: application.user._id}}" class="blue">Voir le
+                            <router-link :to="{name: 'displayUser', params: {id: application.user._id}}" class="blue">
+                                Voir le
                                 profil
                             </router-link>
                             <a v-on:click.stop.prevent="accept(application._id)">Accepter</a>
@@ -65,7 +67,9 @@
 
                 <router-link :to="{name:'users'}">Recruter des membres</router-link>
                 <br/>
-                <a v-on:click.stop.prevent="wip()">Éditer les informations de l'équipe</a>
+                <router-link :to="{name: 'editTeam', params: {id : team._id}}">
+                    Éditer les informations de l'équipe
+                </router-link>
                 <br/>
                 <a v-on:click.stop.prevent="wip()">Dissoudre l'équipe</a>
             </div>
@@ -83,6 +87,35 @@
                     <router-link :to="{name: 'teams'}">Postuler dans une équipe</router-link>
                 </li>
             </ul>
+
+            <div v-if="applications.length > 0">
+                <span class="special">Propositions en attente de réponse ({{applications.length}}) :</span>
+                <ul>
+                    <li v-for="application in applications">
+                        Équipe {{application.team.name}}
+                        <span>&lt;<a v-bind:href="'mailto:' + application.team.email">{{application.team.email}}</a>&gt;</span>
+                        <router-link :to="{name: 'displayTeam', params: {id: application.team._id}}" class="blue">
+                            Voir le
+                            profil
+                        </router-link>
+                        <a v-on:click.stop.prevent="accept(application._id)">Accepter</a>
+                        <a v-on:click.stop.prevent="refuse(application._id)" class="red">Refuser</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div v-if="candidatures.length > 0">
+                <span class="special">Candidatures déposées ({{candidatures.length}}) :</span>
+                <ul>
+                    <li v-for="candidature in candidatures">
+                        Équipe {{candidature.team.name}}
+                        <router-link :to="{name: 'displayTeam', params: {id: candidature.team._id}}" class="blue">
+                            Voir le
+                            profil
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -99,18 +132,19 @@
                     members: {}
                 },
                 applications: [],
+                candidatures: [],
                 teamLeader: false
             };
         },
         methods: {
-            wip: function() {
+            wip: function () {
                 alert('Cette fonctionnalité est en cours de développement. Désolé pour la gêne occasionnée.');
             },
-            nl2br: function(str) {
+            nl2br: function (str) {
                 str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
                 return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
             },
-            accept: function(applicationID) {
+            accept: function (applicationID) {
                 this.$http.post('/api/application/accept', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     this.$router.go({
                         path: this.$route,
@@ -120,7 +154,7 @@
                     });
                 });
             },
-            refuse: function(applicationID) {
+            refuse: function (applicationID) {
                 this.$http.post('/api/application/refuse', JSON.stringify({application: applicationID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     this.$router.go({
                         path: this.$route,
@@ -130,7 +164,7 @@
                     });
                 });
             },
-            kick: function(userID) {
+            kick: function (userID) {
                 this.$http.post('/api/team/kick', JSON.stringify({user: userID}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     this.$router.go({
                         path: this.$route,
@@ -140,7 +174,7 @@
                     });
                 });
             },
-            leave: function(userID) {
+            leave: function (userID) {
                 this.$http.post('/api/team/leave', JSON.stringify({}), {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                     this.$router.go({
                         path: this.$route,
@@ -155,9 +189,9 @@
             this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response1) => {
                 response1.json().then((message1) => {
                     user.setUser(message1.data);
-                    let hasTeam = message1.data.hasOwnProperty('team');
-                    this.teamLeader = message1.data.team.isLeader;
+                    let hasTeam = message1.data.hasOwnProperty('team') && message1.data.team !== null;
                     if (hasTeam) {
+                        this.teamLeader = message1.data.team.isLeader;
                         this.$http.get('/api/team/' + message1.data.team._id).then((response2) => {
                             response2.json().then((message2) => {
                                 this.team = message2.data;
@@ -171,6 +205,17 @@
                                 })
                             });
                         }
+                    } else {
+                        this.$http.get('/api/application/forUser', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                            response.json().then((message) => {
+                                this.applications = message.data;
+                            })
+                        });
+                        this.$http.get('/api/application/forUser/waiting', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
+                            response.json().then((message) => {
+                                this.candidatures = message.data;
+                            })
+                        });
                     }
                 });
             }, (error) => {

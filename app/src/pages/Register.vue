@@ -227,7 +227,7 @@
             };
         },
         computed: {
-            editionMode: function() {
+            editionMode: function () {
                 return this.$route.path === '/user/edit' || this.$route.path === '/user/edit/';
             }
         },

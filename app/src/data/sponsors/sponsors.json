@@ -1,67 +1,67 @@
 {
-  "sponsors": [
-    {
-      "type": "Organisateurs",
-      "partners": [
+    "sponsors": [
         {
-          "name": "Label[i]",
-          "logo": "",
-          "description": "",
-          "website": "http://labeli.org"
+            "type": "Organisateurs",
+            "partners": [
+                {
+                    "name": "Label[i]",
+                    "logo": "/src/style/assets/sponsors/labeli.png",
+                    "description": "Association d'Informatique pour les étudiants de l'Université de Bordeaux. Co-organise la Nuit depuis 4 ans avec l'UF Informatique.",
+                    "website": "http://labeli.org"
+                },
+                {
+                    "name": "Abeii",
+                    "logo": "",
+                    "description": "Association des étudiants en IUT Informatique",
+                    "website": ""
+                },
+                {
+                    "name": "UF Informatique",
+                    "logo": "",
+                    "description": "Unité de formation d'Informatique de l'Université de Bordeaux. Organise la Nuit de l'Info sur Bordeaux depuis 6 ans.",
+                    "website": "http://www.u-bordeaux.fr/Formation/Composantes-de-formation/College-Sciences-et-technologies/Unite-de-formation-d-informatique"
+                },
+                {
+                    "name": "IUT Informatique",
+                    "logo": "/src/style/assets/sponsors/iut.png",
+                    "description": "IUT d'Informatique de l'Universite de Bordeaux.",
+                    "website": "https://www.iut.u-bordeaux.fr/info/"
+                }
+            ]
         },
         {
-          "name": "Abeii",
-          "logo": "",
-          "description": "",
-          "website": ""
+            "type": "Partenaires institutionnels",
+            "partners": [
+                {
+                    "name": "CREMI",
+                    "logo": "/src/style/assets/sponsors/cremi.png",
+                    "description": "Centre de Ressources pour l'Enseignement des Mathématiques et de l'Informatique",
+                    "website": "http://www.emi.u-bordeaux.fr"
+                },
+                {
+                    "name": "FSDIE",
+                    "logo": "/src/style/assets/sponsors/fsdie.png",
+                    "description": "Fonds de Solidarité et de Développement des Initiatives Étudiantes",
+                    "website": "http://www.u-bordeaux.fr/Campus/Vie-associative/Projets-etudiants-FSDIE"
+                }
+            ]
         },
         {
-          "name": "UF Informatique",
-          "logo": "",
-          "description": "",
-          "website": "http://www.u-bordeaux.fr/Formation/Composantes-de-formation/College-Sciences-et-technologies/Unite-de-formation-d-informatique"
+            "type": "Partenaires privés",
+            "partners": [
+                {
+                    "name": "OnePoint",
+                    "logo": "/src/style/assets/sponsors/onepointwhite.png",
+                    "description": "En moins de 15 ans, onepoint est devenu l’un des acteurs majeurs de la transformation numérique, qui compte 1800 collaborateurs.",
+                    "website": "https://www.groupeonepoint.com/emploi-carriere/offres-demplois/"
+                },
+                {
+                    "name": "OVH",
+                    "logo": "/src/style/assets/sponsors/ovh.png",
+                    "description": "Leader européen de l'hébergement web et du cloud.",
+                    "website": "https://ovh.com/fr"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "type": "Partenaires institutionnels",
-      "partners": [
-        {
-          "name": "CREMI",
-          "logo": "",
-          "description": "Centre de Ressources pour l'Enseignement des Mathématiques et de l'Informatique",
-          "website": "http://www.emi.u-bordeaux.fr"
-        },
-        {
-          "name": "LaBRI",
-          "logo": "",
-          "description": "Laboratoire Bordelais de Recherche Informatique",
-          "website": "http://www.labri.fr/"
-        },
-        {
-          "name": "FSDIE",
-          "logo": "",
-          "description": "Fonds de Solidarité et de Développement des Initiatives Étudiantes",
-          "website": "http://www.u-bordeaux.fr/Campus/Vie-associative/Projets-etudiants-FSDIE"
-        }
-      ]
-    },
-    {
-      "type": "Partenaires privés",
-      "partners": [
-        {
-          "name": "CGI",
-          "logo": "",
-          "description": "Cinquième plus importante entreprise indépendante de services en technologies de l'information et en gestion des processus d'affaires au monde.",
-          "website": "http://www.cgi-recrute.fr/"
-        },
-        {
-          "name": "OVH",
-          "logo": "",
-          "description": "Leader européen de l'hébergement web et du cloud.",
-          "website": "https://ovh.com/fr"
-        }
-      ]
-    }
-  ]
+    ]
 }

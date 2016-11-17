@@ -4,11 +4,15 @@
         <h1 v-else>Équipe non trouvée</h1>
         <div class="team" v-if="displayTeam">
 
-            <span class="special">Description :</span>
-            <div class="description">{{team.description}}</div>
+            <div v-if="!isEmpty(team.description)">
+                <span class="special">Description :</span>
+                <div class="description" v-html=nl2br(team.description)"></div>
+            </div>
 
             <h2 class="title">Candidatures</h2>
-            <div class="applicationState">Candidatures <b v-if="team.openForApplications">ouvertes</b><b v-else>fermées</b>
+            <div class="applicationState">Candidatures
+                <b v-if="team.openForApplications">ouvertes</b>
+                <b v-else>fermées</b>
 
                 <div v-if="team.openForApplications && displayApplication">
                     <a v-on:click.stop.prevent="apply(team._id)">Postuler dans cette équipe</a>
@@ -48,6 +52,7 @@
 
 <script>
     import user from '../stores/UserStore';
+    import * as tools from '../libraries/tools';
     export default {
         data(){
             return {
@@ -83,7 +88,14 @@
             }
         },
         methods: {
-            apply: function(teamID) {
+            isEmpty: function (o) {
+                return tools.isEmpty(o);
+            },
+            nl2br: function (str) {
+                str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br/>' + '$2');
+            },
+            apply: function (teamID) {
                 if (user.getToken()) {
                     this.$http.get('/api/user/me', {headers: {Authorization: 'JWT ' + user.getToken()}}).then((response) => {
                         if (response.status === 200) {
