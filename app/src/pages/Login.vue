@@ -54,7 +54,7 @@
                 }, (error) => {
                     console.warn('Erreur Login.vue /api/login');
                     error.json().then((message) => {
-                        alert('Erreur : ' + message.data.message);
+                        alert(message.message);
                     });
                 });
             }
