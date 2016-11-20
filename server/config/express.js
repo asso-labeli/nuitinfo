@@ -43,5 +43,13 @@ module.exports = function (app, config) {
         next();
     });
 
+    app.use(function (req, res, next) {
+        if (req.originalUrl.indexOf('%') !== -1){
+            res.status(400).send('Bad request');
+        } else {
+            next();
+        }
+    });
+
     require('./routes')(app, config);
 };
