@@ -270,8 +270,11 @@
                     } else {
                         self.$http.post('/api/user', JSON.stringify(self.user)).then((response) => {
                             self.$router.push({name: 'login'});
-                        }, (response) => {
+                        }, (error) => {
                             console.warn('Erreur d\'ajout d\'un utilisateur');
+                            error.json().then((message) => {
+                                alert(message.message);
+                            });
                         });
                     }
                 }
@@ -288,8 +291,11 @@
                                 send();
                             });
                         }
-                    }, (response) => {
+                    }, (error) => {
                         console.warn('Erreur d\'ajout d\'une institution');
+                        error.json().then((message) => {
+                            alert(message.message);
+                        });
                     });
                 } else {
                     send();

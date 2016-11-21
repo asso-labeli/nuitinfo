@@ -51,8 +51,11 @@
                         user.setToken(message.data.token);
                         this.$router.push({name: 'dashboard'});
                     });
-                }, (response) => {
+                }, (error) => {
                     console.warn('Erreur Login.vue /api/login');
+                    error.json().then((message) => {
+                        alert(message.message);
+                    });
                 });
             }
         }
