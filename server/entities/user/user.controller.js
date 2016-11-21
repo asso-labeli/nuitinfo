@@ -95,6 +95,11 @@ module.exports = function (userSchema) {
         recursiveEdit(editableFields, params, user);
     }
 
+    function getCorrectDate(stringDate){
+        let tokens = stringDate.split('/');
+        return new Date(tokens[2], tokens[1], tokens[0]);
+    }
+
     /* Controllers methods */
 
     userSchema.statics.create = function (params, callback) {
@@ -110,7 +115,7 @@ module.exports = function (userSchema) {
                 params.password = pass;
 
                 if (params.birthday){
-                    params.birthday = new Date(params.birthday);
+                    params.birthday = getCorrectDate(params.birthday);
                 }
 
                 let user = new Self(params);
@@ -134,7 +139,7 @@ module.exports = function (userSchema) {
                 }
 
                 if (params.birthday){
-                    params.birthday = new Date(params.birthday);
+                    params.birthday = getCorrectDate(params.birthday);
                 }
 
                 editUserParameters(params, user);
