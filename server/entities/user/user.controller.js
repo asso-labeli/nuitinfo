@@ -109,6 +109,10 @@ module.exports = function (userSchema) {
             (pass, next) => {
                 params.password = pass;
 
+                if (params.birthday){
+                    params.birthday = new Date(params.birthday);
+                }
+
                 let user = new Self(params);
 
                 user.save(next);
@@ -127,6 +131,10 @@ module.exports = function (userSchema) {
             (user, next) => {
                 if (!user) {
                     callback('User not found');
+                }
+
+                if (params.birthday){
+                    params.birthday = new Date(params.birthday);
                 }
 
                 editUserParameters(params, user);
