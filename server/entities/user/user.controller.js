@@ -30,11 +30,11 @@ const editableFields = {
     }
 };
 
-module.exports = function (userSchema) {
+module.exports = function(userSchema) {
 
     /* Tool methods */
 
-    userSchema.statics.computeLogin = function (firstName, lastName, callback) {
+    userSchema.statics.computeLogin = function(firstName, lastName, callback) {
         let login = firstName.substr(0, 1).toLowerCase() + '.' +
             lastName.substr(0, 9).toLocaleLowerCase();
         let lastLogin = login;
@@ -95,14 +95,21 @@ module.exports = function (userSchema) {
         recursiveEdit(editableFields, params, user);
     }
 
-    function getCorrectDate(stringDate){
-        let tokens = stringDate.split('/');
-        return new Date(tokens[2], tokens[1], tokens[0]);
+    function getCorrectDate(stringDate) {
+        if (stringDate.indexOf('/') > -1) {
+            // Firefox Date
+            let tokens = stringDate.split('/');
+            return new Date(tokens[2], tokens[1] - 1, tokens[0]);
+        } else if (stringDate.indexOf('-') > -1) {
+            // Chrome Date
+            let tokens = stringDate.split('-');
+            return new Date(tokens[0], tokens[1] - 1, tokens[2]);
+        }
     }
 
     /* Controllers methods */
 
-    userSchema.statics.create = function (params, callback) {
+    userSchema.statics.create = function(params, callback) {
         let Self = this;
 
         params.team = undefined;
@@ -114,7 +121,7 @@ module.exports = function (userSchema) {
             (pass, next) => {
                 params.password = pass;
 
-                if (params.birthday){
+                if (params.birthday) {
                     params.birthday = getCorrectDate(params.birthday);
                 }
 
@@ -130,7 +137,7 @@ module.exports = function (userSchema) {
         ], callback);
     };
 
-    userSchema.statics.edit = function (params, callback) {
+    userSchema.statics.edit = function(params, callback) {
         async.waterfall([
             (next) => mongoose.model('User').findById(params.user, next),
             (user, next) => {
@@ -138,7 +145,7 @@ module.exports = function (userSchema) {
                     callback('User not found');
                 }
 
-                if (params.birthday){
+                if (params.birthday) {
                     params.birthday = getCorrectDate(params.birthday);
                 }
 
@@ -149,7 +156,7 @@ module.exports = function (userSchema) {
         ], callback);
     };
 
-    userSchema.statics.changeTeam = function (params, callback) {
+    userSchema.statics.changeTeam = function(params, callback) {
         mongoose.model('User').update(
             {_id: params.user._id},
             {team: params.team._id},
@@ -162,7 +169,7 @@ module.exports = function (userSchema) {
             });
     };
 
-    userSchema.statics.getById = function (params, callback) {
+    userSchema.statics.getById = function(params, callback) {
         mongoose.model('User')
             .findById(params.id)
             .select('firstName lastName school team biography')
@@ -170,7 +177,7 @@ module.exports = function (userSchema) {
             .exec(callback);
     };
 
-    userSchema.statics.getAll = function (params, callback) {
+    userSchema.statics.getAll = function(params, callback) {
         mongoose.model('User')
             .find()
             .select('firstName lastName school team biography')
@@ -212,7 +219,7 @@ module.exports = function (userSchema) {
 
     /* Express calls */
 
-    userSchema.statics.exCreate = function (req, res) {
+    userSchema.statics.exCreate = function(req, res) {
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
             (next) => mongoose.model('User').create(req.body, next)
@@ -231,7 +238,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exEdit = function (req, res) {
+    userSchema.statics.exEdit = function(req, res) {
         if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
@@ -247,7 +254,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exGet = function (req, res) {
+    userSchema.statics.exGet = function(req, res) {
         mongoose.model('User').getById(req.params, (err, user) => {
             if (err) {
                 return Response.selectError(res, err);
@@ -261,7 +268,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exGetAll = function (req, res) {
+    userSchema.statics.exGetAll = function(req, res) {
         mongoose.model('User').getAll({}, (err, users) => {
             if (err) {
                 return Response.selectError(res, err);
@@ -275,7 +282,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exGetLoggedUser = function (req, res) {
+    userSchema.statics.exGetLoggedUser = function(req, res) {
         if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
@@ -294,11 +301,12 @@ module.exports = function (userSchema) {
 
                 user = user.toObject();
 
-                if (user.team){
+                if (user.team) {
                     user.team.isLeader = user._id.equals(user.team.members.leader);
                 }
 
                 Response.success(res, 'Logged user', user);
             });
     };
-};
+}
+;
