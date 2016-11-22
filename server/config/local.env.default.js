@@ -6,12 +6,15 @@ module.exports = {
     MONGO_HOST: process.env.MONGO_HOST || 'localhost',
     MONGO_PORT: process.env.MONGO_PORT || 27017,
     MONGO_DB: process.env.MONGO_DB || 'nuitinfo',
+    MONGO_USER: process.env.MONGO_USER || 'user',
+    MONGO_PASSWORD : process.env.MONGO_PASSWORD || 'password',
 
     MAIL_ADDRESS: process.env.MAIL_ADDRESS || 'email@default.com',
     MAIL_PASSWORD: process.env.MAIL_PASSWORD || 'password',
     MAIL_HOST: process.env.MAIL_HOST || 'smtp.default.com',
     MAIL_PORT: process.env.MAIL_PORT || 777,
-    MAIL_SECURE: (process.env.hasOwnProperty('MAIL_SECURE') ? (process.env.MAIL_SECURE === 1) : false) || false,
+	MAIL_SECURE: (process.env.hasOwnProperty('MAIL_SECURE') ?
+		(process.env.MAIL_SECURE === 1) : false) || false,
 
     API_URL: process.env.API_URL || 'http://localhost:8080',
     WEBSERVER_URL: process.env.WEBSERVER_URL || 'http://localhost:8080',

@@ -17,11 +17,39 @@ for (let key in envConf) {
 
 require('./config/express')(app, config);
 
-mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' +
-    process.env.MONGO_PORT + '/' + process.env.MONGO_DB);
+function getMongoURI(){
+    let uri = 'mongodb://';
+
+    if (process.env.MONGO_USER){
+        uri += process.env.MONGO_USER;
+
+        if (process.env.MONGO_PASSWORD){
+            uri += ':' + process.env.MONGO_PASSWORD + '@';
+        }
+    }
+
+    uri += process.env.MONGO_HOST;
+
+    if (process.env.MONGO_PORT){
+        uri += ':' + process.env.MONGO_PORT;
+    }
+
+    if (process.env.MONGO_DB){
+        uri += '/' + process.env.MONGO_DB;
+    }
+
+    return uri;
+}
+
+console.log(getMongoURI());
+
+mongoose.connect(getMongoURI());
 
 let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', (err) => {
+    console.error('Mongoose error : ', err);
+});
+
 db.once('open', function() {
     console.log('Database connected on', process.env.MONGO_DB);
 });
