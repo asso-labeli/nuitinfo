@@ -52,6 +52,7 @@
 
 <script>
     import user from '../stores/UserStore';
+    import * as tools from '../libraries/tools';
     export default {
         data(){
             return {
@@ -88,7 +89,7 @@
         },
         methods: {
             isEmpty: function (o) {
-                return o === "";
+                return tools.isEmpty(o);
             },
             nl2br: function (str) {
                 str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

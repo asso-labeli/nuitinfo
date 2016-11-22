@@ -122,6 +122,7 @@ function badLogin(res) {
 }
 
 function editError(res, err) {
+  console.error(err);
   sendResponse(res, 500, {
     message: 'MongoDB error during edition',
     data: err,
@@ -130,6 +131,7 @@ function editError(res, err) {
 }
 
 function selectError(res, err) {
+  console.error(err);
   sendResponse(res, 500, {
     message: 'MongoDB error during selection',
     data: err,
@@ -138,6 +140,7 @@ function selectError(res, err) {
 }
 
 function deleteError(res, err) {
+  console.error(err);
   sendResponse(res, 500, {
     message: 'MongoDB error during deletion',
     data: err,
@@ -146,6 +149,7 @@ function deleteError(res, err) {
 }
 
 function insertError(res, err) {
+  console.error(err);
   sendResponse(res, 500, {
     message: 'MongoDB error during insertion',
     data: err,

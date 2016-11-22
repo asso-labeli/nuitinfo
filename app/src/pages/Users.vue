@@ -13,12 +13,15 @@
                 <div class="school"><span class="special">Établissement :</span> {{user.school.institution.name}}</div>
                 <div class="studyLevel"><span class="special">Niveau d'étude :</span><span> Bac +<span
                         class="integer">{{user.school.studyYear}}</span></span></div>
-                <span class="special">Biographie :</span>
-                <div class="bio" v-html="nl2br(user.biography)"></div>
+                <div v-if="!isEmpty(user.biography)">
+                    <span class="special">Biographie :</span>
+                    <div class="bio" v-html="nl2br(user.biography)"></div>
+                </div>
                 <div v-if="checkTeam(user)">
                     Ce participant est dans l'équipe "
                     <router-link
-                            :to="{name: 'displayTeam', params: {id: user.team._id}}">{{user.team.name}}</router-link>
+                            :to="{name: 'displayTeam', params: {id: user.team._id}}">{{user.team.name}}
+                    </router-link>
                     "
                 </div>
                 <div v-else>
@@ -40,6 +43,7 @@
     import user from '../stores/UserStore';
     import Separator from '../elements/Separator.vue';
     import dataStore from '../stores/DataStore';
+    import * as tools from '../libraries/tools';
     export default {
         components: {Separator},
         data(){
@@ -49,7 +53,6 @@
             };
         },
         mounted(){
-//            this.users = dataStore.get('users', []);
             this.$http.get('/api/user').then((response) => {
                 if (response.status === 200) {
                     response.json().then((message) => {
@@ -77,6 +80,9 @@
             }
         },
         methods: {
+            isEmpty: function(o) {
+                return tools.isEmpty(o);
+            },
             checkTeam: function(user) {
                 return user.hasOwnProperty('team') && user.team !== null;
             },
@@ -103,6 +109,7 @@
             }
         }
     }
+
 </script>
 
 
@@ -115,4 +122,5 @@
             margin: 0 auto;
         }
     }
+
 </style>
