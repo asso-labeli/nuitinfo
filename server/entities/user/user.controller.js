@@ -7,306 +7,311 @@ let PassTools = require('../../tools/passTools');
 let Mail = require('../../config/mail');
 
 const editableFields = {
-    lastName: true,
-    firstName: true,
-    email: true,
-    biography: true,
-    birthday: true,
-    school: {
-        institution: true,
-        studyYear: true,
-        pathway: true
-    },
-    material: {
-        hasMaterial: true,
-        isDesktop: true,
-        hasWifi: true
-    },
-    mailForRecruitment: true,
-    cremiAccount: {
-        needed: true,
-        studentNumber: true,
-        studentMail: true
-    }
+	lastName: true,
+	firstName: true,
+	email: true,
+	biography: true,
+	birthday: true,
+	school: {
+		institution: true,
+		studyYear: true,
+		pathway: true
+	},
+	material: {
+		hasMaterial: true,
+		isDesktop: true,
+		hasWifi: true
+	},
+	mailForRecruitment: true,
+	cremiAccount: {
+		needed: true,
+		studentNumber: true,
+		studentMail: true
+	}
 };
 
-module.exports = function(userSchema) {
+module.exports = function (userSchema) {
 
-    /* Tool methods */
+	/* Tool methods */
 
-    userSchema.statics.computeLogin = function(firstName, lastName, callback) {
-        let login = firstName.substr(0, 1).toLowerCase() + '.' +
-            lastName.substr(0, 9).toLocaleLowerCase();
-        let lastLogin = login;
-        let initialLogin = login;
-        let currentNumber = 1;
+	userSchema.statics.computeLogin = function (firstName, lastName, callback) {
+		let login = firstName.substr(0, 1).toLowerCase() + '.' +
+			lastName.substr(0, 9).toLocaleLowerCase();
+		let lastLogin = login;
+		let initialLogin = login;
+		let currentNumber = 1;
 
-        let user = '';
+		let user = '';
 
-        async.whilst(
-            // Check if a user exist with this login
-            () => user !== null,
-            // Search a login and compute a new one
-            (checkTest) => {
-                this.findOne({login: login}, (err, userFound) => {
-                    if (err) {
-                        return checkTest(err);
-                    }
+		async.whilst(
+			// Check if a user exist with this login
+			() => user !== null,
+			// Search a login and compute a new one
+			(checkTest) => {
+				this.findOne({login: login}, (err, userFound) => {
+					if (err) {
+						return checkTest(err);
+					}
 
-                    // Keep found user in memory for the test
-                    user = userFound;
+					// Keep found user in memory for the test
+					user = userFound;
 
-                    // Keep the login in memory
-                    lastLogin = login;
+					// Keep the login in memory
+					lastLogin = login;
 
-                    // Create a new login
-                    login = initialLogin + currentNumber;
-                    currentNumber++;
+					// Create a new login
+					login = initialLogin + currentNumber;
+					currentNumber++;
 
-                    // Call whilst callback
-                    checkTest(null);
-                });
-            },
-            (err) => {
-                if (err) {
-                    return callback(err);
-                }
+					// Call whilst callback
+					checkTest(null);
+				});
+			},
+			(err) => {
+				if (err) {
+					return callback(err);
+				}
 
-                callback(null, lastLogin);
-            }
-        );
-    };
+				callback(null, lastLogin);
+			}
+		);
+	};
 
-    function recursiveEdit(parametersObject, newParams, user) {
-        for (let key in parametersObject) {
-            if (!parametersObject.hasOwnProperty(key)) {
-                continue;
-            }
+	function recursiveEdit(parametersObject, newParams, user) {
+		for (let key in parametersObject) {
+			if (!parametersObject.hasOwnProperty(key)) {
+				continue;
+			}
 
-            if (parametersObject[key] instanceof Object && newParams[key]) {
-                recursiveEdit(parametersObject[key], newParams[key], user[key]);
-            } else if (newParams[key]) {
-                user[key] = newParams[key];
-            }
-        }
-    }
+			if (parametersObject[key] instanceof Object && newParams[key]) {
+				recursiveEdit(parametersObject[key], newParams[key], user[key]);
+			} else if (newParams[key]) {
+				user[key] = newParams[key];
+			}
+		}
+	}
 
-    function editUserParameters(params, user) {
-        recursiveEdit(editableFields, params, user);
-    }
+	function editUserParameters(params, user) {
+		recursiveEdit(editableFields, params, user);
+	}
 
-    function getCorrectDate(stringDate) {
-        if (stringDate.indexOf('/') > -1) {
-            // Firefox Date
-            let tokens = stringDate.split('/');
-            return new Date(tokens[2], tokens[1] - 1, tokens[0]);
-        } else if (stringDate.indexOf('-') > -1) {
-            // Chrome Date
-            let tokens = stringDate.split('-');
-            return new Date(tokens[0], tokens[1] - 1, tokens[2]);
-        }
-    }
+	function getCorrectDate(stringDate) {
+		if (stringDate.indexOf('/') > -1) {
+			// Firefox Date
+			let tokens = stringDate.split('/');
+			return new Date(tokens[2], tokens[1] - 1, tokens[0]);
+		} else if (stringDate.indexOf('-') > -1) {
+			// Chrome Date
+			let tokens = stringDate.split('-');
+			return new Date(tokens[0], tokens[1] - 1, tokens[2]);
+		}
+	}
 
-    /* Controllers methods */
+	/* Controllers methods */
 
-    userSchema.statics.create = function(params, callback) {
-        let Self = this;
+	userSchema.statics.create = function (params, callback) {
+		let Self = this;
 
-        params.team = undefined;
-        params.paswordRecoveryToken = undefined;
-        params.data = undefined;
+		params.team = undefined;
+		params.paswordRecoveryToken = undefined;
+		params.data = undefined;
 
-        async.waterfall([
-            (next) => PassTools.hashPassword(params.password, next),
-            (pass, next) => {
-                params.password = pass;
+		async.waterfall([
+			(next) => PassTools.hashPassword(params.password, next),
+			(pass, next) => {
+				params.password = pass;
 
-                if (params.birthday) {
-                    params.birthday = getCorrectDate(params.birthday);
-                }
+				if (params.birthday) {
+					params.birthday = getCorrectDate(params.birthday);
+				}
 
-                let user = new Self(params);
+				let user = new Self(params);
 
-                user.save(next);
-            },
-            (user, requests, next) => {
-                Mail.sendSubscribeMail({
-                    to: user.email
-                }, (err) => next(err, user));
-            }
-        ], callback);
-    };
+				user.save(next);
+			},
+			(user, requests, next) => {
+				Mail.sendSubscribeMail({
+					to: user.email
+				}, (err) => next(err, user));
+			}
+		], callback);
+	};
 
-    userSchema.statics.edit = function(params, callback) {
-        async.waterfall([
-            (next) => mongoose.model('User').findById(params.user, next),
-            (user, next) => {
-                if (!user) {
-                    callback('User not found');
-                }
+	userSchema.statics.edit = function (params, callback) {
+		async.waterfall([
+			(next) => mongoose.model('User').findById(params.user, next),
+			(user, next) => {
+				if (!user) {
+					callback('User not found');
+				}
 
-                if (params.birthday) {
-                    params.birthday = getCorrectDate(params.birthday);
-                }
+				if (params.birthday) {
+					params.birthday = getCorrectDate(params.birthday);
+				}
 
-                editUserParameters(params, user);
+				editUserParameters(params, user);
 
-                user.save(next);
-            }
-        ], callback);
-    };
+				user.save(next);
+			}
+		], callback);
+	};
 
-    userSchema.statics.changeTeam = function(params, callback) {
-        mongoose.model('User').update(
-            {_id: params.user._id},
-            {team: params.team._id},
-            (err) => {
-                if (err) {
-                    return callback(err);
-                }
+	userSchema.statics.changeTeam = function (params, callback) {
+		mongoose.model('User').update(
+			{_id: params.user._id},
+			{team: params.team._id},
+			(err) => {
+				if (err) {
+					return callback(err);
+				}
 
-                callback();
-            });
-    };
+				callback();
+			});
+	};
 
-    userSchema.statics.getById = function(params, callback) {
-        mongoose.model('User')
-            .findById(params.id)
-            .select('firstName lastName school team biography')
-            .populate('team school.institution')
-            .exec(callback);
-    };
+	userSchema.statics.getById = function (params, callback) {
+		mongoose.model('User')
+			.findById(params.id)
+			.select('firstName lastName school team biography')
+			.populate('team school.institution')
+			.exec(callback);
+	};
 
-    userSchema.statics.getAll = function(params, callback) {
-        mongoose.model('User')
-            .find()
-            .select('firstName lastName school team biography')
-            .populate('team school.institution')
-            .exec(callback);
-    };
+	userSchema.statics.getAll = function (params, callback) {
+		mongoose.model('User')
+			.find()
+			.select('firstName lastName school team biography')
+			.populate('team school.institution')
+			.exec(callback);
+	};
 
-    /* Express methods verifications */
+	/* Express methods verifications */
 
-    function checkParametersExistsForCreate(req, res, callback) {
-        let parametersAreGood = false;
+	function checkParametersExistsForCreate(req, res, callback) {
+		let parametersAreGood = false;
 
-        if (!req.body || !req.body.firstName) {
-            return Response.missing(res, 'firstName', -11);
-        } else if (!req.body.lastName) {
-            return Response.missing(res, 'lastName', -12);
-        } else if (!req.body.email) {
-            return Response.missing(res, 'email', -13);
-        } else if (!req.body.password) {
-            return Response.missing(res, 'password', -14);
-        } else {
-            parametersAreGood = true;
-        }
+		req.body.isSystemAccount = false;
 
-        if (parametersAreGood && !req.body.login) {
-            mongoose.model('User').computeLogin(req.body.firstName,
-                req.body.lastName, (err, login) => {
-                    req.body.login = login;
-                    callback(err);
-                });
-        } else if (parametersAreGood) {
-            callback();
-        } else {
-            callback({
-                alreadySent: true
-            });
-        }
-    }
+		if (!req.body || !req.body.firstName) {
+			return Response.missing(res, 'firstName', -11);
+		} else if (!req.body.lastName) {
+			return Response.missing(res, 'lastName', -12);
+		} else if (!req.body.email) {
+			return Response.missing(res, 'email', -13);
+		} else if (!req.body.password) {
+			return Response.missing(res, 'password', -14);
+		} else {
+			parametersAreGood = true;
+		}
 
-    /* Express calls */
+		if (parametersAreGood && !req.body.login) {
+			mongoose.model('User').computeLogin(req.body.firstName,
+				req.body.lastName, (err, login) => {
+					req.body.login = login;
+					callback(err);
+				});
+		} else if (parametersAreGood) {
+			callback();
+		} else {
+			callback({
+				alreadySent: true
+			});
+		}
+	}
 
-    userSchema.statics.exCreate = function(req, res) {
-        async.waterfall([
-            (next) => checkParametersExistsForCreate(req, res, next),
-            (next) => mongoose.model('User').create(req.body, next)
-        ], (err, user) => {
-            if (err && err.alreadySent) {
-                return;
-            }
+	/* Express calls */
 
-            if (err && err.code === Response.MongoCodes.alreadyExist) {
-                return Response.alreadyExist(res, 'email');
-            } else if (err) {
-                return Response.insertError(res, err);
-            }
+	userSchema.statics.exCreate = function (req, res) {
+		async.waterfall([
+			(next) => checkParametersExistsForCreate(req, res, next),
+			(next) => mongoose.model('User').create(req.body, next)
+		], (err, user) => {
+			if (err && err.alreadySent) {
+				return;
+			}
 
-            return Response.success(res, 'User added', user);
-        });
-    };
+			if (err && err.code === Response.MongoCodes.alreadyExist) {
+				return Response.alreadyExist(res, 'email');
+			} else if (err) {
+				return Response.insertError(res, err);
+			}
 
-    userSchema.statics.exEdit = function(req, res) {
-        if (!req.isLogged()) {
-            return Response.notAllowed(res);
-        }
+			return Response.success(res, 'User added', user);
+		});
+	};
 
-        req.body.user = req.user._id;
+	userSchema.statics.exEdit = function (req, res) {
+		if (!req.isLogged()) {
+			return Response.notAllowed(res);
+		}
 
-        mongoose.model('User').edit(req.body, (err, user) => {
-            if (err) {
-                return Response.editError(res, err);
-            }
+		req.body.user = req.user._id;
+		req.body.isSystemAccount = false;
 
-            Response.success(res, 'User edited', user);
-        });
-    };
+		mongoose.model('User').edit(req.body, (err, user) => {
+			if (err) {
+				return Response.editError(res, err);
+			}
 
-    userSchema.statics.exGet = function(req, res) {
-        mongoose.model('User').getById(req.params, (err, user) => {
-            if (err) {
-                return Response.selectError(res, err);
-            }
+			Response.success(res, 'User edited', user);
+		});
+	};
 
-            if (!user) {
-                return Response.resourceNotFound(res, 'user');
-            }
+	userSchema.statics.exGet = function (req, res) {
+		mongoose.model('User').getById(req.params, (err, user) => {
+			if (err) {
+				return Response.selectError(res, err);
+			}
 
-            Response.success(res, 'User found', user);
-        });
-    };
+			if (!user) {
+				return Response.resourceNotFound(res, 'user');
+			}
 
-    userSchema.statics.exGetAll = function(req, res) {
-        mongoose.model('User').getAll({}, (err, users) => {
-            if (err) {
-                return Response.selectError(res, err);
-            }
+			Response.success(res, 'User found', user);
+		});
+	};
 
-            if (!users || users.length === 0) {
-                return Response.resourceNotFound(res, 'users');
-            }
+	userSchema.statics.exGetAll = function (req, res) {
+		mongoose.model('User').getAll(
+			{'isSystemAccount': {$ne: false}},
+			(err, users) => {
+				if (err) {
+					return Response.selectError(res, err);
+				}
 
-            Response.success(res, 'Users found', users);
-        });
-    };
+				if (!users || users.length === 0) {
+					return Response.resourceNotFound(res, 'users');
+				}
 
-    userSchema.statics.exGetLoggedUser = function(req, res) {
-        if (!req.isLogged()) {
-            return Response.notAllowed(res);
-        }
+				Response.success(res, 'Users found', users);
+			});
+	};
 
-        mongoose.model('User').findById(req.user._id)
-            .select('-password -__v')
-            .populate('team')
-            .exec((err, user) => {
-                if (err) {
-                    return Response.selectError(res, err);
-                }
+	userSchema.statics.exGetLoggedUser = function (req, res) {
+		if (!req.isLogged()) {
+			return Response.notAllowed(res);
+		}
 
-                if (!user) {
-                    return Response.resourceNotFound(res, 'user');
-                }
+		mongoose.model('User').findById(req.user._id)
+			.select('-password -__v')
+			.populate('team')
+			.exec((err, user) => {
+				if (err) {
+					return Response.selectError(res, err);
+				}
 
-                user = user.toObject();
+				if (!user) {
+					return Response.resourceNotFound(res, 'user');
+				}
 
-                if (user.team) {
-                    user.team.isLeader = user._id.equals(user.team.members.leader);
-                }
+				user = user.toObject();
 
-                Response.success(res, 'Logged user', user);
-            });
-    };
+				if (user.team) {
+					user.team.isLeader = user._id.equals(user.team.members.leader);
+				}
+
+				Response.success(res, 'Logged user', user);
+			});
+	};
 }
 ;

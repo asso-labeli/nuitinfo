@@ -71,6 +71,10 @@ let userSchema = new Schema({
     passwordRecoveryToken : {
         type: String
     },
+    isSystemAccount: {
+        type: Boolean,
+        default: false
+    },
     data : mongoose.Schema.Types.Mixed
 });
 
