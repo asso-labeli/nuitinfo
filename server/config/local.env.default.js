@@ -6,8 +6,8 @@ module.exports = {
     MONGO_HOST: process.env.MONGO_HOST || 'localhost',
     MONGO_PORT: process.env.MONGO_PORT || 27017,
     MONGO_DB: process.env.MONGO_DB || 'nuitinfo',
-    MONGO_USER: process.env.MONGO_USER || 'user',
-    MONGO_PASSWORD : process.env.MONGO_PASSWORD || 'password',
+    MONGO_USER: process.env.MONGO_USER,
+    MONGO_PASSWORD : process.env.MONGO_PASSWORD,
 
     MAIL_ADDRESS: process.env.MAIL_ADDRESS || 'email@default.com',
     MAIL_PASSWORD: process.env.MAIL_PASSWORD || 'password',
