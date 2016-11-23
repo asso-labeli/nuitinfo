@@ -273,7 +273,7 @@ module.exports = function (userSchema) {
 
 	userSchema.statics.exGetAll = function (req, res) {
 		mongoose.model('User').getAll(
-			{'isSystemAccount': {$ne: false}},
+			{'isSystemAccount': {$ne: true}},
 			(err, users) => {
 				if (err) {
 					return Response.selectError(res, err);
