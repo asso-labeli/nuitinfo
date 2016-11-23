@@ -20,10 +20,10 @@ require('./config/express')(app, config);
 function getMongoURI(){
     let uri = 'mongodb://';
 
-    if (process.env.MONGO_USER){
+    if (process.env.MONGO_USER && process.env.MONGO_USER !== 'undefined'){
         uri += process.env.MONGO_USER;
 
-        if (process.env.MONGO_PASSWORD){
+        if (process.env.MONGO_PASSWORD && process.env.MONGO_PASSWORD !== 'undefined'){
             uri += ':' + process.env.MONGO_PASSWORD + '@';
         }
     }
