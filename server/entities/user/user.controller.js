@@ -200,6 +200,8 @@ module.exports = function (userSchema) {
 			return Response.missing(res, 'email', -13);
 		} else if (!req.body.password) {
 			return Response.missing(res, 'password', -14);
+		} else if (req.body.password.length < 4) {
+			return Response.invalidParameter(res, 'password');
 		} else {
 			parametersAreGood = true;
 		}

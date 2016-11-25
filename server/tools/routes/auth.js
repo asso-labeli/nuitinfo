@@ -98,7 +98,9 @@ router.post('/passwordRecovery', (req, res) => {
 router.post('/recovery/:token', (req, res) => {
     if (!req.body || !req.body.password){
         return Response.missing(res, 'password', -11);
-    }
+    } else if (req.body.password.length < 4){
+		return Response.invalidParameter(res, 'password');
+	}
 
     async.waterfall([
         (next) => mongoose.model('User').findOne({passwordRecoveryToken: req.params.token}, next),
