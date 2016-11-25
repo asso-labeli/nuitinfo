@@ -117,8 +117,13 @@ router.post('/recovery/:token', (req, res) => {
             user.password = password;
             user.passwordRecoveryToken = undefined;
 
-            user.save(next);
-        }
+            user.save((err) => next(err, user));
+        },
+		(user, next) => {
+			Mail.sendPasswordChangedMail({
+				to: user.email
+			}, (err) => next(err, user));
+		}
     ], (err, user) => {
         if (err && err.alreadySent){
             return;
