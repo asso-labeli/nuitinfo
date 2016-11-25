@@ -206,7 +206,7 @@ function authenticationFailed(res, message, data){
 }
 
 function resourceNotFound(res, resource){
-  sendResponse(res, 204, {
+  sendResponse(res, 404, {
     message: 'No ' + resource + ' available',
     data: null,
     success: codes.resourceNotFound
