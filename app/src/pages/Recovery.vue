@@ -16,7 +16,6 @@
 </template>
 
 <script>
-    import user from '../stores/UserStore';
     export default {
         data () {
             return {
@@ -25,9 +24,18 @@
         },
         methods: {
             recover() {
-                alert('Cette fonctionnalité est en cours de développement. Contactez le support si vous avez besoin de récupérer votre compte.');
-                console.log(JSON.stringify(this.email));
-                console.log(user.state);
+                this.$http.post('/api/passwordRecovery', JSON.stringify({email: this.email})).then((response) => {
+                    if (response.status === 200) {
+                        response.json().then((message) => {
+                            alert('Un email vous a été envoyé.');
+                        });
+                    }
+                }, (error) => {
+                    console.warn('Erreur Recovery.vue /api/passwordRecovery');
+                    error.json().then((message) => {
+                        alert(message.message);
+                    });
+                });
             }
         }
     };

@@ -68,6 +68,10 @@ const router = new VueRouter({
         component: require('./pages/Recovery.vue'),
         name: 'recovery'
     }, {
+        path: '/recovery/:token',
+        component: require('./pages/NewPassword.vue'),
+        name: 'newPassword'
+    }, {
         path: '/dashboard',
         component: require('./pages/Dashboard.vue'),
         name: 'dashboard'
