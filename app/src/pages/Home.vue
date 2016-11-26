@@ -15,7 +15,8 @@
             <div v-for="day in days" class="day">
                 <h4>{{ day.title }}</h4>
                 <div class="event" v-for="event in day.events">
-                    <div class="date">&nbsp;<span class="orange">*</span> <span class="integer">{{ event.hour }}</span></div>
+                    <div class="date">&nbsp;<span class="orange">*</span> <span class="integer">{{ event.hour }}</span>
+                    </div>
                     <span class="details" v-html="event.content"></span>
                 </div>
             </div>
@@ -98,25 +99,21 @@
             });
 
             this.$http.get('/api/statistics/users').then((response) => {
-                if (response.status === 200) {
-                    response.json().then((statistics) => {
-                        this.users = statistics.data.users;
-                        dataStore.set('home.users', statistics.data.users);
-                    });
-                } else {
-                    this.users = 0;
-                }
+                response.json().then((statistics) => {
+                    this.users = statistics.data.users;
+                    dataStore.set('home.users', statistics.data.users);
+                });
+            }, (error) => {
+                this.users = 0;
             });
 
             this.$http.get('/api/statistics/teams').then((response) => {
-                if (response.status === 200) {
-                    response.json().then((statistics) => {
-                        this.teams = statistics.data.teams;
-                        dataStore.set('home.teams', statistics.data.teams);
-                    });
-                } else {
-                    this.teams = 0;
-                }
+                response.json().then((statistics) => {
+                    this.teams = statistics.data.teams;
+                    dataStore.set('home.teams', statistics.data.teams);
+                });
+            }, (error) => {
+                this.teams = 0;
             });
         }
     };
