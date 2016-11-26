@@ -41,8 +41,6 @@ function getMongoURI(){
     return uri;
 }
 
-console.log(getMongoURI());
-
 mongoose.connect(getMongoURI());
 
 let db = mongoose.connection;
