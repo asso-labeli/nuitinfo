@@ -179,7 +179,7 @@ module.exports = function (userSchema) {
 
 	userSchema.statics.getAll = function (params, callback) {
 		mongoose.model('User')
-			.find()
+			.find(params)
 			.select('firstName lastName school team biography')
 			.populate('team school.institution')
 			.exec(callback);
