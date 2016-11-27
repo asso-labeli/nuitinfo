@@ -6,7 +6,7 @@
 
             <div v-if="!isEmpty(team.description)">
                 <span class="special">Description :</span>
-                <div class="description" v-html=nl2br(team.description)"></div>
+                <div class="description" v-html="nl2br(team.description)"></div>
             </div>
 
             <h2 class="title">Candidatures</h2>
