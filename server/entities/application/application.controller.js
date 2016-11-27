@@ -5,7 +5,7 @@ let mongoose = require('mongoose');
 let async = require('async');
 let Mail = require('../../config/mail');
 
-module.exports = function (applicationSchema) {
+module.exports = function(applicationSchema) {
     /* Tools functions */
 
     function checkApplicationHasGoodTeam(application, params, callback) {
@@ -25,29 +25,30 @@ module.exports = function (applicationSchema) {
             });
     }
 
-    function sendNewApplicationMailToTeam(application, callback){
+    function sendNewApplicationMailToTeam(application, callback) {
         async.waterfall([
             (next) => mongoose.model('Team')
                 .findById(application.team, next),
             (team, next) => {
-                if (!team){
+                if (!team) {
                     return next('No team found');
                 }
 
                 Mail.sendApplicationNotificationToTeamMail({
                     to: team.email,
-                    url: process.env.WEBSERVER_URL + '/dashboard'
+                    url: process.env.WEBSERVER_URL + '/dashboard',
+                    teamName: team.name
                 }, next);
             }
         ], callback);
     }
 
-    function sendNewApplicationMailToUser(application, callback){
+    function sendNewApplicationMailToUser(application, callback) {
         async.waterfall([
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => {
-                if (!user){
+                if (!user) {
                     return next('No user found');
                 }
 
@@ -59,14 +60,14 @@ module.exports = function (applicationSchema) {
         ], callback);
     }
 
-    function sendUserAcceptsMail(application, callback){
+    function sendUserAcceptsMail(application, callback) {
         async.waterfall([
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
                 .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
-                if (!user){
+                if (!user) {
                     return next('No user found');
                 } else if (!team) {
                     return next('No team found');
@@ -80,14 +81,14 @@ module.exports = function (applicationSchema) {
         ], callback);
     }
 
-    function sendUserRefusesMail(application, callback){
+    function sendUserRefusesMail(application, callback) {
         async.waterfall([
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
                 .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
-                if (!user){
+                if (!user) {
                     return next('No user found');
                 } else if (!team) {
                     return next('No team found');
@@ -101,14 +102,14 @@ module.exports = function (applicationSchema) {
         ], callback);
     }
 
-    function sendTeamAcceptsMail(application, callback){
+    function sendTeamAcceptsMail(application, callback) {
         async.waterfall([
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
                 .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
-                if (!user){
+                if (!user) {
                     return next('No user found');
                 } else if (!team) {
                     return next('No team found');
@@ -122,14 +123,14 @@ module.exports = function (applicationSchema) {
         ], callback);
     }
 
-    function sendTeamRefusesMail(application, callback){
+    function sendTeamRefusesMail(application, callback) {
         async.waterfall([
             (next) => mongoose.model('User')
                 .findById(application.user, next),
             (user, next) => mongoose.model('Team')
                 .findById(application.team, (err, team) => next(err, user, team)),
             (user, team, next) => {
-                if (!user){
+                if (!user) {
                     return next('No user found');
                 } else if (!team) {
                     return next('No team found');
@@ -145,17 +146,17 @@ module.exports = function (applicationSchema) {
 
     /* Controller methods */
 
-    applicationSchema.statics.create = function (params, callback) {
+    applicationSchema.statics.create = function(params, callback) {
         let Self = this;
 
         let application = new Self(params);
 
         application.save((err) => {
-            if (err){
+            if (err) {
                 return callback(err);
             }
 
-            if (application.fromUser){
+            if (application.fromUser) {
                 sendNewApplicationMailToTeam(application, callback);
             } else {
                 sendNewApplicationMailToUser(application, callback);
@@ -163,7 +164,7 @@ module.exports = function (applicationSchema) {
         });
     };
 
-    applicationSchema.statics.accept = function (params, callback) {
+    applicationSchema.statics.accept = function(params, callback) {
         async.waterfall([
             (next) => mongoose.model('Application').findById(params.application, next),
             (application, next) => {
@@ -195,7 +196,7 @@ module.exports = function (applicationSchema) {
                     next(err, application);
                 }),
             (application, next) => {
-                if (application.fromTeam){
+                if (application.fromTeam) {
                     sendUserAcceptsMail(application, next);
                 } else {
                     sendTeamAcceptsMail(application, next);
@@ -204,7 +205,7 @@ module.exports = function (applicationSchema) {
         ], callback);
     };
 
-    applicationSchema.statics.refuse = function (params, callback) {
+    applicationSchema.statics.refuse = function(params, callback) {
         async.waterfall([
             (next) => mongoose.model('Application').findById(params.application, next),
             (application, next) => {
@@ -225,7 +226,7 @@ module.exports = function (applicationSchema) {
                     next(err, application);
                 }),
             (application, next) => {
-                if (application.fromTeam){
+                if (application.fromTeam) {
                     sendUserRefusesMail(application, next);
                 } else {
                     sendTeamRefusesMail(application, next);
@@ -262,7 +263,7 @@ module.exports = function (applicationSchema) {
 
     /* Express methods */
 
-    applicationSchema.statics.exCreateFromUser = function (req, res) {
+    applicationSchema.statics.exCreateFromUser = function(req, res) {
         if (!req.isLogged()) {
             return Response.notLogged(res);
         }
@@ -311,7 +312,7 @@ module.exports = function (applicationSchema) {
         });
     };
 
-    applicationSchema.statics.exCreateFromTeam = function (req, res) {
+    applicationSchema.statics.exCreateFromTeam = function(req, res) {
         if (!req.isLogged()) {
             return Response.notLogged(res);
         }
@@ -359,7 +360,7 @@ module.exports = function (applicationSchema) {
         });
     };
 
-    applicationSchema.statics.exAccept = function (req, res) {
+    applicationSchema.statics.exAccept = function(req, res) {
         if (!req.isLogged()) {
             return Response.notLogged(res);
         }
@@ -383,7 +384,7 @@ module.exports = function (applicationSchema) {
         });
     };
 
-    applicationSchema.statics.exRefuse = function (req, res) {
+    applicationSchema.statics.exRefuse = function(req, res) {
         if (!req.isLogged()) {
             return Response.notLogged(res);
         }
@@ -407,7 +408,7 @@ module.exports = function (applicationSchema) {
         });
     };
 
-    applicationSchema.statics.exGetForUser = function (req, res) {
+    applicationSchema.statics.exGetForUser = function(req, res) {
         if (!req.isLogged()) {
             return Response.notLogged(res);
         }
@@ -428,7 +429,7 @@ module.exports = function (applicationSchema) {
     };
 
     applicationSchema.statics.exGetWaitingApplications = function(req, res) {
-        if (!req.isLogged()){
+        if (!req.isLogged()) {
             return Response.notLogged(res);
         }
 
@@ -447,7 +448,7 @@ module.exports = function (applicationSchema) {
             });
     };
 
-    applicationSchema.statics.exGetForTeam = function (req, res) {
+    applicationSchema.statics.exGetForTeam = function(req, res) {
         if (!req.isLogged()) {
             return Response.notLogged(res);
         }
