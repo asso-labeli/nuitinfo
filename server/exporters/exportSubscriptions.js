@@ -69,7 +69,7 @@ mongoose.model('User')
         console.log('site;ecole;annee;prenom;nom;equipe;estLeader');
 
         for (let user of users) {
-            if (!user.team){
+            if (!user.team) {
                 continue;
             }
 
@@ -79,6 +79,7 @@ mongoose.model('User')
                 user.firstName + ';' +
                 user.lastName + ';' +
                 user.email + ';' +
+                user.team.name + ';' +
                 (user._id.equals(user.team.members.leader) ? 'leader' : '0')
             );
         }
