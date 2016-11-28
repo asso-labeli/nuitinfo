@@ -157,6 +157,9 @@ module.exports = function (teamSchema) {
     /* Express calls */
 
     teamSchema.statics.exCreate = function (req, res) {
+        Response.insertError(res, 'Inscriptions terminées');
+        return false;
+
         if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
