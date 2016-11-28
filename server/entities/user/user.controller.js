@@ -30,11 +30,11 @@ const editableFields = {
     }
 };
 
-module.exports = function (userSchema) {
+module.exports = function(userSchema) {
 
     /* Tool methods */
 
-    userSchema.statics.computeLogin = function (firstName, lastName, callback) {
+    userSchema.statics.computeLogin = function(firstName, lastName, callback) {
         let login = firstName.substr(0, 1).toLowerCase() + '.' +
             lastName.substr(0, 9).toLocaleLowerCase();
         let lastLogin = login;
@@ -109,7 +109,7 @@ module.exports = function (userSchema) {
 
     /* Controllers methods */
 
-    userSchema.statics.create = function (params, callback) {
+    userSchema.statics.create = function(params, callback) {
         let Self = this;
 
         params.team = undefined;
@@ -137,7 +137,7 @@ module.exports = function (userSchema) {
         ], callback);
     };
 
-    userSchema.statics.edit = function (params, callback) {
+    userSchema.statics.edit = function(params, callback) {
         async.waterfall([
             (next) => mongoose.model('User').findById(params.user, next),
             (user, next) => {
@@ -156,7 +156,7 @@ module.exports = function (userSchema) {
         ], callback);
     };
 
-    userSchema.statics.changeTeam = function (params, callback) {
+    userSchema.statics.changeTeam = function(params, callback) {
         mongoose.model('User').update(
             {_id: params.user._id},
             {team: params.team._id},
@@ -169,7 +169,7 @@ module.exports = function (userSchema) {
             });
     };
 
-    userSchema.statics.getById = function (params, callback) {
+    userSchema.statics.getById = function(params, callback) {
         mongoose.model('User')
             .findById(params.id)
             .select('firstName lastName school team biography')
@@ -177,7 +177,7 @@ module.exports = function (userSchema) {
             .exec(callback);
     };
 
-    userSchema.statics.getAll = function (params, callback) {
+    userSchema.statics.getAll = function(params, callback) {
         mongoose.model('User')
             .find(params)
             .select('firstName lastName school team biography')
@@ -223,9 +223,9 @@ module.exports = function (userSchema) {
 
     /* Express calls */
 
-    userSchema.statics.exCreate = function (req, res) {
-        // Response.closeRegistrations(res);
-        // return false;
+    userSchema.statics.exCreate = function(req, res) {
+        Response.closeRegistrations(res);
+        return false;
 
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
@@ -245,7 +245,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exEdit = function (req, res) {
+    userSchema.statics.exEdit = function(req, res) {
         if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
@@ -262,7 +262,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exGet = function (req, res) {
+    userSchema.statics.exGet = function(req, res) {
         mongoose.model('User').getById(req.params, (err, user) => {
             if (err) {
                 return Response.selectError(res, err);
@@ -276,7 +276,7 @@ module.exports = function (userSchema) {
         });
     };
 
-    userSchema.statics.exGetAll = function (req, res) {
+    userSchema.statics.exGetAll = function(req, res) {
         mongoose.model('User').getAll(
             {'isSystemAccount': {$ne: true}},
             (err, users) => {
@@ -292,7 +292,7 @@ module.exports = function (userSchema) {
             });
     };
 
-    userSchema.statics.exGetLoggedUser = function (req, res) {
+    userSchema.statics.exGetLoggedUser = function(req, res) {
         if (!req.isLogged()) {
             return Response.notAllowed(res);
         }
