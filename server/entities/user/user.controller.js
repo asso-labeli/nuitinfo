@@ -224,8 +224,8 @@ module.exports = function (userSchema) {
     /* Express calls */
 
     userSchema.statics.exCreate = function (req, res) {
-        Response.closeRegistrations(res);
-        return false;
+        // Response.closeRegistrations(res);
+        // return false;
 
         async.waterfall([
             (next) => checkParametersExistsForCreate(req, res, next),
