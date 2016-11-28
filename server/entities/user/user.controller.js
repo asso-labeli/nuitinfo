@@ -224,7 +224,7 @@ module.exports = function (userSchema) {
     /* Express calls */
 
     userSchema.statics.exCreate = function (req, res) {
-        Response.insertError(res, 'Inscriptions terminées');
+        Response.closeRegistrations(res);
         return false;
 
         async.waterfall([

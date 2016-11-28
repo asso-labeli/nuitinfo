@@ -149,12 +149,20 @@ function deleteError(res, err) {
 }
 
 function insertError(res, err) {
-  console.error(err);
-  sendResponse(res, 500, {
-    message: 'MongoDB error during insertion',
-    data: err,
-    success: -29
-  });
+    console.error(err);
+    sendResponse(res, 500, {
+        message: 'MongoDB error during insertion',
+        data: err,
+        success: -29
+    });
+}
+
+function closeRegistrations(res) {
+    sendResponse(res, 500, {
+        message: 'Inscriptions terminées',
+        data: 'Inscriptions terminées',
+        success: -29
+    });
 }
 
 function invalidID(res) {
@@ -236,6 +244,7 @@ module.exports.editError = editError;
 module.exports.selectError = selectError;
 module.exports.deleteError = deleteError;
 module.exports.insertError = insertError;
+module.exports.closeRegistrations = closeRegistrations;
 module.exports.invalidID = invalidID;
 module.exports.invalidParameter = invalidParameter;
 module.exports.serverError = serverError;
