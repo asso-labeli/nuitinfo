@@ -79,7 +79,7 @@ mongoose.model('User')
                 user.firstName + ';' +
                 user.lastName + ';' +
                 user.email + ';' +
-                user.team.name + ';' +
+                user.team.name.replace(';', '') + ';' +
                 (user._id.equals(user.team.members.leader) ? 'leader' : '0')
             );
         }
