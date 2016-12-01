@@ -1,5 +1,22 @@
 <template>
-    <div>
+    <div v-if="isNightStarted">
+        La nuit est en cours de développement !<br>
+        Y'a un discord pour le support et pour le flood ou pour du vocal entre nous.
+        C'est ici : <a href="https://discord.gg/DcYur6f" target="_blank">https://discord.gg/DcYur6f</a>
+        <br/><br/>
+        <h3>Site national</h3>
+        <p>
+            Le leader de la team a du recevoir <b>DEUX</b> emails sur la boite mail qu'il a renseigné sur ce site.<br/>
+            Un des emails contient le couple login/password pour se connecter au
+            <a href="http://www.nuitdelinfo.com/n2i/users/loginform" target="_blank">site national</a>.
+            <br>
+            Et l'autre contient le couple login/password pour se connecter au
+            <a href="http://mass-talk.univ-tlse2.fr/" target="_blank">forum national</a>.
+            <br>
+        </p>
+        D'autres informations pourront apparaître ici :)
+    </div>
+    <div v-else>
         Il reste <b><span>{{getDays}}</span> jours</b>,
         <b><span>{{getHours}}</span> heure<span v-if="getHours > 1">s</span></b>,
         <b><span>{{getMinutes}}</span> minute<span v-if="getMinutes > 1">s</span></b> et
@@ -12,6 +29,8 @@
     export default {
         data() {
             return {
+                startNDI: new Date(2016, 11, 1, 16, 40, 0, 0),
+                endNDI: new Date(2016, 11, 2, 8, 0, 0, 0),
                 count: {
                     days: 0,
                     hours: 0,
@@ -37,14 +56,15 @@
             },
             getMilliseconds: function() {
                 return this.count.milliseconds;
+            },
+            isNightStarted: function() {
+                return this.start;
             }
         },
         mounted() {
             var self = this;
-            var startNDI = new Date(2016, 11, 1, 16, 40, 0, 0);
-            var startNDITimestamp = startNDI.getTime();
-            var endNDI = new Date(2016, 11, 2, 8, 0, 0, 0);
-            var endNDITimestamp = endNDI.getTime();
+            var startNDITimestamp = this.startNDI.getTime();
+            var endNDITimestamp = this.endNDI.getTime();
 
             function a() {
                 let now = new Date();

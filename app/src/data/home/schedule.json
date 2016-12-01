@@ -53,6 +53,11 @@
                     "content": "<b>Ouverture</b> des salles du <b>CREMI</b> aux équipes de la Nuit"
                 },
                 {
+                    "hour": "19:55",
+                    "TZD": "+01:00",
+                    "content": "<b>Fermeture</b> des inscriptions des défis nationaux"
+                },
+                {
                     "hour": "20:00",
                     "TZD": "+01:00",
                     "content": "<b>Repas/Buffet</b>"
@@ -69,6 +74,11 @@
                     "content": "<b>Petit déjeuner</b>"
                 },
                 {
+                    "hour": "07:45",
+                    "TZD": "+01:00",
+                    "content": "<b>Rangement</b> des salles <span class=\"integer\">005</span>, <span class=\"integer\">007</span>, <span class=\"integer\">005</span>, <span class=\"integer\">101</span>, <span class=\"integer\">102</span>, <span class=\"integer\">103</span>, <span class=\"integer\">201</span>  et <span class=\"integer\">005</span>"
+                },
+                {
                     "hour": "07:50",
                     "TZD": "+01:00",
                     "content": "<b>Rendu</b> des défis sur le site <a href=\"http://nuitdelinfo.com/nuitinfo\">site officiel</a>"
@@ -76,7 +86,7 @@
                 {
                     "hour": "08:00",
                     "TZD": "+01:00",
-                    "content": "<b>Reprise</b> des <b>cours</b> dans les salles zzz et yyy"
+                    "content": "<b>Reprise</b> des <b>cours</b> dans les salles <span class=\"integer\">005</span>, <span class=\"integer\">007</span>, <span class=\"integer\">005</span>, <span class=\"integer\">101</span>, <span class=\"integer\">102</span>, <span class=\"integer\">103</span>, <span class=\"integer\">201</span>  et <span class=\"integer\">005</span>"
                 },
                 {
                     "hour": "08:02",
