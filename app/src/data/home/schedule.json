@@ -35,7 +35,7 @@
                 {
                     "hour": "16:00",
                     "TZD": "+01:00",
-                    "content": "<b>Visioconférence</b> (Amphi Poincaré, bâtiment A22)"
+                    "content": "<b>Visioconférence</b> (Amphi Poincaré, <a href=\"https://www.google.fr/maps/@44.8070482,-0.5988415,18z\">bâtiment A22</a>)"
                 },
                 {
                     "hour": "16:30",
