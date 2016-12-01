@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isNightStarted">
+    <div>
         La nuit est en cours de développement !<br>
         Y'a un discord pour le support et pour le flood ou pour du vocal entre nous.
         C'est ici : <a href="https://discord.gg/DcYur6f" target="_blank">https://discord.gg/DcYur6f</a>
@@ -15,13 +15,13 @@
             <br>
         </p>
         D'autres informations pourront apparaître ici :)
-    </div>
-    <div v-else>
-        Il reste <b><span>{{getDays}}</span> jours</b>,
-        <b><span>{{getHours}}</span> heure<span v-if="getHours > 1">s</span></b>,
-        <b><span>{{getMinutes}}</span> minute<span v-if="getMinutes > 1">s</span></b> et
-        <b><span>{{getSeconds}}</span> seconde<span v-if="getSeconds > 1">s</span></b>
-        avant <span v-if="count.start">le début</span><span v-else>la fin</span> de la Nuit
+        <div v-if="false">
+            Il reste <b><span>{{getDays}}</span> jours</b>,
+            <b><span>{{getHours}}</span> heure<span v-if="getHours > 1">s</span></b>,
+            <b><span>{{getMinutes}}</span> minute<span v-if="getMinutes > 1">s</span></b> et
+            <b><span>{{getSeconds}}</span> seconde<span v-if="getSeconds > 1">s</span></b>
+            avant <span v-if="count.start">le début</span><span v-else>la fin</span> de la Nuit
+        </div>
     </div>
 </template>
 
@@ -42,22 +42,22 @@
             };
         },
         computed: {
-            getDays: function() {
+            getDays: function () {
                 return this.count.days;
             },
-            getHours: function() {
+            getHours: function () {
                 return this.count.hours;
             },
-            getMinutes: function() {
+            getMinutes: function () {
                 return this.count.minutes;
             },
-            getSeconds: function() {
+            getSeconds: function () {
                 return this.count.seconds;
             },
-            getMilliseconds: function() {
+            getMilliseconds: function () {
                 return this.count.milliseconds;
             },
-            isNightStarted: function() {
+            isNightStarted: function () {
                 return this.start;
             }
         },
