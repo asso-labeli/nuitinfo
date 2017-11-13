@@ -1,7 +1,7 @@
 <template>
     <div id="home" class="responsive page">
 
-        <h1>Nuit de l'Info <span class="integer">2016</span> - Édition Bordelaise</h1>
+        <h1>Nuit de l'Info <span class="integer">2017</span> - Édition Bordelaise</h1>
 
         <div class="presentation" v-for="part in paragraphs">
             <h2 class="title">{{ part.title }}</h2>

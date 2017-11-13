@@ -16,7 +16,7 @@
         components: {NuitInfoMenu, NuitInfoFooter},
         data () {
             return {
-                title: "Nuit de l'Info 2016 - Édition Bordelaise"
+                title: "Nuit de l'Info 2017 - Édition Bordelaise"
             }
         },
         mounted(){

@@ -29,8 +29,8 @@
     export default {
         data() {
             return {
-                startNDI: new Date(2016, 11, 1, 16, 40, 0, 0),
-                endNDI: new Date(2016, 11, 2, 8, 0, 0, 0),
+                startNDI: new Date(2017, 11, 7, 16, 40, 0, 0),
+                endNDI: new Date(2017, 11, 9, 8, 0, 0, 0),
                 count: {
                     days: 0,
                     hours: 0,
@@ -62,9 +62,9 @@
             }
         },
         mounted() {
-            var self = this;
-            var startNDITimestamp = this.startNDI.getTime();
-            var endNDITimestamp = this.endNDI.getTime();
+            let self = this;
+            let startNDITimestamp = this.startNDI.getTime();
+            let endNDITimestamp = this.endNDI.getTime();
 
             function a() {
                 let now = new Date();
